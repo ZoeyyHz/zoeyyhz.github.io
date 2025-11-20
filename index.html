@@ -9,11 +9,13 @@
         :root {
             --primary: #2c3e50;
             --accent: #007bff; /* 科技蓝 */
-            --bg: #f8f9fa;
+            --bg: #f4f7f6; /* 稍微深一点的背景，突出白卡片 */
+            --sidebar-bg: #ffffff;
             --card-bg: #ffffff;
             --text: #333;
             --gray: #666;
             --border-color: #e0e0e0;
+            --sidebar-width: 320px; /* 左侧栏固定宽度 */
         }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -23,50 +25,76 @@
             margin: 0;
             padding: 0;
         }
-        .container {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 40px 20px;
+
+        /* --- 布局核心 (Layout) --- */
+        .layout-wrapper {
+            display: flex;
             min-height: 100vh;
         }
 
-        /* --- 头部简介 (Hero Section) --- */
-        header {
+        /* --- 左侧固定侧边栏 (Sidebar) --- */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--sidebar-bg);
+            height: 100vh; /* 占满全屏高度 */
+            position: fixed; /* 【核心】固定定位 */
+            top: 0;
+            left: 0;
+            padding: 40px 30px;
+            box-sizing: border-box;
+            border-right: 1px solid var(--border-color);
+            overflow-y: auto; /* 如果屏幕矮，侧边栏内部可以滚动 */
             display: flex;
-            align-items: center;
-            gap: 50px;
-            padding-bottom: 60px;
-            border-bottom: 1px solid var(--border-color);
-            margin-bottom: 60px;
+            flex-direction: column;
+            text-align: center;
+            z-index: 1000;
         }
-        .profile-img {
-            width: 180px;
-            height: 180px;
+
+        .sidebar .profile-img {
+            width: 160px;
+            height: 160px;
             border-radius: 50%;
             object-fit: cover;
-            border: 4px solid white;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            flex-shrink: 0;
+            border: 4px solid #f0f0f0;
+            margin: 0 auto 20px auto;
+            display: block;
         }
-        .intro-text h1 {
-            margin: 0 0 10px 0;
-            font-size: 2.5rem;
+
+        .sidebar h1 {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
             color: var(--primary);
         }
-        .intro-text .subtitle {
-            font-size: 1.2rem;
+
+        .sidebar .subtitle {
+            font-size: 1rem;
             color: var(--accent);
             font-weight: bold;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            display: block;
         }
+
+        .sidebar .bio-text {
+            font-size: 0.9rem;
+            color: #555;
+            margin-bottom: 30px;
+            text-align: left; /* 简介文字左对齐阅读更舒服 */
+            line-height: 1.8;
+        }
+
+        .social-links {
+            margin-top: auto; /* 把链接推到底部 */
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
         .social-links a {
-            display: inline-block;
-            margin-right: 15px;
             text-decoration: none;
             color: var(--primary);
             border: 1px solid #ddd;
-            padding: 5px 15px;
-            border-radius: 20px;
+            padding: 10px;
+            border-radius: 8px;
             font-size: 0.9rem;
             transition: all 0.3s;
         }
@@ -76,108 +104,88 @@
             border-color: var(--primary);
         }
 
-        /* --- 通用标题样式 --- */
+        /* --- 右侧主要内容区 (Main Content) --- */
+        .main-content {
+            margin-left: var(--sidebar-width); /* 【核心】留出左侧宽度 */
+            flex: 1;
+            padding: 60px 80px; /* 内容区的内边距 */
+            max-width: 1000px; /* 限制最大宽度，防止文字太长 */
+        }
+
+        /* --- 通用板块样式 --- */
         .section-title {
             font-size: 1.8rem;
-            margin-bottom: 40px;
-            margin-top: 80px; /* 增加板块间距 */
-            text-align: center;
+            margin-bottom: 30px;
+            margin-top: 60px; /* 板块间距 */
             color: var(--primary);
-            position: relative;
+            border-bottom: 2px solid var(--accent);
+            display: inline-block;
+            padding-bottom: 5px;
         }
-        /* 给标题加个小装饰线 */
-        .section-title::after {
-            content: '';
-            display: block;
-            width: 50px;
-            height: 3px;
-            background: var(--accent);
-            margin: 10px auto 0;
+        .section-title:first-of-type {
+            margin-top: 0;
         }
-        
-        /* --- 项目展示卡片 --- */
+
+        /* --- 项目卡片 --- */
         .project-card {
             background: var(--card-bg);
             border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
-            margin-bottom: 60px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin-bottom: 40px;
             display: flex;
             align-items: stretch;
-            min-height: 400px;
+            min-height: 350px;
         }
-        
         .project-img-container {
-            flex: 1; /* 图片占 40% */
-            min-width: 300px;
+            flex: 1; /* 图片占比 */
+            min-width: 250px;
             background-color: #eee;
-            position: relative;
         }
         .project-img-container img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             object-position: top center;
-            display: block;
         }
-
         .project-content {
-            flex: 1.5; /* 文字占 60% */
-            padding: 40px 50px;
+            flex: 1.4; /* 文字占比 */
+            padding: 30px;
             display: flex;
             flex-direction: column;
             justify-content: center;
         }
-
-        .project-tags {
-            margin-bottom: 15px;
-        }
         .tag {
             display: inline-block;
-            background: #eeffff;
-            color: #008888;
-            padding: 4px 10px;
+            background: #eef6ff;
+            color: var(--accent);
+            padding: 3px 8px;
             border-radius: 4px;
             font-size: 0.8rem;
             font-weight: bold;
             margin-right: 5px;
             margin-bottom: 5px;
         }
-        
         .project-content h3 {
-            margin: 0 0 15px 0;
-            font-size: 1.6rem;
-            line-height: 1.3;
+            margin: 10px 0;
+            font-size: 1.4rem;
             color: var(--primary);
         }
-        
-        .project-content p {
-            margin-bottom: 15px;
-            font-size: 0.95rem;
-            color: #444;
-        }
-
         .btn-link {
-            display: inline-block;
-            margin-top: 10px;
-            margin-right: 15px;
+            margin-top: 15px;
             text-decoration: none;
             color: var(--accent);
             font-weight: bold;
-            border-bottom: 2px solid transparent;
-            transition: border-color 0.3s;
-        }
-        .btn-link:hover {
-            border-bottom-color: var(--accent);
+            font-size: 0.9rem;
         }
 
-        /* --- 工作经历样式 (新增) --- */
+        /* --- 工作经历 (时间轴) --- */
         .timeline-item {
             background: white;
-            padding: 30px;
-            border-left: 4px solid var(--accent); /* 左侧强调线 */
-            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
-            margin-bottom: 30px;
+            padding: 25px;
+            border-left: 4px solid var(--accent);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+            margin-bottom: 20px;
             border-radius: 0 8px 8px 0;
         }
         .job-header {
@@ -187,299 +195,287 @@
             margin-bottom: 10px;
             flex-wrap: wrap;
         }
-        .job-title {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: var(--primary);
-        }
-        .company {
-            font-size: 1.1rem;
-            color: #555;
-            font-weight: 500;
-        }
-        .date {
-            color: var(--accent);
-            font-weight: bold;
-            font-size: 0.9rem;
-        }
-        .timeline-item ul {
-            padding-left: 20px;
-            margin: 15px 0 0 0;
-            color: #555;
-        }
-        .timeline-item li {
-            margin-bottom: 8px;
-        }
+        .job-title { font-weight: bold; color: var(--primary); font-size: 1.1rem; }
+        .company { color: #555; }
+        .date { color: var(--accent); font-size: 0.9rem; font-weight: bold;}
+        .timeline-item ul { padding-left: 20px; margin: 10px 0 0 0; color: #555; font-size: 0.95rem;}
+        .timeline-item li { margin-bottom: 6px; }
 
-        /* --- 教育背景与技能 (新增 - 双栏布局) --- */
-        .edu-skills-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr; /* 两列等宽 */
-            gap: 40px;
-        }
-        .info-block {
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
-        }
-        .info-block h3 {
-            color: var(--primary);
-            border-bottom: 1px solid #eee;
-            padding-bottom: 15px;
-            margin-bottom: 20px;
-            margin-top: 0;
-        }
-        .edu-item, .cert-item {
-            margin-bottom: 25px;
-        }
-        .edu-title {
-            font-weight: bold;
-            color: #333;
-            display: block;
-            font-size: 1.05rem;
-        }
-        .edu-school {
-            color: #666;
-            font-style: italic;
-        }
-        .edu-date {
-            color: var(--accent);
-            font-size: 0.9rem;
-            float: right;
+        /* --- 教育与证书 (新版重构) --- */
+        .edu-container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
         }
         
-        .skill-list {
-            list-style: none;
-            padding: 0;
-        }
-        .skill-list li {
-            margin-bottom: 12px;
-            padding-left: 25px;
-            position: relative;
-        }
-        .skill-list li::before {
-            content: '🔹'; /* 列表前的小图标 */
-            position: absolute;
-            left: 0;
-            font-size: 0.8rem;
-            top: 3px;
-        }
-        .publication-box {
-            background: #f0f7ff;
-            padding: 15px;
+        /* 教育卡片 */
+        .edu-card {
+            background: white;
+            padding: 25px;
             border-radius: 8px;
-            font-size: 0.9rem;
-            border: 1px solid #cce5ff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+            border-left: 4px solid #ddd; /* 灰色边框区分 */
+        }
+        
+        /* PMP 证书特别展示卡片 */
+        .pmp-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08); /* 更明显的阴影 */
+            overflow: hidden;
+            display: flex;
+            border: 1px solid #eee;
+        }
+        .pmp-info {
+            padding: 30px;
+            flex: 1.5;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .pmp-badge {
+            background: #ff9900;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            align-self: flex-start;
+            margin-bottom: 10px;
+        }
+        .pmp-img-container {
+            flex: 1;
+            background: #f9f9f9;
+            min-height: 200px;
+            position: relative;
+            overflow: hidden;
+            border-left: 1px solid #eee;
+        }
+        /* PMP 图片设置 */
+        .pmp-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* 完整显示证书，不裁切 */
+            padding: 10px; /* 加点内边距 */
+            box-sizing: border-box;
+            display: block;
         }
 
-        /* --- 响应式设计 --- */
+        /* 技能与出版物 */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 10px;
+        }
+        .skill-box {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+        }
+        .skill-box h4 { margin-top: 0; color: var(--primary); border-bottom: 1px solid #eee; padding-bottom: 10px;}
+        .skill-list { list-style: none; padding: 0; font-size: 0.9rem; color: #555; }
+        .skill-list li { margin-bottom: 8px; position: relative; padding-left: 20px; }
+        .skill-list li::before { content: '•'; color: var(--accent); position: absolute; left: 0; font-weight: bold;}
+
+        /* --- 响应式 (手机端) --- */
         @media (max-width: 900px) {
-            header {
-                flex-direction: column;
-                text-align: center;
-            }
-            .project-card {
-                flex-direction: column; 
-                height: auto;
-            }
-            .project-img-container {
-                height: 250px; 
+            .layout-wrapper { flex-direction: column; }
+            .sidebar {
+                position: relative; /* 取消固定 */
                 width: 100%;
-                flex: none;
+                height: auto;
+                border-right: none;
+                border-bottom: 1px solid #eee;
+                padding: 40px 20px;
             }
-            .project-content {
-                padding: 30px;
+            .main-content {
+                margin-left: 0; /* 取消左边距 */
+                padding: 40px 20px;
             }
-            .edu-skills-grid {
-                grid-template-columns: 1fr; /* 手机上变成单列 */
-            }
-            .job-header {
-                flex-direction: column;
-            }
-            .date {
-                margin-top: 5px;
-            }
+            .project-card, .pmp-card { flex-direction: column; }
+            .project-img-container { height: 200px; }
+            .pmp-img-container { height: 200px; border-left: none; border-top: 1px solid #eee;}
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    
-    <!-- 1. 个人简介 -->
-    <header>
-        <img src="images/profile.png" alt="Zhuo Huang" class="profile-img" onerror="this.src='https://via.placeholder.com/180?text=Zoey'">
-        <div class="intro-text">
-            <h1>Zhuo Huang (Zoey)</h1>
-            <div class="subtitle">PMP® Certified | Research Assistant @ Art Museum,CUHK</div>
-            <p>PMP® certified Project Manager with 5 years in corporate R&D (O-Net) and AI research (CUHK). Adept at coordinating cross-functional teams and streamlining workflows to drive over 300% efficiency gains while translating research into scalable products. Recognized with “Very Good” performance ratings for three consecutive years. Bilingual professional with strong technical skills in Python, LLM Prompt Engineering, and TTS.</p>
-            <div class="social-links">
-                <a href="mailto:zoey3huang@gmail.com">📧 Email Me</a>
-                <a href="https://github.com/zoeyyhz" target="_blank">GitHub</a>
-            </div>
-        </div>
-    </header>
+<div class="layout-wrapper">
 
-    <!-- 2. 项目展示区 -->
-    <h2 class="section-title">🚀 Featured Projects</h2>
-
-    <!-- Project 1 -->
-    <div class="project-card">
-        <div class="project-img-container">
-            <img src="images/ai4future.png" alt="AI4Future" onerror="this.style.backgroundColor='#eee'">
-        </div>
-        <div class="project-content">
-            <div class="project-tags">
-                <span class="tag">EdTech</span>
-                <span class="tag">Product Management</span>
-                <span class="tag">Impact</span>
-            </div>
-            <h3>CUHK Jockey Club AI for the Future Project</h3>
-            <p><strong>Bridged Research and Education:</strong> As the core project coordinator, facilitated the development of the "AI & Calligraphy" module by assisting a cross-functional team to translate complex university research into a practical secondary school curriculum.</p>
-            <p><strong>Achievements:</strong> Assumed full responsibility for curriculum design. Achieved over <strong>50% School Adoption Rate</strong> (164+ schools) in Hong Kong.</p>
-            <a href="https://cuhkjc-aiforfuture.hk/index.php/en/home/" class="btn-link" target="_blank">📄 View Project Details &rarr;</a>
-        </div>
-    </div>
-
-    <!-- Project 2 -->
-    <div class="project-card">
-        <div class="project-img-container">
-            <img src="images/museum.png" alt="AI Audio Guide" onerror="this.style.backgroundColor='#eee'">
-        </div>
-        <div class="project-content">
-            <div class="project-tags">
-                <span class="tag">GenAI</span>
-                <span class="tag">Voice Cloning (TTS)</span>
-                <span class="tag">Python</span>
-            </div>
-            <h3>Art Museum AI Audio Guide</h3>
-            <p><strong>Led Full-Stack Project Delivery:</strong> Directed the complete project lifecycle for the museum's first-ever AI Audio Guide.</p>
-            <p><strong>Technical Highlight:</strong> Engineered prompts for Gemini 2.5 and fine-tuned <strong>GPT-SoVITS</strong> models to achieve high-fidelity voice cloning. <strong>Achieved 300%+ Efficiency Gain</strong> (20 to 62 exhibits in 2 weeks).</p>
-            <div>
-                <a href="https://www.artmuseum.cuhk.edu.hk/en/xhfz.php?xv=e&xs=1" class="btn-link" target="_blank">🎧 Audio (English)</a>
-                <a href="https://www.artmuseum.cuhk.edu.hk/zh/xhfz.php?xv=p&xs=1" class="btn-link" target="_blank">🎧 Audio (Mandarin)</a>
-                <a href="https://www.artmuseum.cuhk.edu.hk/zh/xhfz.php?xv=c&xs=1" class="btn-link" target="_blank">🎧 Audio (Cantonese)</a>
-            </div>
-        </div>
-    </div>
-
-    <!-- Project 3 -->
-    <div class="project-card">
-        <div class="project-img-container">
-            <img src="images/sxhData.png" alt="sxhData Project" onerror="this.style.backgroundColor='#eee'">
-        </div>
-        <div class="project-content">
-            <div class="project-tags">
-                <span class="tag">Data Strategy</span>
-                <span class="tag">Grant Writing</span>
-                <span class="tag">Digital Humanities</span>
-            </div>
-            <h3>Sheng Xuanhuai Archives Project</h3>
-            <p><strong>Bridged the Tech-Art Divide:</strong> Identified critical data mismatch and forged international academic partnerships to build a new data strategy.</p>
-            <p><strong>Outcome:</strong> Delivered a core dataset of <strong>4 million character-level annotations</strong>.</p>
-            <a href="https://repository.lib.cuhk.edu.hk/en/collection/shengxuanhuai" class="btn-link" target="_blank">🔗 View Dataset &rarr;</a>
-        </div>
-    </div>
-
-    <!-- 3. 工作经历 (新增) -->
-    <h2 class="section-title">💼 Work Experience</h2>
-    
-    <!-- Job 1 -->
-    <div class="timeline-item">
-        <div class="job-header">
-            <div>
-                <span class="job-title">Research Assistant (Full-time)</span>
-                <span class="company"> @ The Chinese University of Hong Kong (CUHK)</span>
-            </div>
-            <span class="date">Nov 2022 – Present</span>
-        </div>
-        <ul>
-            <li><strong>End-to-End AI Product Lifecycle:</strong> Led the development of innovative AI applications, including hands-on model fine-tuning and workflow design.</li>
-            <li><strong>Drove Research Strategy:</strong> Built international academic partnerships and delivered a core dataset of <strong> 4 million character-level annotations</strong></li>
-            <li><strong>Knowledge Transfer:</strong> Transformed advanced academic research into a practical curriculum adopted by over 50% of target secondary schools.</li>
-        </ul>
-    </div>
-
-    <!-- Job 2 -->
-    <div class="timeline-item">
-        <div class="job-header">
-            <div>
-                <span class="job-title">Teaching Assistant (Part-time)</span>
-                <span class="company"> @ Hong Kong Baptist University (HKBU)</span>
-            </div>
-            <span class="date">Sep 2022 – May 2023</span>
-        </div>
-        <ul>
-            <li><strong>Mentored in 3 Courses:</strong> Basic Programming for Data Science, Data Mining & Knowledge Discovery, Algorithmic Culture.</li>
-            <li><strong>Deepened Technical Expertise:</strong> Strengthened personal expertise in data science fundamentals and evaluating student projects.</li>
-        </ul>
-    </div>
-
-    <!-- Job 3 -->
-    <div class="timeline-item">
-        <div class="job-header">
-            <div>
-                <span class="job-title">R&D Project Management (Full-time)</span>
-                <span class="company"> @ O-Net Technologies (Group) Limited</span>
-            </div>
-            <span class="date">Jun 2019 - May 2021</span>
-        </div>
-        <ul>
-            <li><strong>Managed Full lifecycle Product Launch:</strong> Responsible for the company's first optical product with a U.S.-independent supply chain, achieving on-time market launch.</li>
-            <li><strong>Cross-functional Leadership:</strong> Coordinated 5+ departments (Optics, EE, ME, SW, NPI), shortened critical path via Fast Tracking, and overcame supply chain challenges.</li>
-        </ul>
-    </div>
-
-    <!-- 4. 教育与发展 (新增) -->
-    <h2 class="section-title">🎓 Education & Professional Development</h2>
-    
-    <div class="edu-skills-grid">
+    <!-- === 左侧固定栏 (Sidebar) === -->
+    <aside class="sidebar">
+        <!-- 记得确保 profile.png 在 images 文件夹里 -->
+        <img src="images/profile.png" alt="Zhuo Huang" class="profile-img" onerror="this.src='https://via.placeholder.com/160?text=Zoey'">
         
-        <!-- 左栏：教育与证书 -->
-        <div class="info-block">
-            <h3>Education</h3>
-            <div class="edu-item">
-                <span class="edu-title">Master of AI and Digital Media</span>
-                <span class="edu-school">Hong Kong Baptist University</span>
-                <span class="edu-date">2021 - 2022</span>
-                <div style="font-size: 0.9rem; color: #666; margin-top: 5px;">
-                    GPA: 3.50 / 4.0 <br>
-                    Award: Merit-Based Scholarship (2nd Place)
-                </div>
-            </div>
+        <h1>Zhuo Huang (Zoey)</h1>
+        <span class="subtitle">PMP® Certified Project Manager</span>
+        <span class="subtitle" style="font-size: 0.9rem; margin-top: -15px; color: #666;">AI Researcher @ CUHK</span>
+        
+        <div class="bio-text">
+            <p>拥有5年项目管理经验的 IEEE 作者。擅长将前沿 AI 技术（LLMs, TTS）转化为实际落地产品。</p>
+            <p>曾成功申请 80万港币+ 科研基金，推动 AI 教育产品覆盖香港 164+ 所中学。</p>
+            <p>目前专注于生成式 AI 在数字人文与博物馆场景的应用。</p>
+        </div>
 
-            <h3>Certification</h3>
-            <div class="cert-item">
-                <span class="edu-title">Project Management Professional (PMP)®</span>
-                <span class="edu-school">Project Management Institute (PMI)</span>
-                <div style="font-size: 0.9rem; color: #666; margin-top: 5px;">
-                    Issued: Dec 2020 | Valid until: Dec 2026 <br>
-                    Credential # 2952732
+        <div class="social-links">
+            <a href="mailto:zoey3huang@gmail.com">📧 zoey3huang@gmail.com</a>
+            <a href="https://www.linkedin.com" target="_blank">🔗 LinkedIn Profile</a>
+            <a href="https://github.com/zoeyyhz" target="_blank">💻 GitHub Portfolio</a>
+        </div>
+    </aside>
+
+    <!-- === 右侧内容区 (Main Content) === -->
+    <main class="main-content">
+
+        <!-- 1. 项目经历 -->
+        <h2 class="section-title">🚀 Featured Projects</h2>
+        
+        <div class="project-card">
+            <div class="project-img-container">
+                <img src="images/ai4future.png" alt="AI4Future">
+            </div>
+            <div class="project-content">
+                <div>
+                    <span class="tag">EdTech</span>
+                    <span class="tag">Product Management</span>
                 </div>
+                <h3>CUHK JC AI for the Future</h3>
+                <p>作为核心协调人，将大学前沿 AI 研究转化为中学课程 "AI & Calligraphy"。全权负责课程设计与落地，实现全港 <strong>164+ 所中学</strong> (覆盖率50%) 采用。</p>
+                <a href="https://cuhkjc-aiforfuture.hk/index.php/en/home/" class="btn-link" target="_blank">View Project &rarr;</a>
             </div>
         </div>
 
-        <!-- 右栏：技能与出版物 -->
-        <div class="info-block">
-            <h3>Technical Skills</h3>
-            <ul class="skill-list">
-                <li><strong>Programming:</strong> Python (Proficient)</li>
-                <li><strong>Generative AI:</strong> LLMs Prompt Engineering, Voice Cloning (GPT-SoVITS), Speech Synthesis (TTS), Font Generation</li>
+        <div class="project-card">
+            <div class="project-img-container">
+                <img src="images/museum.png" alt="Art Museum AI">
+            </div>
+            <div class="project-content">
+                <div>
+                    <span class="tag">GenAI</span>
+                    <span class="tag">TTS Voice Cloning</span>
+                </div>
+                <h3>Art Museum AI Audio Guide</h3>
+                <p>主导首个 AI 语音导览项目。利用 Gemini 2.5 生成脚本，微调 GPT-SoVITS 克隆人声。将生产效率提升 <strong>300%</strong>，2周内完成62个展品的双语导览。</p>
+                <a href="https://www.artmuseum.cuhk.edu.hk/en/xhfz.php?xv=e&xs=1" class="btn-link" target="_blank">Listen to Demo &rarr;</a>
+            </div>
+        </div>
+
+        <div class="project-card">
+            <div class="project-img-container">
+                <img src="images/sxhdata.png" alt="Data Project">
+            </div>
+            <div class="project-content">
+                <div>
+                    <span class="tag">Data Strategy</span>
+                    <span class="tag">Grant Writing</span>
+                </div>
+                <h3>Sheng Xuanhuai Archives Data</h3>
+                <p>解决技术与人文团队的数据标准错位，主导400万字数据集标注。以此为基础撰写标书，成功申请超过 <strong>HKD 800K+</strong> 科研基金。</p>
+                <a href="https://repository.lib.cuhk.edu.hk/en/collection/shengxuanhuai" class="btn-link" target="_blank">View Dataset &rarr;</a>
+            </div>
+        </div>
+
+        <!-- 2. 工作经历 -->
+        <h2 class="section-title">💼 Work Experience</h2>
+        
+        <div class="timeline-item">
+            <div class="job-header">
+                <span class="job-title">Research Assistant (Full-time) @ CUHK</span>
+                <span class="date">Nov 2022 – Present</span>
+            </div>
+            <ul>
+                <li><strong>AI Product Lifecycle:</strong> 领导端到端 AI 应用开发，负责模型微调与工作流设计。</li>
+                <li><strong>Grant Success:</strong> 建立国际学术合作，解决数据瓶颈，成功申请 80万+ 港币基金。</li>
             </ul>
+        </div>
 
-            <h3>Publication</h3>
-            <div class="publication-box">
-                <strong>HUANG, Z.</strong>, et al. (2023). "The Future of Work: Do We Need Interactive Collaborative Offices?..." <br>
-                <em>IEEE 43rd International Conference on Distributed Computing Systems Workshops (ICCSW).</em>
+        <div class="timeline-item">
+            <div class="job-header">
+                <span class="job-title">Teaching Assistant @ HKBU</span>
+                <span class="date">2022 – 2023</span>
+            </div>
+            <ul>
+                <li>辅导数据科学基础、数据挖掘等3门课程，强化了算法与数据分析能力。</li>
+            </ul>
+        </div>
+
+        <div class="timeline-item">
+            <div class="job-header">
+                <span class="job-title">R&D Project Manager @ O-Net Tech</span>
+                <span class="date">2019 – 2021</span>
+            </div>
+            <ul>
+                <li>管理首个美国独立供应链光学产品的全生命周期，协调5+部门实现按时上市。</li>
+            </ul>
+        </div>
+
+        <!-- 3. 教育与专业发展 (重新排版) -->
+        <h2 class="section-title">🎓 Education & Development</h2>
+        
+        <div class="edu-container">
+            
+            <!-- PMP 证书高亮卡片 -->
+            <div class="pmp-card">
+                <div class="pmp-info">
+                    <span class="pmp-badge">Professional Certification</span>
+                    <h3 style="color: var(--primary); margin-top: 5px;">Project Management Professional (PMP)®</h3>
+                    <p style="color: #666; font-size: 0.95rem;">
+                        <strong>Issued by:</strong> Project Management Institute (PMI)<br>
+                        <strong>Credential ID:</strong> #2952732<br>
+                        <strong>Status:</strong> Active (Valid until Dec 2026)
+                    </p>
+                    <p style="font-size: 0.9rem; color: #555; margin-top: 15px;">
+                        系统掌握项目启动、规划、执行、监控和收尾的五大过程组，擅长敏捷开发与传统瀑布流管理。
+                    </p>
+                </div>
+                <div class="pmp-img-container">
+                    <!-- 请上传 pmp.png 到 images 文件夹 -->
+                    <img src="images/pmp.png" alt="PMP Certificate" onerror="this.src='https://via.placeholder.com/300x200?text=Upload+PMP+Image'">
+                </div>
+            </div>
+
+            <!-- 学历卡片 -->
+            <div class="edu-card">
+                <div class="job-header">
+                    <span class="job-title">Master of Science in AI and Digital Media</span>
+                    <span class="date">Hong Kong Baptist University (2021-2022)</span>
+                </div>
+                <ul style="margin-top: 10px;">
+                    <li><strong>GPA:</strong> 3.50 / 4.0</li>
+                    <li><strong>Award:</strong> Merit-Based Scholarship (Second Place)</li>
+                </ul>
+            </div>
+
+            <!-- 技能与论文 (网格布局) -->
+            <div class="skills-grid">
+                <div class="skill-box">
+                    <h4>🛠 Technical Skills</h4>
+                    <ul class="skill-list">
+                        <li><strong>Coding:</strong> Python (Proficient)</li>
+                        <li><strong>GenAI:</strong> LLMs, Prompt Engineering, RAG</li>
+                        <li><strong>Audio:</strong> Voice Cloning (GPT-SoVITS), TTS</li>
+                        <li><strong>Tools:</strong> Git, Jira, Asana, VS Code</li>
+                    </ul>
+                </div>
+
+                <div class="skill-box">
+                    <h4>📄 Selected Publication</h4>
+                    <p style="font-size: 0.9rem; color: #555; line-height: 1.5;">
+                        <strong>HUANG, Z.</strong>, et al. (2023). <br>
+                        "The Future of Work: Do We Need Interactive Collaborative Offices?..." <br>
+                        <em>IEEE 43rd International Conference on Distributed Computing Systems Workshops.</em>
+                    </p>
+                </div>
             </div>
         </div>
-    </div>
 
-    <footer style="text-align: center; margin-top: 80px; padding-bottom: 40px; color: #888; font-size: 0.9rem;">
-        &copy; 2025 Zhuo Huang. All Rights Reserved.
-    </footer>
+        <footer style="text-align: center; margin-top: 80px; color: #999; font-size: 0.8rem;">
+            &copy; 2025 Zhuo Huang. All Rights Reserved.
+        </footer>
 
+    </main>
 </div>
 
 </body>

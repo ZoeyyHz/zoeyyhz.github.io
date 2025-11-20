@@ -9,7 +9,7 @@
         :root {
             --primary: #2c3e50;
             --accent: #007bff;
-            --bg-color: #f8f9fa;      /* 【核心】整体柔和浅灰背景 */
+            --bg-color: #ffffff;      /* 【核心】整体柔和浅灰背景f8f9fa */
             --card-bg: #ffffff;       /* 卡片纯白 */
             --text: #333;
             --gray: #666;
@@ -39,7 +39,7 @@
             position: fixed;
             top: 0;
             left: 0;
-            padding: 80px 60px; /* 增加内边距 */
+            padding: 80px 80px; /* 增加内边距 */
             box-sizing: border-box;
             overflow-y: auto;
             z-index: 100;
@@ -50,11 +50,11 @@
 
         /* 头像样式优化 */
         .sidebar .profile-img {
-            width: 220px;  /* 【核心】放大尺寸 */
-            height: 220px;
+            width: 280px;  /* 【核心】放大尺寸 */
+            height: 280px;
             border-radius: 24px; /* 【核心】正方形大圆角 */
             object-fit: cover;
-            border: 4px solid #ffffff; /* 白色边框突出 */
+            border: 4px solid #f8f9fa; /* 白色边框突出 */
             box-shadow: 0 10px 25px rgba(0,0,0,0.08); /* 强阴影 */
             margin-bottom: 40px;
             display: block;
@@ -246,28 +246,38 @@
         /* PMP 专属卡片设计 */
         .pmp-card-inner {
             display: flex;
-            gap: 40px;
-            align-items: center;
+            gap: 30px;
+            align-items: stretch; /* 让文字区和图片区等高 */
+            overflow: hidden; /* 防止图片圆角溢出 */
         }
         .pmp-text {
-            flex: 1.2;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            ent: center; /* 文字垂直居中 */
+            padding-right: 10px;
         }
         .pmp-image-area {
-            flex: 1;
+            flex: 1.5;
             height: 220px;
-            background: #f9f9f9;
-            border: 1px dashed #ccc;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            padding: 10px;
+            background: transparent; /* 取消背景灰底 */
+            border: none; /* 【关键】取消虚线边框 */
+            padding: 0; /* 【关键】取消内边距 */
+            border-radius: 12px; /* 给图片加个圆角 */
+            overflow: hidden; /* 裁切多余部分 */
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08); /* 给图片本身加一点立体阴影 */
         }
         .pmp-image-area img {
             max-width: 100%;
             max-height: 100%;
-            object-fit: contain;
+            object-fit: cover; /* 【关键】自动缩放填满，不留空隙 */
+            object-position: center; /* 居中显示 */
+            display: block;
+            transition: transform 0.5s ease; /* 增加一点微动效 */
+        }
+        /* 鼠标悬停时，证书稍微放大一点点，增加交互感 */
+        .pmp-image-area:hover img {
+            transform: scale(1.05);
         }
 
         /* Education Item */
@@ -342,21 +352,22 @@
 
     <!-- === 左侧 Sidebar (30%) === -->
     <aside class="sidebar">
-        <img src="images/profile.jpeg" alt="Zhuo Huang" class="profile-img" onerror="this.src='https://via.placeholder.com/220?text=Zoey'">
+        <img src="images/profile.png" alt="Zhuo Huang" class="profile-img" onerror="this.src='https://via.placeholder.com/220?text=Zoey'">
         
         <h1>Zhuo Huang (Zoey)</h1>
-        <span class="subtitle">PMP® Certified Project Manager</span>
-        <span class="subtitle-small">AI Researcher @ CUHK</span>
+        <span class="subtitle">Research Assistant @ Art Museum</span>
+        <span class="subtitle-small">The Chinese University of Hong Kong</span>
         
         <div class="bio-text">
-            <p>PMP® certified professional with 5 years of versatile experience in project management and advanced AI research.</p>
-            <p>Expert in translating cutting-edge AI research (LLMs, TTS) into scalable products. Driving over 300% efficiency gains in R&D projects.</p>
+            <p>PMP® certified professional with 5 years in corporate R&D (O-Net) and AI research (CUHK).</p>
+            <p>Adept at coordinating cross-functional teams and streamlining workflows to drive over 300% efficiency gains while translating research into scalable products.</p>
+            <p>Recognized with “Very Good” performance ratings for three consecutive years.</p>
+            <p>Bilingual professional with strong technical skills in Python, LLM Prompt Engineerin.</p>
         </div>
 
         <div class="social-links">
             <a href="mailto:zoey3huang@gmail.com">📧 zoey3huang@gmail.com</a>
-            <a href="https://www.linkedin.com" target="_blank">🔗 LinkedIn Profile</a>
-            <a href="https://github.com/zoeyyhz" target="_blank">💻 GitHub Portfolio</a>
+            <a href="https://github.com/zoeyyhz" target="_blank">💻 GitHub</a>
         </div>
     </aside>
 
@@ -389,7 +400,7 @@
         <div class="card-box">
             <div class="project-item">
                 <div class="project-img-container">
-                    <img src="images/museum.jpeg" alt="AI Audio Guide" onerror="this.style.backgroundColor='#eee'">
+                    <img src="images/museum.png" alt="AI Audio Guide" onerror="this.style.backgroundColor='#eee'">
                 </div>
                 <div class="project-content">
                     <div class="project-tags">

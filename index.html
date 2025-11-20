@@ -246,17 +246,18 @@
         /* PMP 专属卡片设计 */
         .pmp-card-inner {
             display: flex;
-            gap: 30px;
+            gap: 20px;
             align-items: stretch; /* 让文字区和图片区等高 */
             overflow: hidden; /* 防止图片圆角溢出 */
             min-height: 180px; /* 设置一个最小高度，保证图片够大 */
         }
         .pmp-text {
-            flex: 1;
+            flex: 1.4;
             display: flex;
             flex-direction: column;
             ent: center; /* 文字垂直居中 */
             gap: 8px; /* 【关键】控制每行文字之间的紧凑距离，不再松散 */
+            padding-right: 5px; /*稍微留一点呼吸感*/
         }
         /* 针对内部文字的样式微调，去除默认大间距 */
         .pmp-text h3 {
@@ -276,7 +277,7 @@
             margin-bottom: 5px;
         }
         .pmp-image-area {
-            flex: 1.2;
+            flex: 1;
             height: 220px;
             background: transparent; /* 取消背景灰底 */
             border: none; /* 【关键】取消虚线边框 */

@@ -171,11 +171,11 @@
     <!-- 个人简介 -->
     <header>
         <!-- 这里的 profile.jpg 对应你在 images 文件夹里上传的头像 -->
-        <img src="images/profile.jpg" alt="Zhuo Huang" class="profile-img" onerror="this.src='https://via.placeholder.com/180?text=Zoey'">
+        <img src="images/profile.png" alt="Zhuo Huang" class="profile-img" onerror="this.src='https://via.placeholder.com/180?text=Zoey'">
         <div class="intro-text">
             <h1>Zhuo Huang (Zoey)</h1>
-            <div class="subtitle">AI Product Manager & Researcher</div>
-            <p>PMP® 认证项目经理，拥有5年研发管理与落地经验。擅长将前沿 AI 技术（LLMs, TTS）转化为实际产品，并成功申请超过 80万港币 科研基金。</p>
+            <div class="subtitle">Research Assistant, Art Museum, CUHK</div>
+            <p>PMP® certified professional with 5 years of versatile experience in project management, spanning corporate R&D in O-Net Optical Communications Technologies (Group) Limited and advanced AI research at The Chinese University of Hong Kong (CUHK). Published IEEE author with strong expertise in quantitative analysis and research grant acquisition (secured HKD 800K+). Proven track record in translating cutting-edge AI research into scalable products and stage-specific deliverables. Adept at coordinating cross-functional teams, streamlining project workflows, and driving over 300% efficiency gains. Recognized with “Very Good” performance ratings for three consecutive years. Bilingual (Chinese/English) with international collaboration experience and solid technical skills in Python and key AI technologies including Large Language Models (LLMs), Prompt Engineering, and Speech Synthesis (TTS)</p>
             <div class="social-links">
                 <a href="mailto:zoey3huang@gmail.com">📧 Email Me</a>
                 <!-- 在这里替换你的 LinkedIn 链接 -->
@@ -188,11 +188,33 @@
     <!-- 项目展示区 -->
     <h2 class="section-title">🚀 Featured Projects</h2>
 
-    <!-- 项目 1: Art Museum -->
+    <!-- 项目 1: AI4Future -->
     <div class="project-card">
         <div class="project-img-container">
-            <!-- 对应 images/museum.jpg -->
-            <img src="images/museum.jpg" alt="AI Audio Guide" onerror="this.style.backgroundColor='#eee'">
+            <!-- 对应 images/ai4future.png -->
+            <img src="images/ai4future.png" alt="AI4Future" onerror="this.style.backgroundColor='#eee'">
+        </div>
+        <div class="project-content">
+            <div class="project-tags">
+                <span class="tag">EdTech</span>
+                <span class="tag">Product Management</span>
+                <span class="tag">Impact</span>
+            </div>
+            <h3>CUHK Jockey Club AI for the Future Project</h3>
+            <p><strong>Bridged Research and Education:</strong> As the core project coordinator, facilitated the development of the "AI & Calligraphy" module by assisting a cross-functional team to successfully translate complex university research into a practical secondary school curriculum.</p>
+            <p><strong>Spearheaded Curriculum Creation:</strong> Assumed full responsibility for designing and writing the entire educational curriculum, from initial concept to the final delivery of interactive experiments, presentations, and the instructor's guidebook.</p>
+            <p><strong>Achieved over 50% School Adoption Rate:</strong> Drove the project to a significant knowledge transfer success; the module is adopted by <strong>over 164 secondary schools (over 50% of the 238 target schools in Hong Kong)</strong> with its official launch confirmed for the "Learning and Teaching Expo 2025."</p>
+            <!-- 如果有课程网页，替换 # -->
+            <a href="https://cuhkjc-aiforfuture.hk/index.php/en/home/" class="btn-link">📄 View AI4Future Project Details &rarr;</a>
+        </div>
+    </header> <!-- 这里的闭合标签修正 -->
+    </div> <!-- 修正结束标签 -->
+
+    <!-- 项目 2: Art Museum AI Audio Guide -->
+    <div class="project-card">
+        <div class="project-img-container">
+            <!-- 对应 images/museum.png -->
+            <img src="images/museum.png" alt="AI Audio Guide" onerror="this.style.backgroundColor='#eee'">
         </div>
         <div class="project-content">
             <div class="project-tags">
@@ -201,41 +223,21 @@
                 <span class="tag">Python</span>
             </div>
             <h3>Art Museum AI Audio Guide</h3>
-            <p><strong>背景：</strong> 博物馆展品更新快，传统人工录制导览成本高、周期长。</p>
-            <p><strong>方案：</strong> 针对 62 件展品，我设计了一套全自动 AI 工作流。利用 <strong>Gemini 2.5</strong> 编写导览脚本，并微调 <strong>GPT-SoVITS</strong> 模型克隆专业解说员的声音。</p>
-            <p><strong>成果：</strong> 制作效率提升 <strong>300%</strong>，在 2 周内完成了原本需要数月的音频生产。</p>
+            <p><strong>Led Full-Stack Project Delivery:</strong> Directed the complete project lifecycle while also serving as the lead technical implementer for the museum's first-ever AI Audio Guide.</p>
+            <p><strong>Built & Fine-Tuned AI Models:</strong> Personally engineered prompt strategies for Gemini 2.5 to generate custom scripts, and fine-tuned the GPT-SoVITS model with self-preprocessed audio data to achieve high-fidelity voice cloning.</p>
+            <p><strong>Achieved 300%+ Efficiency Gain:</strong> Expanded content from 20 to 62 exhibits in 2 weeks, revolutionizing the traditional production mode.</p>
             <!-- 如果你有 Demo 链接，把 # 换成你的链接 -->
-            <a href="#" class="btn-link">🎧 Listen to Demo (Coming Soon) &rarr;</a>
+            <a href="https://www.artmuseum.cuhk.edu.hk/en/xhfz.php?xv=e&xs=1" class="btn-link">🎧 Listen to Demo (English) &rarr;</a>
+            <a href="https://www.artmuseum.cuhk.edu.hk/zh/xhfz.php?xv=p&xs=1" class="btn-link">🎧 Listen to Demo (Mandarin) &rarr;</a>
+            <a href="https://www.artmuseum.cuhk.edu.hk/zh/xhfz.php?xv=c&xs=1" class="btn-link">🎧 Listen to Demo (Cantonese) &rarr;</a>
         </div>
     </div>
-
-    <!-- 项目 2: AI Curriculum -->
-    <div class="project-card">
-        <div class="project-img-container">
-            <!-- 对应 images/course.jpg -->
-            <img src="images/course.jpg" alt="AI Curriculum" onerror="this.style.backgroundColor='#eee'">
-        </div>
-        <div class="project-content">
-            <div class="project-tags">
-                <span class="tag">EdTech</span>
-                <span class="tag">Product Management</span>
-                <span class="tag">Impact</span>
-            </div>
-            <h3>CUHK JC AI for the Future</h3>
-            <p><strong>背景：</strong> 大学的前沿 AI 研究难以触达中学课堂，存在知识断层。</p>
-            <p><strong>方案：</strong> 担任核心协调人，开发 "AI & Calligraphy" 课程模块。负责从课程设计、教材编写到交互实验开发的端到端管理。</p>
-            <p><strong>成果：</strong> 课程已被香港 <strong>164 所中学</strong> 采纳（覆盖率超 50%），确认将在 "Learning and Teaching Expo 2025" 正式发布。</p>
-            <!-- 如果有课程网页，替换 # -->
-            <a href="#" class="btn-link">📄 View Curriculum Details &rarr;</a>
-        </div>
-    </header> <!-- 这里的闭合标签修正 -->
-    </div> <!-- 修正结束标签 -->
 
     <!-- 项目 3: Sheng Xuanhuai Data -->
     <div class="project-card">
         <div class="project-img-container">
-            <!-- 对应 images/data.jpg -->
-            <img src="images/data.jpg" alt="Data Project" onerror="this.style.backgroundColor='#eee'">
+            <!-- 对应 images/sxhData.png -->
+            <img src="images/sxhData.png" alt="sxhData Project" onerror="this.style.backgroundColor='#eee'">
         </div>
         <div class="project-content">
             <div class="project-tags">
@@ -243,16 +245,15 @@
                 <span class="tag">Grant Writing</span>
                 <span class="tag">Digital Humanities</span>
             </div>
-            <h3>Sheng Xuanhuai Archives Project</h3>
-            <p><strong>背景：</strong> 历史档案数字化过程中，技术团队与人文团队存在严重的数据标准错位。</p>
-            <p><strong>方案：</strong> 搭建跨学科沟通桥梁，主导了 <strong>400万字</strong> 的众包数据标注项目。以此为基础，撰写并成功申请了多项科研基金。</p>
-            <p><strong>成果：</strong> 获得超过 <strong>HKD 800,000+</strong> 资助，发表 IEEE 论文一篇。</p>
-            <a href="#" class="btn-link">🔗 Read IEEE Publication &rarr;</a>
+            <h3>Sheng Xuanhuai Archives Crowdsourcing Project</h3>
+            <p><strong>Bridged the Tech-Art Divide:</strong> Identified a critical data mismatch by serving as the key liaison between technical and art teams. Forged international academic partnerships to build a new data strategy from the ground up.</p>
+            <p><strong>Led Foundational Dataset Creation:</strong> Spearheaded a large-scale crowdsourcing project for the "Sheng Xuanhuai Archives," delivering a core dataset of 4 million character-level annotations that unlocked subsequent algorithm development.</p>
+            <a href="https://repository.lib.cuhk.edu.hk/en/collection/shengxuanhuai" class="btn-link">🔗 dataset of 4 million character-level annotations &rarr;</a>
         </div>
     </div>
 
     <footer style="text-align: center; margin-top: 80px; color: #888; font-size: 0.9rem;">
-        &copy; 2024 Zhuo Huang. All Rights Reserved.
+        &copy; 2025 Zhuo Huang. All Rights Reserved.
     </footer>
 
 </div>

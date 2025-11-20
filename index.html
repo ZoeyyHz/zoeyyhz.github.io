@@ -3,206 +3,258 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zhuo Huang (Zoey) - AI Project Manager</title>
+    <title>Zhuo Huang (Zoey) - Portfolio</title>
     <style>
-        /* 极简样式设计 - 干净、专业 */
+        /* --- 基础设置 --- */
         :root {
-            --primary-color: #2c3e50;
-            --accent-color: #3498db;
-            --bg-color: #f8f9fa;
-            --text-color: #333;
+            --primary: #2c3e50;
+            --accent: #007bff; /* 科技蓝 */
+            --bg: #f8f9fa;
+            --card-bg: #ffffff;
+            --text: #333;
+            --gray: #666;
         }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             line-height: 1.6;
-            color: var(--text-color);
-            background-color: var(--bg-color);
+            color: var(--text);
+            background-color: var(--bg);
             margin: 0;
             padding: 0;
         }
         .container {
-            max-width: 900px;
+            max-width: 1000px; /* 加宽一点以容纳图片 */
             margin: 0 auto;
             padding: 40px 20px;
-            background: white;
-            box-shadow: 0 0 20px rgba(0,0,0,0.05);
             min-height: 100vh;
         }
-        /* 头部区域 */
+
+        /* --- 头部简介 (Hero Section) --- */
         header {
-            text-align: center;
-            padding-bottom: 40px;
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            padding-bottom: 60px;
             border-bottom: 1px solid #eee;
-            margin-bottom: 40px;
+            margin-bottom: 60px;
         }
-        h1 {
+        .profile-img {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid white;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            flex-shrink: 0;
+        }
+        .intro-text h1 {
+            margin: 0 0 10px 0;
             font-size: 2.5rem;
-            margin-bottom: 10px;
-            color: var(--primary-color);
+            color: var(--primary);
         }
-        .subtitle {
+        .intro-text .subtitle {
             font-size: 1.2rem;
-            color: #666;
-            margin-bottom: 20px;
+            color: var(--accent);
+            font-weight: bold;
+            margin-bottom: 15px;
         }
-        .contact-info a {
-            color: var(--accent-color);
+        .social-links a {
+            display: inline-block;
+            margin-right: 15px;
             text-decoration: none;
-            margin: 0 10px;
-            font-weight: bold;
+            color: var(--primary);
+            border: 1px solid #ddd;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        .social-links a:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* --- 项目展示卡片 (关键更新) --- */
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 40px;
+            text-align: center;
+            color: var(--primary);
         }
         
-        /* 核心板块样式 */
-        section {
+        .project-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
             margin-bottom: 50px;
-        }
-        h2 {
-            font-size: 1.5rem;
-            border-left: 5px solid var(--accent-color);
-            padding-left: 15px;
-            margin-bottom: 25px;
-            color: var(--primary-color);
+            display: flex; /* 让图文并排 */
+            align-items: stretch;
         }
         
-        /* 项目卡片 */
-        .project {
-            margin-bottom: 30px;
-            padding: 20px;
-            border: 1px solid #eee;
-            border-radius: 8px;
-            transition: transform 0.2s;
+        .project-img-container {
+            flex: 1; /* 图片占 40% 左右宽度 */
+            min-width: 300px;
+            background-color: #eee;
         }
-        .project:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        .project-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* 保证图片填满且不变形 */
+            display: block;
         }
-        .project-title {
-            font-size: 1.2rem;
-            font-weight: bold;
-            margin-bottom: 10px;
-            color: var(--primary-color);
+
+        .project-content {
+            flex: 1.5; /* 文字占 60% 左右宽度 */
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
-        .tags {
-            margin-bottom: 10px;
+
+        .project-tags {
+            margin-bottom: 15px;
         }
         .tag {
-            display: inline-block;
-            background: #e1f0fa;
-            color: var(--accent-color);
-            padding: 2px 8px;
+            background: #eeffff;
+            color: #008888;
+            padding: 4px 10px;
             border-radius: 4px;
             font-size: 0.8rem;
+            font-weight: bold;
             margin-right: 5px;
         }
         
-        /* 技能列表 */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
+        h3 {
+            margin: 0 0 15px 0;
+            font-size: 1.5rem;
+            color: var(--primary);
         }
-        .skill-item strong {
-            display: block;
-            color: var(--primary-color);
-            margin-bottom: 5px;
+        
+        .btn-link {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: var(--accent);
+            font-weight: bold;
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.3s;
+        }
+        .btn-link:hover {
+            border-bottom-color: var(--accent);
         }
 
-        /* 移动端适配 */
-        @media (max-width: 600px) {
-            h1 { font-size: 2rem; }
-            .container { padding: 20px; }
+        /* --- 响应式设计 (手机端适配) --- */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+            }
+            .project-card {
+                flex-direction: column; /* 手机上变成上下排列 */
+            }
+            .project-img-container {
+                height: 200px; /* 限制图片高度 */
+                min-width: 100%;
+            }
+            .project-content {
+                padding: 25px;
+            }
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <!-- 头部简介 -->
+    
+    <!-- 个人简介 -->
     <header>
-        <h1>Zhuo Huang (Zoey)</h1>
-        <div class="subtitle">PMP® Certified Project Manager | AI Researcher @ CUHK</div>
-        <p style="max-width: 600px; margin: 0 auto 20px auto;">
-            拥有5年项目管理经验的 IEEE 作者。擅长将前沿 AI 技术（LLMs, TTS）转化为实际落地产品。
-            拥有超过 80万港币 科研基金申请经验，推动教育科技产品覆盖香港 164+ 所中学。
-        </p>
-        <div class="contact-info">
-            <a href="mailto:zoey3huang@gmail.com">📧 Email Me</a>
-            <!-- 如果你有LinkedIn，可以在这里加 -->
-            <!-- <a href="你的LinkedIn链接">LinkedIn</a> -->
+        <!-- 这里的 profile.jpg 对应你在 images 文件夹里上传的头像 -->
+        <img src="images/profile.jpg" alt="Zhuo Huang" class="profile-img" onerror="this.src='https://via.placeholder.com/180?text=Zoey'">
+        <div class="intro-text">
+            <h1>Zhuo Huang (Zoey)</h1>
+            <div class="subtitle">AI Product Manager & Researcher</div>
+            <p>PMP® 认证项目经理，拥有5年研发管理与落地经验。擅长将前沿 AI 技术（LLMs, TTS）转化为实际产品，并成功申请超过 80万港币 科研基金。</p>
+            <div class="social-links">
+                <a href="mailto:zoey3huang@gmail.com">📧 Email Me</a>
+                <!-- 在这里替换你的 LinkedIn 链接 -->
+                <a href="https://www.linkedin.com" target="_blank">LinkedIn</a> 
+                <a href="https://github.com/zoeyyhz" target="_blank">GitHub</a>
+            </div>
         </div>
     </header>
 
-    <!-- 核心项目板块 -->
-    <section>
-        <h2>🚀 Featured Projects</h2>
-        
-        <div class="project">
-            <div class="project-title">Art Museum AI Audio Guide</div>
-            <div class="tags">
+    <!-- 项目展示区 -->
+    <h2 class="section-title">🚀 Featured Projects</h2>
+
+    <!-- 项目 1: Art Museum -->
+    <div class="project-card">
+        <div class="project-img-container">
+            <!-- 对应 images/museum.jpg -->
+            <img src="images/museum.jpg" alt="AI Audio Guide" onerror="this.style.backgroundColor='#eee'">
+        </div>
+        <div class="project-content">
+            <div class="project-tags">
                 <span class="tag">GenAI</span>
-                <span class="tag">Speech Synthesis (TTS)</span>
-                <span class="tag">Product Delivery</span>
+                <span class="tag">Voice Cloning (TTS)</span>
+                <span class="tag">Python</span>
             </div>
-            <p><strong>挑战与成果：</strong> 博物馆传统导览制作效率低。我主导开发了首个 AI 语音导览系统，利用 <strong>Gemini 2.5</strong> 生成脚本并微调 <strong>GPT-SoVITS</strong> 进行声音克隆。</p>
-            <p>✨ <strong>亮点：</strong> 将制作效率提升 <strong>300%</strong>（2周内完成62个展品内容），实现了全自动化生产工作流。</p>
+            <h3>Art Museum AI Audio Guide</h3>
+            <p><strong>背景：</strong> 博物馆展品更新快，传统人工录制导览成本高、周期长。</p>
+            <p><strong>方案：</strong> 针对 62 件展品，我设计了一套全自动 AI 工作流。利用 <strong>Gemini 2.5</strong> 编写导览脚本，并微调 <strong>GPT-SoVITS</strong> 模型克隆专业解说员的声音。</p>
+            <p><strong>成果：</strong> 制作效率提升 <strong>300%</strong>，在 2 周内完成了原本需要数月的音频生产。</p>
+            <!-- 如果你有 Demo 链接，把 # 换成你的链接 -->
+            <a href="#" class="btn-link">🎧 Listen to Demo (Coming Soon) &rarr;</a>
         </div>
+    </div>
 
-        <div class="project">
-            <div class="project-title">CUHK JC AI for the Future</div>
-            <div class="tags">
+    <!-- 项目 2: AI Curriculum -->
+    <div class="project-card">
+        <div class="project-img-container">
+            <!-- 对应 images/course.jpg -->
+            <img src="images/course.jpg" alt="AI Curriculum" onerror="this.style.backgroundColor='#eee'">
+        </div>
+        <div class="project-content">
+            <div class="project-tags">
                 <span class="tag">EdTech</span>
-                <span class="tag">Curriculum Design</span>
-                <span class="tag">Project Management</span>
+                <span class="tag">Product Management</span>
+                <span class="tag">Impact</span>
             </div>
-            <p><strong>挑战与成果：</strong> 负责将复杂的大学 AI 研究转化为中学生能听懂的课程 "AI & Calligraphy"。</p>
-            <p>✨ <strong>亮点：</strong> 课程被全港 <strong>164所中学</strong> 采纳（覆盖率>50%），并将在 "Learning and Teaching Expo 2025" 正式发布。</p>
+            <h3>CUHK JC AI for the Future</h3>
+            <p><strong>背景：</strong> 大学的前沿 AI 研究难以触达中学课堂，存在知识断层。</p>
+            <p><strong>方案：</strong> 担任核心协调人，开发 "AI & Calligraphy" 课程模块。负责从课程设计、教材编写到交互实验开发的端到端管理。</p>
+            <p><strong>成果：</strong> 课程已被香港 <strong>164 所中学</strong> 采纳（覆盖率超 50%），确认将在 "Learning and Teaching Expo 2025" 正式发布。</p>
+            <!-- 如果有课程网页，替换 # -->
+            <a href="#" class="btn-link">📄 View Curriculum Details &rarr;</a>
         </div>
+    </header> <!-- 这里的闭合标签修正 -->
+    </div> <!-- 修正结束标签 -->
 
-        <div class="project">
-            <div class="project-title">Sheng Xuanhuai Archives Data Project</div>
-            <div class="tags">
+    <!-- 项目 3: Sheng Xuanhuai Data -->
+    <div class="project-card">
+        <div class="project-img-container">
+            <!-- 对应 images/data.jpg -->
+            <img src="images/data.jpg" alt="Data Project" onerror="this.style.backgroundColor='#eee'">
+        </div>
+        <div class="project-content">
+            <div class="project-tags">
                 <span class="tag">Data Strategy</span>
                 <span class="tag">Grant Writing</span>
                 <span class="tag">Digital Humanities</span>
             </div>
-            <p><strong>挑战与成果：</strong> 解决了技术团队与艺术团队的数据标准不匹配问题，主导了400万字符的数据集标注。</p>
-            <p>✨ <strong>亮点：</strong> 成功申请到超过 <strong>HKD 800,000+</strong> 的科研基金（包含省级重点研发计划）。</p>
+            <h3>Sheng Xuanhuai Archives Project</h3>
+            <p><strong>背景：</strong> 历史档案数字化过程中，技术团队与人文团队存在严重的数据标准错位。</p>
+            <p><strong>方案：</strong> 搭建跨学科沟通桥梁，主导了 <strong>400万字</strong> 的众包数据标注项目。以此为基础，撰写并成功申请了多项科研基金。</p>
+            <p><strong>成果：</strong> 获得超过 <strong>HKD 800,000+</strong> 资助，发表 IEEE 论文一篇。</p>
+            <a href="#" class="btn-link">🔗 Read IEEE Publication &rarr;</a>
         </div>
-    </section>
+    </div>
 
-    <!-- 技能板块 -->
-    <section>
-        <h2>🛠 Technical & Professional Skills</h2>
-        <div class="skills-grid">
-            <div class="skill-item">
-                <strong>Project Management</strong>
-                PMP® Certified, Agile/Scrum, Cross-functional Leadership, Risk Management
-            </div>
-            <div class="skill-item">
-                <strong>AI Technologies</strong>
-                Large Language Models (LLMs), Prompt Engineering, Voice Cloning (TTS), Python
-            </div>
-            <div class="skill-item">
-                <strong>Research & Grants</strong>
-                Quantitative Analysis, Grant Writing (HKD 800K+ secured), IEEE Publication
-            </div>
-        </div>
-    </section>
-
-    <!-- 经历简表 -->
-    <section>
-        <h2>🎓 Experience & Education</h2>
-        <ul>
-            <li><strong>Research Assistant</strong> @ CUHK (2022 - Present)</li>
-            <li><strong>Teaching Assistant</strong> @ HKBU (2022 - 2023)</li>
-            <li><strong>R&D Project Manager</strong> @ O-Net Technologies (2019 - 2021)</li>
-            <li><strong>M.Sc. in AI and Digital Media</strong> @ HKBU (GPA: 3.50/4.0)</li>
-        </ul>
-    </section>
-
-    <footer style="text-align: center; font-size: 0.8rem; color: #999; margin-top: 50px;">
-        &copy; 2024 Zhuo Huang. Hosted on GitHub Pages.
+    <footer style="text-align: center; margin-top: 80px; color: #888; font-size: 0.9rem;">
+        &copy; 2024 Zhuo Huang. All Rights Reserved.
     </footer>
+
 </div>
 
 </body>

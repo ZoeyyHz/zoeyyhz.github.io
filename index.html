@@ -23,9 +23,9 @@
             padding: 0;
         }
         .container {
-            max-width: 95%; /* 加宽一点以容纳图片 */
+            max-width: 1280px; /* 保持你喜欢的舒适宽度 */
             margin: 0 auto;
-            padding: 40px;
+            padding: 40px 20px;
             min-height: 100vh;
         }
 
@@ -33,7 +33,7 @@
         header {
             display: flex;
             align-items: center;
-            gap: 40px;
+            gap: 50px;
             padding-bottom: 60px;
             border-bottom: 1px solid #eee;
             margin-bottom: 60px;
@@ -72,9 +72,10 @@
         .social-links a:hover {
             background: var(--primary);
             color: white;
+            border-color: var(--primary);
         }
 
-        /* --- 项目展示卡片 (关键更新) --- */
+        /* --- 项目展示卡片 --- */
         .section-title {
             font-size: 1.8rem;
             margin-bottom: 40px;
@@ -88,28 +89,28 @@
             overflow: hidden;
             box-shadow: 0 5px 20px rgba(0,0,0,0.05);
             margin-bottom: 60px;
-            display: flex; /* 让图文并排 */
+            display: flex;
             align-items: stretch;
-            min-height: 400px;
+            min-height: 400px; /* 高度适中 */
         }
         
         .project-img-container {
-            flex: 1.2; 
-            min-width: 500px;
+            flex: 1; /* 【回归】图片占约 40% */
+            min-width: 300px; /* 保证最小宽度 */
             background-color: #eee;
             position: relative;
         }
         .project-img-container img {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* 保证图片填满且不变形 */
-            tion: top center;
+            object-fit: cover; /* 填满容器 */
+            object-position: top center; /* 优先显示顶部 */
             display: block;
         }
 
         .project-content {
-            flex: 1; /* 文字占 60% 左右宽度 */
-            padding: 50px;
+            flex: 1.5; /* 【回归】文字占约 60%，空间更充裕 */
+            padding: 40px 50px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -119,6 +120,7 @@
             margin-bottom: 15px;
         }
         .tag {
+            display: inline-block;
             background: #eeffff;
             color: #008888;
             padding: 4px 10px;
@@ -126,17 +128,26 @@
             font-size: 0.8rem;
             font-weight: bold;
             margin-right: 5px;
+            margin-bottom: 5px;
         }
         
         h3 {
             margin: 0 0 15px 0;
-            font-size: 1.5rem;
+            font-size: 1.6rem;
+            line-height: 1.3;
             color: var(--primary);
         }
         
+        p {
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+            color: #444;
+        }
+
         .btn-link {
             display: inline-block;
-            margin-top: 20px;
+            margin-top: 10px;
+            margin-right: 15px;
             text-decoration: none;
             color: var(--accent);
             font-weight: bold;
@@ -148,21 +159,22 @@
         }
 
         /* --- 响应式设计 (手机端适配) --- */
-        @media (max-width: 768px) {
+        @media (max-width: 900px) {
             header {
                 flex-direction: column;
                 text-align: center;
-                gap: 20px;
             }
             .project-card {
-                flex-direction: column; /* 手机上变成上下排列 */
+                flex-direction: column; 
+                height: auto;
             }
             .project-img-container {
-                height: 200px; /* 限制图片高度 */
-                min-width: 100%;
+                height: 250px; 
+                width: 100%;
+                flex: none;
             }
             .project-content {
-                padding: 25px;
+                padding: 30px;
             }
         }
     </style>
@@ -173,15 +185,13 @@
     
     <!-- 个人简介 -->
     <header>
-        <!-- 这里的 profile.jpeg 对应你在 images 文件夹里上传的头像 -->
-        <img src="images/profile.jpeg" alt="Zhuo Huang" class="profile-img" onerror="this.src='https://via.placeholder.com/180?text=Zoey'">
+        <img src="images/profile.png" alt="Zhuo Huang" class="profile-img" onerror="this.src='https://via.placeholder.com/180?text=Zoey'">
         <div class="intro-text">
             <h1>Zhuo Huang (Zoey)</h1>
             <div class="subtitle">Research Assistant, Art Museum, CUHK</div>
             <p>PMP® certified professional with 5 years of versatile experience in project management, spanning corporate R&D in O-Net Optical Communications Technologies (Group) Limited and advanced AI research at The Chinese University of Hong Kong (CUHK). Published IEEE author with strong expertise in quantitative analysis and research grant acquisition (secured HKD 800K+). Proven track record in translating cutting-edge AI research into scalable products and stage-specific deliverables. Adept at coordinating cross-functional teams, streamlining project workflows, and driving over 300% efficiency gains. Recognized with “Very Good” performance ratings for three consecutive years. Bilingual (Chinese/English) with international collaboration experience and solid technical skills in Python and key AI technologies including Large Language Models (LLMs), Prompt Engineering, and Speech Synthesis (TTS)</p>
             <div class="social-links">
                 <a href="mailto:zoey3huang@gmail.com">📧 Email Me</a>
-                <!-- 在这里替换你的 LinkedIn 链接 -->
                 <a href="https://www.linkedin.com" target="_blank">LinkedIn</a> 
                 <a href="https://github.com/zoeyyhz" target="_blank">GitHub</a>
             </div>
@@ -194,7 +204,6 @@
     <!-- 项目 1: AI4Future -->
     <div class="project-card">
         <div class="project-img-container">
-            <!-- 对应 images/ai4future.png -->
             <img src="images/ai4future.png" alt="AI4Future" onerror="this.style.backgroundColor='#eee'">
         </div>
         <div class="project-content">
@@ -206,18 +215,15 @@
             <h3>CUHK Jockey Club AI for the Future Project</h3>
             <p><strong>Bridged Research and Education:</strong> As the core project coordinator, facilitated the development of the "AI & Calligraphy" module by assisting a cross-functional team to successfully translate complex university research into a practical secondary school curriculum.</p>
             <p><strong>Spearheaded Curriculum Creation:</strong> Assumed full responsibility for designing and writing the entire educational curriculum, from initial concept to the final delivery of interactive experiments, presentations, and the instructor's guidebook.</p>
-            <p><strong>Achieved over 50% School Adoption Rate:</strong> Drove the project to a significant knowledge transfer success; the module is adopted by <strong>over 164 secondary schools (over 50% of the 238 target schools in Hong Kong)</strong> with its official launch confirmed for the "Learning and Teaching Expo 2025."</p>
-            <!-- 如果有课程网页，替换 # -->
-            <a href="https://cuhkjc-aiforfuture.hk/index.php/en/home/" class="btn-link">📄 View AI4Future Project Details &rarr;</a>
+            <p><strong>Achieved over 50% School Adoption Rate:</strong> Drove the project to a significant knowledge transfer success; the module is adopted by <strong>over 164 secondary schools</strong> with its official launch confirmed for the "Learning and Teaching Expo 2025."</p>
+            <a href="https://cuhkjc-aiforfuture.hk/index.php/en/home/" class="btn-link" target="_blank">📄 View AI4Future Project Details &rarr;</a>
         </div>
-    </header> <!-- 这里的闭合标签修正 -->
-    </div> <!-- 修正结束标签 -->
+    </div>
 
     <!-- 项目 2: Art Museum AI Audio Guide -->
     <div class="project-card">
         <div class="project-img-container">
-            <!-- 对应 images/museum.jpeg -->
-            <img src="images/museum.jpeg" alt="AI Audio Guide" onerror="this.style.backgroundColor='#eee'">
+            <img src="images/museum.png" alt="AI Audio Guide" onerror="this.style.backgroundColor='#eee'">
         </div>
         <div class="project-content">
             <div class="project-tags">
@@ -229,17 +235,17 @@
             <p><strong>Led Full-Stack Project Delivery:</strong> Directed the complete project lifecycle while also serving as the lead technical implementer for the museum's first-ever AI Audio Guide.</p>
             <p><strong>Built & Fine-Tuned AI Models:</strong> Personally engineered prompt strategies for Gemini 2.5 to generate custom scripts, and fine-tuned the GPT-SoVITS model with self-preprocessed audio data to achieve high-fidelity voice cloning.</p>
             <p><strong>Achieved 300%+ Efficiency Gain:</strong> Expanded content from 20 to 62 exhibits in 2 weeks, revolutionizing the traditional production mode.</p>
-            <!-- 如果你有 Demo 链接，把 # 换成你的链接 -->
-            <a href="https://www.artmuseum.cuhk.edu.hk/en/xhfz.php?xv=e&xs=1" class="btn-link">🎧 Listen to Demo (English) &rarr;</a>
-            <a href="https://www.artmuseum.cuhk.edu.hk/zh/xhfz.php?xv=p&xs=1" class="btn-link">🎧 Listen to Demo (Mandarin) &rarr;</a>
-            <a href="https://www.artmuseum.cuhk.edu.hk/zh/xhfz.php?xv=c&xs=1" class="btn-link">🎧 Listen to Demo (Cantonese) &rarr;</a>
+            <div>
+                <a href="https://www.artmuseum.cuhk.edu.hk/en/xhfz.php?xv=e&xs=1" class="btn-link" target="_blank">🎧 Demo (Eng)</a>
+                <a href="https://www.artmuseum.cuhk.edu.hk/zh/xhfz.php?xv=p&xs=1" class="btn-link" target="_blank">🎧 Demo (Mandarin)</a>
+                <a href="https://www.artmuseum.cuhk.edu.hk/zh/xhfz.php?xv=c&xs=1" class="btn-link" target="_blank">🎧 Demo (Cantonese)</a>
+            </div>
         </div>
     </div>
 
     <!-- 项目 3: Sheng Xuanhuai Data -->
     <div class="project-card">
         <div class="project-img-container">
-            <!-- 对应 images/sxhData.png -->
             <img src="images/sxhData.png" alt="sxhData Project" onerror="this.style.backgroundColor='#eee'">
         </div>
         <div class="project-content">
@@ -251,15 +257,4 @@
             <h3>Sheng Xuanhuai Archives Crowdsourcing Project</h3>
             <p><strong>Bridged the Tech-Art Divide:</strong> Identified a critical data mismatch by serving as the key liaison between technical and art teams. Forged international academic partnerships to build a new data strategy from the ground up.</p>
             <p><strong>Led Foundational Dataset Creation:</strong> Spearheaded a large-scale crowdsourcing project for the "Sheng Xuanhuai Archives," delivering a core dataset of 4 million character-level annotations that unlocked subsequent algorithm development.</p>
-            <a href="https://repository.lib.cuhk.edu.hk/en/collection/shengxuanhuai" class="btn-link">🔗 dataset of 4 million character-level annotations &rarr;</a>
-        </div>
-    </div>
-
-    <footer style="text-align: center; margin-top: 80px; color: #888; font-size: 0.9rem;">
-        &copy; 2025 Zhuo Huang. All Rights Reserved.
-    </footer>
-
-</div>
-
-</body>
-</html>
+            <a href="https://repository.lib.c

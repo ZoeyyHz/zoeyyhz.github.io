@@ -254,20 +254,21 @@
             display: flex;
             gap: 25px; 
             align-items: stretch; 
-            min-height: 180px;
+            min-height: 140px;
             overflow: hidden; /* 确保直角不溢出 */
         }
         .pmp-text {
-            flex: 1.4;
+            flex: 2;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            gap: 8px;
+            justify-content: flex-start;
+            padding-top: 15px;
+            gap: 5px;
             padding-right: 5px;
         }
         .pmp-text h3 {
             margin: 0;
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             color: var(--primary);
             line-height: 1.2;
         }
@@ -279,12 +280,13 @@
         }
         .pmp-text .tag {
             align-self: flex-start;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
+            font-size: 0.75rem; /* 标签也稍微小一点 */
         }
         
         /* 【修改3】PMP 图片区域 - 纯直角，无边框，填满 */
         .pmp-image-area {
-            flex: 1; 
+            flex: 0.8; 
             background: transparent; /* 无背景 */
             border: none; /* 无边框 */
             padding: 0; /* 无内边距 */
@@ -383,8 +385,8 @@
         <span class="subtitle-small">The Chinese University of Hong Kong</span>
         
         <div class="bio-text">
-            <p>PMP® certified professional with 2 years in corporate R&D @O-Net and 3 years in AI research @Art Museum,CUHK.</p>
-            <p>AI enthusiast passionate about EdTech and Generative AI in Chinese Arts. My goal is to promote inclusivity by making the object-based study of Chinese heritage accessible and engaging for everyone..</p>
+            <p>PMP® certified professional bridging the gap between industry and academia. My background blends 2 years of corporate R&D at O-Net with 3 years of interdisciplinary AI research at the Art Museum, CUHK.</p>
+            <p>AI enthusiast passionate about EdTech and Generative AI in Chinese Arts. My goal is to promote inclusivity by making the object-based study of Chinese heritage accessible and engaging for everyone.</p>
         </div>
 
         <div class="social-links">
@@ -412,8 +414,8 @@
                         <span class="tag">Curriculum Design</span>
                     </div>
                     <h3>CUHK Jockey Club AI for the Future Project</h3>
-                    <p><strong>Challenge:</strong>Bridging the gap between complex university-level AI research and accessible secondary school education.</p>
-                    <p><strong>Solution:</strong>Spearheaded the curriculum development as the core coordinator. I translated technical concepts into an end-to-end educational package, designing everything from interactive experiments to instructor guidebooks</p>
+                    <p><strong>Challenge:</strong> Bridging the gap between complex university-level AI research and accessible secondary school education.</p>
+                    <p><strong>Solution:</strong> Spearheaded the curriculum development as the core coordinator. I translated technical concepts into an end-to-end educational package, designing everything from interactive experiments to instructor guidebooks</p>
                     <p><strong>Impact:</strong> Achieved over <strong>50% School Adoption Rate</strong> (164+ schools) in Hong Kong, with an official launch confirmed for the "Learning and Teaching Expo 2025" at HKCEC.</p>
                     <a href="https://cuhkjc-aiforfuture.hk/index.php/en/home/" class="btn-link" target="_blank">📄 View Project &rarr;</a>
                 </div>
@@ -433,13 +435,15 @@
                         <span class="tag">Voice Cloning (TTS)</span>
                     </div>
                     <h3>AI Audio Guide @Art Museum </h3>
-                    <p><strong>Challenge:</strong>Revolutionize the traditional, labor-intensive production of audio guides to meet tight exhibition deadlines.</p>
-                    <p><strong>Solution:</strong>Led the full-stack implementation of a Generative AI workflow. I engineered prompt strategies using <strong>Gemini 2.5</strong> for script generation and fine-tuned <strong>GPT-SoVITS</strong> models with self-preprocessed data for high-fidelity voice cloning.</p>
-                    <p><strong>Impact:</strong> <strong>Achieved 300%+ Efficiency Gain</strong> scaling content from 20 to 62 exhibits in just 2 weeks—successfully delivering the museum’s first-ever AI audio guide.</p>
+                    <ul>
+                        <li><strong>Challenge:</strong> Revolutionize the traditional, labor-intensive production of audio guides to meet tight exhibition deadlines.</li>
+                        <li><strong>Solution:</strong> Led the full-stack implementation of a Generative AI workflow. I engineered prompt strategies using <strong>Gemini 2.5</strong> for script generation and fine-tuned <strong>GPT-SoVITS</strong> models with self-preprocessed data for high-fidelity voice cloning.</li>
+                        <li><strong>Impact:</strong> <strong> Achieved 300%+ Efficiency Gain</strong> scaling content from 20 to 62 exhibits in just 2 weeks—successfully delivering the museum’s first-ever AI audio guide.</li>
+                    </ul>
                     <div>
-                        <a href="https://www.artmuseum.cuhk.edu.hk/en/xhfz.php?xv=e" class="btn-link" target="_blank">🎧 Audio (English)</a>
-                        <a href="https://www.artmuseum.cuhk.edu.hk/zh/xhfz.php?xv=p" class="btn-link" target="_blank">🎧 Audio (Mandarin)</a>
-                        <a href="https://www.artmuseum.cuhk.edu.hk/zh/xhfz.php?xv=c" class="btn-link" target="_blank">🎧 Audio (Cantonese)</a>
+                        <a href="https://www.artmuseum.cuhk.edu.hk/en/xhfz.php?xv=e" class="btn-link" target="_blank">🎧 English</a>
+                        <a href="https://www.artmuseum.cuhk.edu.hk/zh/xhfz.php?xv=p" class="btn-link" target="_blank">🎧 Mandarin</a>
+                        <a href="https://www.artmuseum.cuhk.edu.hk/zh/xhfz.php?xv=c" class="btn-link" target="_blank">🎧 Cantonese</a>
                     </div>
                 </div>
             </div>
@@ -457,9 +461,9 @@
                         <span class="tag">Grant Writing</span>
                     </div>
                     <h3>Sheng Xuanhuai Archives Project</h3>
-                    <p><strong>Challenge:</strong>Identified a critical "data mismatch" between technical requirements and artistic realities that was stalling algorithm development.</p>
-                    <p><strong>Solution:</strong>Built a new data strategy from the ground up. I acted as the bridge between Art and Tech teams and forged international academic partnerships to launch a large-scale crowdsourcing initiative.</p>
-                    <p><strong>Impact:</strong>Successfully delivered a foundational dataset of <strong>4 million character-level annotations</strong>. This massive asset unlocked the project's core algorithm development.</p>
+                    <p><strong>Challenge:</strong> Identified a critical "data mismatch" between technical requirements and artistic realities that was stalling algorithm development.</p>
+                    <p><strong>Solution:</strong> Built a new data strategy from the ground up. I acted as the bridge between Art and Tech teams and forged international academic partnerships to launch a large-scale crowdsourcing initiative.</p>
+                    <p><strong>Impact:</strong> Successfully delivered a foundational dataset of <strong>4 million character-level annotations</strong>. This massive asset unlocked the project's core algorithm development.</p>
                     <a href="https://repository.lib.cuhk.edu.hk/en/collection/shengxuanhuai" class="btn-link" target="_blank">🔗 View Dataset &rarr;</a>
                 </div>
             </div>

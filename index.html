@@ -10,14 +10,14 @@
             --primary: #2c3e50;
             --accent: #007bff;
             
-            /* 【修改6】配色修复：背景白，前景白，打造层次感 */
-            --bg-body: #ffffff;       /* 整体背景：白 */
-            --bg-sidebar: #ffffff;    /* 侧边栏：白 */
-            --card-bg: #ffffff;       /* 卡片：纯白 */
+            /* 【颜色恢复】背景改回纯白 */
+            --bg-body: #ffffff;       
+            --bg-sidebar: #ffffff;    
+            --card-bg: #ffffff;       
             
             --text: #333;
             --gray: #666;
-            --sidebar-width: 30vw;    /* 左侧占比 30% */
+            --sidebar-width: 30vw;
         }
 
         body {
@@ -26,7 +26,7 @@
             color: var(--text);
             margin: 0;
             padding: 0;
-            background-color: var(--bg-body); /* 应用全局灰背景 */
+            background-color: var(--bg-body);
         }
 
         /* --- 核心布局容器 --- */
@@ -38,27 +38,28 @@
         /* --- 1. 左侧固定侧边栏 (Sidebar) --- */
         .sidebar {
             width: var(--sidebar-width);
-            background-color: var(--bg-sidebar); /* 【修改6】侧边栏改为纯白 */
+            background-color: var(--bg-sidebar);
             height: 100vh;
             position: fixed;
             top: 0;
             left: 0;
-            padding: 80px 60px; /* 宽敞内边距 */
+            padding: 80px 60px;
             box-sizing: border-box;
             overflow-y: auto;
             z-index: 100;
             display: flex;
-            flex-direction: column; 
+            flex-direction: column;
+            /* 右侧淡阴影，区分左右区域 */
+            box-shadow: 2px 0 20px rgba(0,0,0,0.03); 
         }
 
         /* 头像样式 */
         .sidebar .profile-img {
-            width: 280px;
-            height: 280px;
-            border-radius: 24px; /* 正方形大圆角 */
+            width: 250px;
+            height: 250px;
+            border-radius: 24px; 
             object-fit: cover;
             border: 4px solid #fff; 
-            /* 【修改4】头像阴影加深 */
             box-shadow: 0 15px 35px rgba(0,0,0,0.15); 
             margin-bottom: 40px;
             display: block;
@@ -117,8 +118,8 @@
 
         /* --- 2. 右侧主要内容区 (Main Content) --- */
         .main-content {
-            margin-left: var(--sidebar-width); /* 留出左侧空间 */
-            width: 70vw; /* 占剩余空间 */
+            margin-left: var(--sidebar-width); 
+            width: 70vw; 
             padding: 80px 100px;
             box-sizing: border-box;
         }
@@ -137,11 +138,18 @@
             margin-top: 0;
         }
 
-        /* --- 通用卡片样式 (白色浮层) --- */
+        /* 统一卡片内标题的大小 (修复：Education标题过小的问题) */
+        .card-header-title {
+            margin: 0; 
+            color: var(--primary);
+            font-size: 1.5rem; /* 增大到 1.5rem */
+            font-weight: 700;
+        }
+
+        /* --- 通用卡片样式 --- */
         .card-box {
             background: var(--card-bg);
             border-radius: 16px;
-            /* 【修改1】质感阴影：加深了透明度 0.04 -> 0.08 */
             box-shadow: 0 10px 40px rgba(0,0,0,0.08); 
             padding: 40px;
             margin-bottom: 40px;
@@ -149,7 +157,6 @@
             transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s ease;
         }
         .card-box:hover {
-            /* 【修改2】悬浮动效增强：-5px -> -8px */
             transform: translateY(-8px); 
             box-shadow: 0 20px 50px rgba(0,0,0,0.12);
         }
@@ -241,64 +248,72 @@
         .timeline-row ul { padding-left: 18px; color: #555; margin-top: 10px; }
         .timeline-row li { margin-bottom: 8px; }
 
-        /* --- 教育与证书 (Vertical Stack) --- */
+        /* --- 垂直堆叠 (用于PMP和Education) --- */
         .vertical-stack {
             display: flex;
             flex-direction: column;
-            /* 【修改4】减小 Education 和 Skills 卡片之间的间距 */
             gap: 20px; 
         }
 
-        /* --- PMP 专属卡片设计 (Final) --- */
+        /* --- PMP & Honors 专属卡片设计 (修复版) --- */
         .pmp-card-inner {
             display: flex;
-            gap: 25px; 
+            gap: 30px; 
             align-items: stretch; 
-            min-height: 140px;
-            overflow: hidden; /* 确保直角不溢出 */
+            min-height: 150px; 
+            overflow: hidden;
         }
+
+        /* 文字区域修复：左上对齐，间距舒适 */
         .pmp-text {
-            flex: 2;
+            flex: 1.6; 
             display: flex;
             flex-direction: column;
-            justify-content: flex-start;
-            padding-top: 20px; 
-            padding-bottom: 20px; 
-            padding-right: 10px;
-            gap: 0px;
+            /* 修复：强制靠左靠上对齐 */
+            justify-content: flex-start; 
+            align-items: flex-start;
+            padding-top: 0; /* 去掉顶部内边距，死死贴住顶部 */
+            padding-bottom: 10px;
+            gap: 0; 
+        }
+        
+        .pmp-text .tag {
+            align-self: flex-start;
+            margin-bottom: 15px; 
+            font-size: 0.8rem; 
         }
         .pmp-text h3 {
-            margin: 0 0 15px 0; 
+            margin: 0 0 12px 0; 
             font-size: 1.4rem; 
             color: var(--primary);
             line-height: 1.3;
+            text-align: left;
         }
         .pmp-text p {
-            margin: 0 0 8px 0; 
-            font-size: 0.95rem; 
+            margin: 0 0 6px 0; 
+            /* 修复：字号放大至 1rem，与Work Experience一致 */
+            font-size: 1rem; 
             color: #555;
             line-height: 1.6;
-        }
-        .pmp-text .tag {
-            align-self: flex-start;
-            margin-bottom: 12px;
-            font-size: 0.8rem; 
+            text-align: left;
         }
         
-        /* 【修改3】PMP 图片区域 - 纯直角，无边框，填满 */
+        /* PMP 图片区域修复：直角、无边、填满 */
         .pmp-image-area {
-            flex: 0.8; 
-            background: transparent; /* 无背景 */
-            border: none; /* 无边框 */
-            padding: 0; /* 无内边距 */
-            border-radius: 0; /* 【关键】取消圆角，变成直角 */
+            flex: 1; 
+            background: transparent; 
+            border: none; 
+            padding: 0; 
+            border-radius: 0; 
             position: relative;
+            min-height: 200px; 
         }
         .pmp-image-area img {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* 强制填满 */
-            object-position: center;
+            /* 修复：改为 contain，确保图片完整显示，不被裁切 */
+            object-fit: contain; 
+            object-position: center; 
             display: block;
         }
 
@@ -316,7 +331,11 @@
             align-items: center;
             margin-bottom: 8px;
         }
-        .edu-degree { font-size: 1.2rem; font-weight: bold; color: var(--primary); }
+        .edu-degree { 
+            font-size: 1.2rem; 
+            font-weight: bold; 
+            color: var(--primary); 
+        }
         .edu-year { color: var(--accent); font-weight: bold; }
         .edu-school { font-size: 1.1rem; color: #666; font-style: italic; }
         
@@ -335,41 +354,33 @@
             font-size: 0.8rem;
         }
 
-        /* --- 【修改5】响应式适配 (Mobile 修复) --- */
+        /* --- 响应式适配 (Mobile) --- */
         @media (max-width: 1100px) {
-            /* 改为上下排列 */
-            .layout-wrapper { 
-                flex-direction: column; 
-            }
+            .layout-wrapper { flex-direction: column; }
             
-            /* Sidebar 在手机上变成顶部 Header */
             .sidebar {
-                width: 100%;        /* 宽度填满 */
-                height: auto;       /* 高度自动 */
-                position: relative; /* 取消固定定位 */
+                width: 100%;
+                height: auto;
+                position: relative;
                 padding: 60px 30px;
-                box-shadow: none;   /* 手机上不需要右侧阴影 */
+                box-shadow: none;
                 border-bottom: 1px solid #eee;
                 align-items: center;
                 text-align: center;
             }
-            
-            /* Main Content 在手机上填满 */
+            .sidebar .bio-text { text-align: center; }
+
             .main-content {
                 margin-left: 0;
                 width: 100%;
                 padding: 40px 20px;
             }
 
-            /* 卡片适配 */
-            .card-box { padding: 30px 20px; }
-            
-            /* 项目和PMP卡片改为上下排列 */
             .project-item { flex-direction: column; gap: 20px; }
             .project-img-container { height: 220px; min-width: 100%; }
             
             .pmp-card-inner { flex-direction: column-reverse; gap: 20px; }
-            .pmp-image-area { width: 100%; height: 220px; }
+            .pmp-image-area { width: 100%; height: 240px; }
         }
     </style>
 </head>
@@ -387,7 +398,7 @@
         
         <div class="bio-text">
             <p>PMP® certified professional with 5 years in corporate R&D @O-Net and AI research @Art Musuem, CUHK.</p>
-            <p>AI enthusiast passionate about EdTech and Generative AI in Chinese Arts.Dedicated to democratizing Chinese heritage education through Generative AI.</p>
+            <p>AI enthusiast passionate about EdTech and Generative AI in Chinese Arts. Dedicated to democratizing Chinese heritage education through Generative AI.</p>
         </div>
 
         <div class="social-links">
@@ -416,7 +427,7 @@
                     </div>
                     <h3>CUHK Jockey Club AI for the Future Project</h3>
                     <p><strong>Challenge:</strong> Bridging the gap between complex university-level AI research and accessible secondary school education.</p>
-                    <p><strong>Solution:</strong> Spearheaded the curriculum development as the core coordinator. I translated technical concepts into an end-to-end educational package, designing everything from interactive experiments to instructor guidebooks</p>
+                    <p><strong>Solution:</strong> Spearheaded the curriculum development as the core coordinator. I translated technical concepts into an end-to-end educational package, designing everything from interactive experiments to instructor guidebooks.</p>
                     <p><strong>Impact:</strong> Achieved over <strong>50% School Adoption Rate</strong> (164+ schools) in Hong Kong, with an official launch confirmed for the "Learning and Teaching Expo 2025" at HKCEC.</p>
                     <a href="https://cuhkjc-aiforfuture.hk/index.php/en/home/" class="btn-link" target="_blank">📄 View Project &rarr;</a>
                 </div>
@@ -504,47 +515,45 @@
                 </div>
                 <ul>
                     <li><strong>Full-Lifecycle Product Launch:</strong> Managed company's first optical product with U.S.-independent supply chain.</li>
-                    <li><strong>Schedule Optimization:</strong> Coordinated 5+ departments (OpticOrchestrated 5+ technical teams to shorten the critical path via Fast Tracking, successfully navigating supply chain constraints.</li>
+                    <li><strong>Schedule Optimization:</strong> Orchestrated 5+ technical teams to shorten the critical path via Fast Tracking, successfully navigating supply chain constraints.</li>
                     <li><strong>On-Site Risk Management:</strong> Optimized project planning by conducting on-site risk assessments and engaging directly with NPI and line workers.</li>
                 </ul>
             </div>
         </div>
 
-        <!-- 3. Professional Certification (Vertical Stack) -->
+        <!-- 3. Professional Development (Vertical Stack) -->
         <h2 class="section-title">Professional Development</h2>
         
         <div class="vertical-stack">
             
-            <!-- PMP Card (Special Design) -->
+            <!-- PMP Card -->
             <div class="card-box">
                 <div class="pmp-card-inner">
                     <div class="pmp-text">
                         <span class="tag" style="background: #fff3cd; color: #856404;">Professional Certification</span>
-                        <h3 style="margin-top: 15px; color: var(--primary);">Project Management Professional (PMP)®</h3>
+                        <h3>Project Management Professional (PMP)®</h3>
                         <p><strong>Issued by:</strong> Project Management Institute (PMI)</p>
                         <p><strong>Status:</strong> Active (Valid until Dec 2026)</p>
                         <p><strong>Credential ID:</strong> #2952732</p>
                     </div>
                     <div class="pmp-image-area">
-                        <!-- 图片 -->
-                        <img src="images/pmp.png" alt="PMP Certificate" onerror="this.src='https://via.placeholder.com/300x200?text=Upload+PMP+Image'">
+                        <img src="images/pmp.png" alt="PMP Certificate" onerror="this.src='https://via.placeholder.com/300x200?text=PMP+Certificate'">
                     </div>
                 </div>
             </div>
 
-            <!-- typography2024 Card (Special Design) -->
+            <!-- Honors Card -->
             <div class="card-box">
                 <div class="pmp-card-inner">
                     <div class="pmp-text">
                         <span class="tag" style="background: #fff3cd; color: #856404;">Honors & Awards</span>
-                        <h3 style="margin-top: 15px; color: var(--primary);">Selected Participant, National Arts Fund Talent Training Project (2024)</h3>
-                        <p><strong>Host:</strong> School of Design, Central Academy of Fine Arts(CAFA)</p>
-                        <p><strong>Grant:</strong> China National Arts Fund(CNAF) </p>
-                        <p><strong>Project:</strong>Talent Cultivation for Research & Innovation in Chinese Typography  in the New Era 2024</p>
+                        <h3>Selected Participant, National Arts Fund Talent Training Project (2024)</h3>
+                        <p><strong>Host:</strong> School of Design, Central Academy of Fine Arts (CAFA)</p>
+                        <p><strong>Grant:</strong> China National Arts Fund (CNAF)</p>
+                        <p><strong>Project:</strong> Talent Cultivation for Research & Innovation in Chinese Typography in the New Era 2024</p>
                     </div>
                     <div class="pmp-image-area">
-                        <!-- 图片 -->
-                        <img src="images/typography2024.png" alt="typography2024" onerror="this.src='https://via.placeholder.com/300x200?text=Upload+PMP+Image'">
+                        <img src="images/typography2024.png" alt="typography2024" onerror="this.src='https://via.placeholder.com/300x200?text=Award+Image'">
                     </div>
                 </div>
             </div>
@@ -555,11 +564,10 @@
             <div class="card-box">
             
                 <!-- Part A: Education -->
-                <h3 style="margin: 0; color: var(--primary);">Education</h3>
-                <!-- 粗分割线 -->
+                <!-- 修复：使用 card-header-title 放大字号 -->
+                <h3 class="card-header-title">Education</h3>
                 <hr style="border: 0; border-top: 3px solid #eee; margin: 15px 0 25px 0;">
 
-                <!-- style="border-bottom: none; margin-bottom: 0; padding-bottom: 0;"-->
                 <div class="edu-item"> 
                     <div class="edu-header">
                         <span class="edu-degree">Master of AI and Digital Media</span>
@@ -582,9 +590,9 @@
                     </div>
                 </div>
 
-                <!-- === Part B: Technical Skills (增加顶部间距，区分模块) === -->
-                <h3 style="margin: 30px 0 0 0; color: var(--primary);">Technical Skills</h3>
-                <!-- 粗分割线 -->
+                <!-- === Part B: Technical Skills === -->
+                <!-- 修复：使用 card-header-title 放大字号 -->
+                <h3 class="card-header-title" style="margin-top: 30px;">Technical Skills</h3>
                 <hr style="border: 0; border-top: 3px solid #eee; margin: 15px 0 25px 0;">
 
                 <ul class="skill-list">
@@ -593,7 +601,7 @@
                     <li><strong>Deep Learning:</strong> Foundational principles</li>
                 </ul>
                 
-                <!-- === Part C: Publication (保持原样) === -->
+                <!-- === Part C: Publication === -->
                 <div style="margin-top: 30px; background: #f0f7ff; padding: 20px; border-radius: 8px; border: 1px solid #e1ecf4;">
                     <strong style="color: var(--primary);">Selected Publication:</strong><br>
                     <span style="font-size: 0.95rem; color: #444; display: block; margin-top: 5px;">

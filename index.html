@@ -9,11 +9,15 @@
         :root {
             --primary: #2c3e50;
             --accent: #007bff;
-            --bg-color: #ffffff;      /* 【核心】整体柔和浅灰背景f8f9fa */
-            --card-bg: #ffffff;       /* 卡片纯白 */
+            
+            /* 【修改6】配色修复：背景灰，前景白，打造层次感 */
+            --bg-body: #f2f5f8;       /* 整体背景：柔和的蓝灰色 */
+            --bg-sidebar: #ffffff;    /* 侧边栏：纯白 */
+            --card-bg: #ffffff;       /* 卡片：纯白 */
+            
             --text: #333;
             --gray: #666;
-            --sidebar-width: 30vw;    /* 【核心】左侧占比 30% */
+            --sidebar-width: 30vw;    /* 左侧占比 30% */
         }
 
         body {
@@ -22,7 +26,7 @@
             color: var(--text);
             margin: 0;
             padding: 0;
-            background-color: var(--bg-color); /* 全局灰色背景 */
+            background-color: var(--bg-body); /* 应用全局灰背景 */
         }
 
         /* --- 核心布局容器 --- */
@@ -34,28 +38,30 @@
         /* --- 1. 左侧固定侧边栏 (Sidebar) --- */
         .sidebar {
             width: var(--sidebar-width);
-            background-color: var(--bg-color); /* 与背景融合，拒绝死板纯白 */
+            background-color: var(--bg-sidebar); /* 【修改6】侧边栏改为纯白 */
             height: 100vh;
             position: fixed;
             top: 0;
             left: 0;
-            padding: 80px 80px; /* 增加内边距 */
+            padding: 80px 60px; /* 宽敞内边距 */
             box-sizing: border-box;
             overflow-y: auto;
             z-index: 100;
             display: flex;
             flex-direction: column;
-            /* 这一版取消右侧边框，让视觉更通透 */
+            /* 添加右侧微弱阴影，分割左右区域 */
+            box-shadow: 2px 0 20px rgba(0,0,0,0.03); 
         }
 
-        /* 头像样式优化 */
+        /* 头像样式 */
         .sidebar .profile-img {
-            width: 280px;  /* 【核心】放大尺寸 */
-            height: 280px;
-            border-radius: 24px; /* 【核心】正方形大圆角 */
+            width: 220px;
+            height: 220px;
+            border-radius: 24px; /* 正方形大圆角 */
             object-fit: cover;
-            border: 4px solid #f8f9fa; /* 白色边框突出 */
-            box-shadow: 0 10px 25px rgba(0,0,0,0.08); /* 强阴影 */
+            border: 4px solid #fff; 
+            /* 【修改4】头像阴影加深 */
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15); 
             margin-bottom: 40px;
             display: block;
         }
@@ -113,9 +119,9 @@
 
         /* --- 2. 右侧主要内容区 (Main Content) --- */
         .main-content {
-            margin-left: var(--sidebar-width); /* 留出 30% 空间 */
-            width: 70vw; /* 占剩余 70% */
-            padding: 80px 100px; /* 宽敞的内边距 */
+            margin-left: var(--sidebar-width); /* 留出左侧空间 */
+            width: 70vw; /* 占剩余空间 */
+            padding: 80px 100px;
             box-sizing: border-box;
         }
 
@@ -136,19 +142,21 @@
         /* --- 通用卡片样式 (白色浮层) --- */
         .card-box {
             background: var(--card-bg);
-            border-radius: 16px; /* 更大的圆角 */
-            box-shadow: 0 4px 20px rgba(0,0,0,0.04); /* 质感阴影 */
+            border-radius: 16px;
+            /* 【修改1】质感阴影：加深了透明度 0.04 -> 0.08 */
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08); 
             padding: 40px;
             margin-bottom: 40px;
             border: 1px solid rgba(0,0,0,0.02);
-            transition: transform 0.3s ease;
+            transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s ease;
         }
         .card-box:hover {
-            transform: translateY(-5px); /* 悬浮微动效 */
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            /* 【修改2】悬浮动效增强：-5px -> -8px */
+            transform: translateY(-8px); 
+            box-shadow: 0 20px 50px rgba(0,0,0,0.12);
         }
 
-        /* --- 项目样式 (复用之前的布局) --- */
+        /* --- 项目样式 --- */
         .project-item {
             display: flex;
             align-items: stretch;
@@ -203,7 +211,7 @@
         }
         .btn-link:hover { border-bottom-color: var(--accent); }
 
-        /* --- 工作经历 (Timeline Inside Card) --- */
+        /* --- 工作经历 --- */
         .timeline-row {
             border-left: 3px solid var(--accent);
             padding-left: 30px;
@@ -235,67 +243,62 @@
         .timeline-row ul { padding-left: 18px; color: #555; margin-top: 10px; }
         .timeline-row li { margin-bottom: 8px; }
 
-        /* --- 教育与证书 (Vertical Stack - 垂直流式) --- */
-        /* 这里的容器不需要 Grid，直接上下排列即可 */
+        /* --- 教育与证书 (Vertical Stack) --- */
         .vertical-stack {
             display: flex;
             flex-direction: column;
-            gap: 30px;
+            /* 【修改4】减小 Education 和 Skills 卡片之间的间距 */
+            gap: 20px; 
         }
 
-        /* PMP 专属卡片设计 */
+        /* --- PMP 专属卡片设计 (Final) --- */
         .pmp-card-inner {
             display: flex;
-            gap: 20px;
-            align-items: stretch; /* 让文字区和图片区等高 */
-            overflow: hidden; /* 防止图片圆角溢出 */
-            min-height: 180px; /* 设置一个最小高度，保证图片够大 */
+            gap: 25px; 
+            align-items: stretch; 
+            min-height: 180px;
+            overflow: hidden; /* 确保直角不溢出 */
         }
         .pmp-text {
             flex: 1.4;
             display: flex;
             flex-direction: column;
-            ent: center; /* 文字垂直居中 */
-            gap: 8px; /* 【关键】控制每行文字之间的紧凑距离，不再松散 */
-            padding-right: 5px; /*稍微留一点呼吸感*/
+            justify-content: center;
+            gap: 8px;
+            padding-right: 5px;
         }
-        /* 针对内部文字的样式微调，去除默认大间距 */
         .pmp-text h3 {
-            margin: 0; /* 去掉标题外边距 */
+            margin: 0;
             font-size: 1.4rem;
             color: var(--primary);
             line-height: 1.2;
         }
         .pmp-text p {
-            margin: 0; /* 去掉段落外边距 */
+            margin: 0;
             font-size: 0.95rem;
             color: #555;
             line-height: 1.5;
         }
         .pmp-text .tag {
-            align-self: flex-start; /* 标签靠左 */
+            align-self: flex-start;
             margin-bottom: 5px;
         }
+        
+        /* 【修改3】PMP 图片区域 - 纯直角，无边框，填满 */
         .pmp-image-area {
-            flex: 1;
-            height: 220px;
-            background: transparent; /* 取消背景灰底 */
-            border: none; /* 【关键】取消虚线边框 */
-            padding: 0; /* 【关键】取消内边距 */
-            border-radius: 12px; /* 给图片加个圆角 */
-            overflow: hidden; /* 裁切多余部分 */
+            flex: 1; 
+            background: transparent; /* 无背景 */
+            border: none; /* 无边框 */
+            padding: 0; /* 无内边距 */
+            border-radius: 0; /* 【关键】取消圆角，变成直角 */
+            position: relative;
         }
         .pmp-image-area img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: cover; /* 【关键】自动缩放填满，不留空隙 */
-            object-position: center; /* 居中显示 */
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* 强制填满 */
+            object-position: center;
             display: block;
-            transition: transform 0.5s ease; /* 增加一点微动效 */
-        }
-        /* 鼠标悬停时，证书稍微放大一点点，增加交互感 */
-        .pmp-image-area:hover img {
-            transform: scale(1.05);
         }
 
         /* Education Item */
@@ -331,36 +334,41 @@
             font-size: 0.8rem;
         }
 
-        /* --- 响应式适配 (Mobile) --- */
+        /* --- 【修改5】响应式适配 (Mobile 修复) --- */
         @media (max-width: 1100px) {
-            .layout-wrapper { flex-direction: column; }
+            /* 改为上下排列 */
+            .layout-wrapper { 
+                flex-direction: column; 
+            }
             
-            /* Sidebar Mobile */
+            /* Sidebar 在手机上变成顶部 Header */
             .sidebar {
-                width: 100%;
-                height: auto;
-                position: relative;
+                width: 100%;        /* 宽度填满 */
+                height: auto;       /* 高度自动 */
+                position: relative; /* 取消固定定位 */
                 padding: 60px 30px;
+                box-shadow: none;   /* 手机上不需要右侧阴影 */
+                border-bottom: 1px solid #eee;
                 align-items: center;
                 text-align: center;
             }
-            .sidebar .profile-img { margin: 0 auto 30px auto; }
-            .sidebar .bio-text { text-align: center; }
-            .social-links { align-items: center; }
-
-            /* Main Content Mobile */
+            
+            /* Main Content 在手机上填满 */
             .main-content {
                 margin-left: 0;
                 width: 100%;
                 padding: 40px 20px;
             }
 
-            /* Cards Mobile */
-            .card-box { padding: 25px; }
-            .project-item { flex-direction: column; }
-            .project-img-container { height: 250px; }
-            .pmp-card-inner { flex-direction: column-reverse; } /* 图片在手机上放上面或下面 */
-            .pmp-image-area { width: 100%; height: 250px; }
+            /* 卡片适配 */
+            .card-box { padding: 30px 20px; }
+            
+            /* 项目和PMP卡片改为上下排列 */
+            .project-item { flex-direction: column; gap: 20px; }
+            .project-img-container { height: 220px; min-width: 100%; }
+            
+            .pmp-card-inner { flex-direction: column-reverse; gap: 20px; }
+            .pmp-image-area { width: 100%; height: 220px; }
         }
     </style>
 </head>
@@ -427,9 +435,9 @@
                     <p><strong>Led Full-Stack Project Delivery:</strong> Engineered prompts for Gemini 2.5 and fine-tuned <strong>GPT-SoVITS</strong> models to achieve high-fidelity voice cloning.</p>
                     <p><strong>Impact:</strong> <strong>Achieved 300%+ Efficiency Gain</strong> (20 to 62 exhibits in 2 weeks).</p>
                     <div>
-                        <a href="https://www.artmuseum.cuhk.edu.hk/en/xhfz.php?xv=e&xs=1" class="btn-link" target="_blank">🎧 Audio (English)</a>
-                        <a href="https://www.artmuseum.cuhk.edu.hk/zh/xhfz.php?xv=p&xs=1" class="btn-link" target="_blank">🎧 Audio (Mandarin)</a>
-                        <a href="https://www.artmuseum.cuhk.edu.hk/zh/xhfz.php?xv=c&xs=1" class="btn-link" target="_blank">🎧 Audio (Cantonese)</a>
+                        <a href="https://www.artmuseum.cuhk.edu.hk/en/xhfz.php?xv=e" class="btn-link" target="_blank">🎧 Audio (English)</a>
+                        <a href="https://www.artmuseum.cuhk.edu.hk/zh/xhfz.php?xv=p" class="btn-link" target="_blank">🎧 Audio (Mandarin)</a>
+                        <a href="https://www.artmuseum.cuhk.edu.hk/zh/xhfz.php?xv=c" class="btn-link" target="_blank">🎧 Audio (Cantonese)</a>
                     </div>
                 </div>
             </div>
@@ -491,7 +499,7 @@
             </div>
         </div>
 
-        <!-- 3. Education & Certification (Vertical Flow) -->
+        <!-- 3. Education & Certification (Vertical Stack) -->
         <h2 class="section-title">Education & Professional Development</h2>
         
         <div class="vertical-stack">
@@ -509,6 +517,23 @@
                     <div class="pmp-image-area">
                         <!-- 图片 -->
                         <img src="images/pmp.png" alt="PMP Certificate" onerror="this.src='https://via.placeholder.com/300x200?text=Upload+PMP+Image'">
+                    </div>
+                </div>
+            </div>
+
+            <!-- typography2024 Card (Special Design) -->
+            <div class="card-box">
+                <div class="pmp-card-inner">
+                    <div class="pmp-text">
+                        <span class="tag" style="background: #fff3cd; color: #856404;">Honors & Awards</span>
+                        <h3 style="margin-top: 15px; color: var(--primary);">Selected Participant, National Arts Fund Talent Training Project (2024)</h3>
+                        <p><strong>Host:</strong> School of Design, Central Academy of Fine Arts(CAFA)</p>
+                        <p><strong>Grant:</strong> China National Arts Fund(CNAF) </p>
+                        <p><strong>Project:</strong>Talent Cultivation for Research & Innovation in Chinese Typography  in the New Era 2024</p>
+                    </div>
+                    <div class="pmp-image-area">
+                        <!-- 图片 -->
+                        <img src="images/typography2024.png" alt="typography2024" onerror="this.src='https://via.placeholder.com/300x200?text=Upload+PMP+Image'">
                     </div>
                 </div>
             </div>

@@ -11,8 +11,8 @@
             --accent: #007bff;
             
             /* 【修改6】配色修复：背景灰，前景白，打造层次感 */
-            --bg-body: #f2f5f8;       /* 整体背景：柔和的蓝灰色 */
-            --bg-sidebar: #ffffff;    /* 侧边栏：纯白 */
+            --bg-body: #f0f0f0;       /* 整体背景：灰白 */
+            --bg-sidebar: #f0f0f0;    /* 侧边栏：灰白 */
             --card-bg: #ffffff;       /* 卡片：纯白 */
             
             --text: #333;
@@ -499,8 +499,8 @@
             </div>
         </div>
 
-        <!-- 3. Education & Certification (Vertical Stack) -->
-        <h2 class="section-title">Education & Professional Development</h2>
+        <!-- 3. Professional Certification (Vertical Stack) -->
+        <h2 class="section-title">Professional Development</h2>
         
         <div class="vertical-stack">
             
@@ -538,45 +538,51 @@
                 </div>
             </div>
 
-            <!-- Education Card -->
+            <!-- Education & Skill & Publication Card -->
+            <h2 class="section-title">Education & Skills</h2>
+
             <div class="card-box">
-                <h3 style="border-bottom: 2px solid #f0f0f0; padding-bottom: 15px; margin-top: 0;">Education</h3>
+            
+                <!-- Part A: Education -->
+                <h3 style="margin: 0 0 20px 0; color: var(--primary);">Education</h3>
                 <div class="edu-item">
                     <div class="edu-header">
                         <span class="edu-degree">Master of AI and Digital Media</span>
                         <span class="edu-year">2021 - 2022</span>
                     </div>
                     <div class="edu-school">Hong Kong Baptist University</div>
-                    <div style="margin-top: 5px; color: #555;">
+                    <div style="margin-top: 5px; color: #555; font-size: 0.95rem;">
                         Award: Merit-Based Scholarship (Second Place) | GPA: 3.50 / 4.0
                     </div>
                 </div>
-            </div>
 
-            <!-- Skills & Publication Card -->
-            <div class="card-box">
-                <h3 style="border-bottom: 2px solid #f0f0f0; padding-bottom: 15px; margin-top: 0;">Technical Skills & Publication</h3>
-                
+                <!-- 分割线 -->
+                <hr style="border: 0; border-top: 1px solid #eee; margin: 30px 0;">
+
+                <!-- Part B: Skills & Publication -->
+                <h3 style="margin: 0 0 20px 0; color: var(--primary);">Technical Skills & Publication</h3>
+            
                 <ul class="skill-list">
                     <li><strong>Programming:</strong> Python (Proficient)</li>
                     <li><strong>Generative AI:</strong> LLMs & Prompt Engineering, Voice Cloning (GPT-SoVITS), TTS</li>
                     <li><strong>Computer Vision:</strong> Foundational principles in generative models</li>
                 </ul>
 
-                <div style="margin-top: 30px; background: #f0f7ff; padding: 20px; border-radius: 8px;">
-                    <strong>HUANG, Z.</strong>, et al. (2023). "The Future of Work: Do We Need Interactive Collaborative Offices?..." <br>
-                    <em>IEEE 43rd International Conference on Distributed Computing Systems Workshops (ICCSW).</em>
+                <div style="margin-top: 30px; background: #f0f7ff; padding: 20px; border-radius: 8px; border: 1px solid #e1ecf4;">
+                    <strong style="color: var(--primary);">Selected Publication:</strong><br>
+                    <span style="font-size: 0.95rem; color: #444; display: block; margin-top: 5px;">
+                        <strong>HUANG, Z.</strong>, et al. (2023). "The Future of Work: Do We Need Interactive Collaborative Offices?..." <br>
+                        <em>IEEE 43rd International Conference on Distributed Computing Systems Workshops (ICCSW).</em>
+                    </span>
                 </div>
             </div>
 
-        </div>
+            <footer style="text-align: center; margin-top: 80px; color: #999; font-size: 0.9rem;">
+                &copy; 2025 Zhuo Huang. All Rights Reserved.
+            </footer>
 
-        <footer style="text-align: center; margin-top: 80px; color: #999; font-size: 0.9rem;">
-            &copy; 2025 Zhuo Huang. All Rights Reserved.
-        </footer>
-
-    </main>
-</div>
+        </main>
+    </div>
 
 </body>
 </html>

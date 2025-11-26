@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zhuo (Zoey) Huang | Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2c3e50; /* 深蓝灰，沉稳学术 */
+            --accent-color: #3498db;  /* 科技蓝，点缀 */
+            --bg-color: #f8f9fa;
+            --text-color: #333;
+            --light-text: #666;
+            --section-spacing: 80px;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            margin: 0;
+            background-color: var(--bg-color);
+        }
+
+        /* --- Navigation to Home --- */
+        .back-nav {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 0.9rem;
+        }
+        .back-nav a {
+            text-decoration: none;
+            color: var(--light-text);
+            border: 1px solid #ddd;
+            padding: 5px 10px;
+            border-radius: 4px;
+            background: #fff;
+            transition: all 0.3s;
+        }
+        .back-nav a:hover {
+            color: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            background: #fff;
+            padding: 80px 20px 40px;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
+
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #fff;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        .hero .tagline {
+            font-size: 1.2rem;
+            color: var(--light-text);
+            font-weight: 300;
+            margin-bottom: 20px;
+        }
+
+        .bio-blurb {
+            max-width: 700px;
+            margin: 0 auto 40px;
+            font-size: 1.1rem;
+        }
+
+        .social-links a {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            margin: 0 10px;
+            transition: color 0.3s;
+        }
+        .social-links a:hover { color: var(--accent-color); }
+
+        /* --- Impact Bar --- */
+        .impact-bar {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid #eee;
+        }
+
+        .impact-item {
+            text-align: center;
+        }
+
+        .impact-number {
+            display: block;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent-color);
+        }
+
+        .impact-label {
+            font-size: 0.9rem;
+            color: var(--light-text);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* --- Content Layout --- */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: var(--section-spacing) 0;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            border-left: 5px solid var(--accent-color);
+            padding-left: 15px;
+            margin-bottom: 40px;
+        }
+
+        /* --- Projects (Case Study Style) --- */
+        .project-card {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            margin-bottom: 60px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column; /* Mobile first */
+        }
+
+        @media (min-width: 768px) {
+            .project-card {
+                flex-direction: row;
+            }
+            .project-visual {
+                flex: 1; /* 40% width */
+                min-width: 350px;
+            }
+            .project-content {
+                flex: 1.5; /* 60% width */
+            }
+        }
+
+        .project-visual {
+            background: #eef2f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .project-visual img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .project-card:hover .project-visual img {
+            transform: scale(1.02);
+        }
+
+        .project-content {
+            padding: 40px;
+        }
+
+        .project-role {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .project-title {
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .project-tags span {
+            display: inline-block;
+            background: #f0f4f8;
+            color: #555;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-right: 5px;
+            margin-bottom: 10px;
+        }
+
+        .case-study-section {
+            margin-top: 20px;
+        }
+        
+        .case-study-title {
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .case-study-text {
+            font-size: 0.95rem;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .project-links a {
+            display: inline-block;
+            margin-top: 10px;
+            text-decoration: none;
+            color: var(--accent-color);
+            font-weight: 600;
+            border: 1px solid var(--accent-color);
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.3s;
+        }
+
+        .project-links a:hover {
+            background: var(--accent-color);
+            color: #fff;
+        }
+
+        /* --- Research Section --- */
+        .paper-item {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid var(--light-text); /* Default border */
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+        }
+
+        .paper-item.highlight {
+            border-left-color: var(--accent-color); /* Highlight for CVPR */
+            background: #fdfdfd;
+        }
+
+        .paper-tag {
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            padding: 2px 6px;
+            border-radius: 3px;
+            margin-right: 8px;
+        }
+        
+        .paper-tag.review { background: #ffeeba; color: #856404; }
+        .paper-tag.pub { background: #d4edda; color: #155724; }
+
+        .paper-title {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        /* --- Footer --- */
+        footer {
+            text-align: center;
+            padding: 40px;
+            background: #fff;
+            color: #aaa;
+            font-size: 0.9rem;
+            margin-top: 60px;
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- 返回旧主页的导航 -->
+    <div class="back-nav">
+        <a href="../index.html"><i class="fas fa-arrow-left"></i> Back to Main Site</a>
+    </div>
+
+    <!-- HERO SECTION -->
+    <header class="hero">
+        <div class="container">
+            <!-- 注意：这里用了 ../images/ 去上一级目录找图片 -->
+            <img src="../images/profile.png" alt="Zhuo (Zoey) Huang" class="profile-img">
+            <h1>Zhuo (Zoey) Huang</h1>
+            <p class="tagline">Bridging Cultural Heritage & Generative AI</p>
+            <p class="tagline" style="font-size: 1rem; margin-top: -10px;">Researcher | AI Engineer | PMP® Certified</p>
+            
+            <div class="bio-blurb">
+                <p>
+                    I explore how <strong>Generative AI (LLMs, TTS, Vision)</strong> can revitalize traditional culture. 
+                    With 5 years of R&D experience, I specialize in translating complex algorithms into 
+                    <strong>deployable, educational, and interactive museum experiences</strong>.
+                </p>
+            </div>
+
+            <div class="social-links">
+                <a href="mailto:zoey3huang@gmail.com"><i class="fas fa-envelope"></i></a>
+                <a href="https://github.com/zoeyyhz" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/zoey-zhuo-huang" target="_blank"><i class="fab fa-linkedin"></i></a>
+            </div>
+
+            <!-- IMPACT BAR -->
+            <div class="impact-bar">
+                <div class="impact-item">
+                    <span class="impact-number">164</span>
+                    <span class="impact-label">Partner Schools</span>
+                </div>
+                <div class="impact-item">
+                    <span class="impact-number">4M+</span>
+                    <span class="impact-label">Dataset Characters</span>
+                </div>
+                <div class="impact-item">
+                    <span class="impact-number">800K</span>
+                    <span class="impact-label">Grant Secured (HKD)</span>
+                </div>
+                <div class="impact-item">
+                    <span class="impact-number">300%</span>
+                    <span class="impact-label">Efficiency Boost</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- SELECTED PROJECTS SECTION -->
+    <div class="container">
+        <section id="projects">
+            <h2 class="section-title">Selected Projects</h2>
+
+            <!-- Project 1: AI Calligraphy -->
+            <div class="project-card">
+                <div class="project-visual">
+                    <!-- 图片路径修改为 ../images/ -->
+                    <img src="../images/ai4future.png" alt="AI Calligraphy System">
+                </div>
+                <div class="project-content">
+                    <div class="project-role">Project Lead & Core Developer</div>
+                    <h3 class="project-title">AI Calligraphy Education System</h3>
+                    <div class="project-tags">
+                        <span>Computer Vision</span>
+                        <span>Style Transfer</span>
+                        <span>EdTech</span>
+                        <span>Curriculum Design</span>
+                    </div>
+
+                    <div class="case-study-section">
+                        <span class="case-study-title">🛑 The Challenge</span>
+                        <p class="case-study-text">Traditional calligraphy education faces a "Tech-Art Divide". Students find rote practice boring, and teachers lack tools for real-time feedback.</p>
+                    </div>
+
+                    <div class="case-study-section">
+                        <span class="case-study-title">💡 The Solution</span>
+                        <p class="case-study-text">Designed an "AI-in-the-loop" curriculum. The system uses CV to analyze strokes in real-time and generates "completed" artworks, encouraging co-creation.</p>
+                    </div>
+
+                    <div class="case-study-section">
+                        <span class="case-study-title">🚀 Impact</span>
+                        <p class="case-study-text">Achieved <strong>50% adoption rate</strong> (164 schools) in HK. Selected for "Learning & Teaching Expo 2025".</p>
+                    </div>
+
+                    <div class="project-links">
+                        <a href="https://cuhkjc-aiforfuture.hk/index.php/en/home/" target="_blank">View Project <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 2: Museum AI Audio Guide -->
+            <div class="project-card">
+                <div class="project-visual">
+                    <img src="../images/museum.png" alt="Museum AI Audio Guide">
+                </div>
+                <div class="project-content">
+                    <div class="project-role">Technical Lead</div>
+                    <h3 class="project-title">Museum AI Audio Guide</h3>
+                    <div class="project-tags">
+                        <span>GPT-SoVITS</span>
+                        <span>Gemini 2.5</span>
+                        <span>Voice Cloning</span>
+                        <span>Pipeline Engineering</span>
+                    </div>
+
+                    <div class="case-study-section">
+                        <span class="case-study-title">🛑 The Problem</span>
+                        <p class="case-study-text">Producing audio guides for 62 exhibits traditionally takes months. Content is often static and costs are prohibitive for rapid curation.</p>
+                    </div>
+
+                    <div class="case-study-section">
+                        <span class="case-study-title">⚙️ Methodology</span>
+                        <p class="case-study-text">Built a GenAI pipeline: Raw Text → Gemini (Script Refinement) → GPT-SoVITS (High-fidelity Voice Cloning of historical figures).</p>
+                    </div>
+
+                    <div class="case-study-section">
+                        <span class="case-study-title">🚀 Impact</span>
+                        <p class="case-study-text">Expanded content from 20 to 62 exhibits in just <strong>2 weeks</strong> (300% boost). Delivered the museum's first AI guide.</p>
+                    </div>
+
+                    <div class="project-links">
+                        <a href="https://www.artmuseum.cuhk.edu.hk/en/xhfz.php?xv=e&xs=1" target="_blank">Listen to Demo <i class="fas fa-headphones"></i></a>
+                    </div>
+                </div>
+            </div>
+
+             <!-- Project 3: Sheng Xuanhuai Data -->
+             <div class="project-card">
+                <div class="project-visual">
+                    <img src="../images/sxhData.png" alt="Sheng Xuanhuai Archives">
+                </div>
+                <div class="project-content">
+                    <div class="project-role">Project Manager & Data Strategist</div>
+                    <h3 class="project-title">Sheng Xuanhuai Archives Digitization</h3>
+                    <div class="project-tags">
+                        <span>Data Strategy</span>
+                        <span>Crowdsourcing</span>
+                        <span>OCR/HTR</span>
+                        <span>Project Management</span>
+                    </div>
+
+                    <div class="case-study-section">
+                        <span class="case-study-title">🛑 The Challenge</span>
+                        <p class="case-study-text">Identified a critical "data mismatch" stalling algorithm development. Historical archives lacked annotated training data.</p>
+                    </div>
+
+                    <div class="case-study-section">
+                        <span class="case-study-title">💡 The Solution</span>
+                        <p class="case-study-text">Bridged Art and Tech teams. Forged international partnerships to launch a large-scale crowdsourcing initiative.</p>
+                    </div>
+
+                    <div class="case-study-section">
+                        <span class="case-study-title">🚀 Impact</span>
+                        <p class="case-study-text">Delivered a foundational dataset of <strong>4 million characters</strong>, unlocking core algorithm development for the team.</p>
+                    </div>
+
+                    <div class="project-links">
+                        <a href="https://repository.lib.cuhk.edu.hk/en/collection/shengxuanhuai" target="_blank">View Dataset <i class="fas fa-database"></i></a>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- RESEARCH SECTION -->
+        <section id="research">
+            <h2 class="section-title">Research Publications</h2>
+            
+            <!-- CVPR Paper (Projected) -->
+            <div class="paper-item highlight">
+                <span class="paper-tag review">Under Review</span>
+                <div class="paper-content">
+                    <div class="paper-title">[Title Hidden for Blind Review] - AI Calligraphy & Generative Models</div>
+                    <div class="paper-authors"><strong>Z. Huang (3rd Author)</strong>, et al.</div>
+                    <div class="paper-venue">Submitted to <em>IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)</em>, 2026.</div>
+                </div>
+            </div>
+
+            <!-- Existing Paper -->
+            <div class="paper-item">
+                <span class="paper-tag pub">Published</span>
+                <div class="paper-content">
+                    <div class="paper-title">"The Future of Work: Do We Need Interactive Collaborative Offices?..."</div>
+                    <div class="paper-authors"><strong>HUANG, Z.</strong>, et al.</div>
+                    <div class="paper-venue"><em>IEEE 43rd International Conference on Distributed Computing Systems Workshops (ICCSW)</em>, 2023.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- EDUCATION / EXPERIENCE SECTION (Simplified) -->
+        <section id="background">
+            <h2 class="section-title">Background & Skills</h2>
+            <div style="display: flex; gap: 40px; flex-wrap: wrap;">
+                <div style="flex: 1; min-width: 300px;">
+                    <h3><i class="fas fa-graduation-cap"></i> Education</h3>
+                    <p><strong>MSc in AI and Digital Media</strong><br>Hong Kong Baptist University (2022) <br> <small>Merit-Based Scholarship | GPA: 3.50/4.0</small></p>
+                </div>
+                <div style="flex: 1; min-width: 300px;">
+                    <h3><i class="fas fa-briefcase"></i> Experience</h3>
+                    <p><strong>Research Assistant</strong> @ CUHK Art Museum (2022-Present)</p>
+                    <p><strong>R&D Project Manager</strong> @ O-Net Tech (2019-2021)</p>
+                </div>
+                <div style="flex: 1; min-width: 300px;">
+                    <h3><i class="fas fa-certificate"></i> Certification</h3>
+                    <p><strong>PMP® (Project Management Professional)</strong><br>ID #2952732 | Valid until 2026</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Zhuo Huang. Crafted for Next-Gen Museums.</p>
+    </footer>
+
+</body>
+</html>

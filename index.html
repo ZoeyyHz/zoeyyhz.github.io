@@ -9,8 +9,6 @@
         :root {
             --primary: #2c3e50;
             --accent: #007bff;
-            
-            /* 【颜色恢复】背景改回纯白 */
             --bg-body: #ffffff;       
             --bg-sidebar: #ffffff;    
             --card-bg: #ffffff;       
@@ -447,14 +445,23 @@
                 </div>
                 <div class="project-content">
                     <div class="project-tags">
-                        <span class="tag">Gemini 2.5 Flash</span>
+                        <span class="tag">Human-in-the-Loop</span>
                         <span class="tag">GPT-SoVITS</span>
                         <span class="tag">Voice Cloning (TTS)</span>
                     </div>
                     <h3>AI Audio Guide @Art Museum, CUHK </h3>
-                    <p><strong>Challenge:</strong> Revolutionize the traditional, labor-intensive production of audio guides to meet tight exhibition deadlines.</p>
-                    <p><strong>Solution:</strong> Led the full-stack implementation of a Generative AI workflow. I engineered prompt strategies using <strong>Gemini 2.5</strong> for script generation and fine-tuned <strong>GPT-SoVITS</strong> models with self-preprocessed data for high-fidelity voice cloning.</p>
-                    <p><strong>Impact:</strong> <strong> Achieved 300%+ Efficiency Gain</strong> scaling content from 20 to 62 exhibits in just 2 weeks—successfully delivering the museum’s first-ever AI audio guide.</p>
+                    <p><strong>Challenge:</strong> Overcome the scalability barrier of manual scriptwriting to produce high-quality, multilingual audio guide for museum exhibits under tight deadlines.</p>
+                    <p style="margin-bottom: 5px;"><strong>Solution:</strong> Designed a <strong>Human-in-the-Loop</strong> AI workflow to transform scholarly catalogues into engaging audio scripts.</p>
+                    <!-- 列表部分：添加了 ul 包裹，并设置了紧凑的样式 -->
+                    <ul style="margin-top: 0; padding-left: 18px; margin-bottom: 15px;">
+                        <li style="margin-bottom: 5px;">
+                            <strong>Curator-AI Co-Design:</strong> Engineered context-aware prompts based on academic catalogues. Facilitated expert-in-the-loop validation sessions (using side-by-side comparisons) with curators to iteratively refine these prompts, ensuring AI outputs met strict expert standards.
+                        </li>
+                        <li>
+                            <strong>Reproducible Pipeline:</strong> Established a "Source-First" strategy—generating approved Chinese scripts via LLMs before translation—to maintain cross-lingual semantic consistency. Fine-tuned GPT-SoVITS models for high-fidelity voice cloning.
+                        </li>
+                    </ul>
+                    <p><strong>Impact:</strong> <strong> Achieved 300%+ Efficiency Gain</strong> scaling content from 20 to 62 exhibits in 2 weeks. Successfully delivering the museum’s first-ever AI audio guide. Documented the SOP, and mentored a team of 4 students to execute the pipeline independently.</p>
                     <div>
                         <a href="https://www.artmuseum.cuhk.edu.hk/en/xhfz.php?xv=e&xs=1" class="btn-link" target="_blank">🎧Audio (English)</a>
                         <a href="https://www.artmuseum.cuhk.edu.hk/zh/xhfz.php?xv=p&xs=1" class="btn-link" target="_blank">🎧Audio (Mandarin)</a>

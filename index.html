@@ -173,11 +173,10 @@
         .project-img-container {
             flex: 0 0 340px;
             /* 新增/修改以下部分 */
-            position: relative;
             background-color: #f8f9fa;
             border-radius: 12px;
             overflow: hidden;
-            
+            border: 1px solid #eee;
             /* 利用 Flex 布局让图片垂直居中 */
             display: flex;
             align-items: center;
@@ -188,7 +187,6 @@
             height: 100%;
             object-fit: contain;
             display: block;
-            border-radius: 12px;
         }
         .project-content {
             flex: 1.5;
@@ -384,9 +382,9 @@
                 padding: 40px 20px;
             }
 
-            .project-item { flex-direction: column; gap: 20px; }
-            .project-img-container { height: auto; min-width: 100%; }
-            .project-img-container img { height: auto; object-fit: contain;
+            .project-item { flex-direction: column; gap: 20px; align-items: flex-start; }
+            .project-img-container { width: 100%; flex: none; height: auto !important; min-height: 0; display: block; background-color: transparent; border: none;  }
+            .project-img-container img { width: 100%; height: auto !important; object-fit: contain; border-radius: 12px;
             
             .pmp-card-inner { flex-direction: column-reverse; gap: 20px; }
             .pmp-image-area { width: 100%; height: 240px; }

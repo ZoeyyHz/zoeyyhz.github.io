@@ -256,15 +256,16 @@
 
         /* --- 垂直堆叠 (用于PMP和Education) --- */
         .vertical-stack {
-            display: flex;
-            flex-direction: column;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 20px; 
         }
 
         /* --- PMP & Honors 专属卡片设计 (修复版) --- */
         .pmp-card-inner {
             display: flex;
-            gap: 30px; 
+            flex-direction: column;
+            gap: 15px; 
             align-items: stretch; 
             min-height: 150px; 
             overflow: hidden;
@@ -312,7 +313,9 @@
         
         /* PMP 图片区域修复：直角、无边、填满 */
         .pmp-image-area {
-            flex: 1; 
+            width: 100%;
+            height: 200px;
+            flex: none;
             background: transparent; 
             border: none; 
             padding: 0; 
@@ -364,6 +367,10 @@
             left: 0;
             top: 2px;
             font-size: 0.8rem;
+        }
+
+        @media (max-width: 760px) {
+            .vertical-stack { grid-template-columns: 1fr; }
         }
 
         /* --- 响应式适配 (Mobile) --- */
@@ -617,12 +624,16 @@
             <!-- PMP Card -->
             <div class="card-box">
                 <div class="pmp-card-inner">
-                    <div class="pmp-text">
-                        <div class="pmp-tags">
+                    <div class="pmp-tags">
                             <span class="tag" style="background: #fff3cd; color: #856404;">Waterfall</span>
                             <span class="tag" style="background: #fff3cd; color: #856404;">Project Management</span>
                             <span class="tag" style="background: #fff3cd; color: #856404;">PMI</span>
                         </div>
+<div class="pmp-image-area">
+                        <img src="images/pmp2.png" alt="PMP Certificate" onerror="this.src='https://via.placeholder.com/300x200?text=PMP+Certificate'">
+                    </div>
+<div class="pmp-text">
+                        
                         <h3>Project Management Professional (PMP)®</h3>
                         <p><strong>Issued by:</strong> Project Management Institute (PMI)</p>
                         <p><strong>Original Grant Date:</strong> 05 December 2020</p>
@@ -630,21 +641,23 @@
                         <p><strong>Status:</strong> Active</p>
                         <p><strong>Certification Number:</strong> 2952732(CITEF)</p>
                     </div>
-                    <div class="pmp-image-area">
-                        <img src="images/pmp2.png" alt="PMP Certificate" onerror="this.src='https://via.placeholder.com/300x200?text=PMP+Certificate'">
-                    </div>
+                    
                 </div>
             </div>
 
             <!-- PMI-ACP Card -->
             <div class="card-box">
                 <div class="pmp-card-inner">
-                    <div class="pmp-text">
-                        <div class="pmp-tags">
+                    <div class="pmp-tags">
                             <span class="tag" style="background: #fff3cd; color: #856404;">Agile</span>
                             <span class="tag" style="background: #fff3cd; color: #856404;">Scrum Master</span>
                             <span class="tag" style="background: #fff3cd; color: #856404;">Kanban</span>
                         </div>
+<div class="pmp-image-area">
+                        <img src="images/pmiacp.png" alt="PMP Certificate" onerror="this.src='https://via.placeholder.com/300x200?text=PMP+Certificate'">
+                    </div>
+<div class="pmp-text">
+                        
                         <h3>PMI Agile Certified Practitioner (PMI-ACP)®</h3>
                         <p><strong>Issued by:</strong> Project Management Institute (PMI)</p>
                         <p><strong>Original Grant Date:</strong> 12 September 2026</p>
@@ -652,25 +665,25 @@
                         <p><strong>Status:</strong> Active</p>
                         <p><strong>Certification Number:</strong> 4544847</p>
                     </div>
-                    <div class="pmp-image-area">
-                        <img src="images/pmiacp.png" alt="PMP Certificate" onerror="this.src='https://via.placeholder.com/300x200?text=PMP+Certificate'">
-                    </div>
+                    
                 </div>
             </div>
 
             <!-- Honors Card -->
             <div class="card-box">
                 <div class="pmp-card-inner">
-                    <div class="pmp-text">
-                        <span class="tag" style="background: #fff3cd; color: #856404;">Typography</span>
+                    <span class="tag" style="background: #fff3cd; color: #856404;">Typography</span>
+<div class="pmp-image-area">
+                        <img src="images/typography2024.png" alt="typography2024" onerror="this.src='https://via.placeholder.com/300x200?text=Award+Image'">
+                    </div>
+<div class="pmp-text">
+                        
                         <h3>Talent Cultivation for Research & Innovation in Chinese Typography(2024)</h3>
                         <p><strong>Host:</strong> School of Design, Central Academy of Fine Arts (CAFA)</p>
                         <p><strong>Grant:</strong> China National Arts Fund (CNAF)</p>
                         <p><strong>Credential:</strong> Selected Participant</p>
                     </div>
-                    <div class="pmp-image-area">
-                        <img src="images/typography2024.png" alt="typography2024" onerror="this.src='https://via.placeholder.com/300x200?text=Award+Image'">
-                    </div>
+                    
                 </div>
             </div>
 

@@ -283,10 +283,16 @@
             gap: 0; 
         }
         
-        .pmp-text .tag {
-            align-self: flex-start;
-            margin-bottom: 15px; 
-            font-size: 0.8rem; 
+        .pmp-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .pmp-tags .tag {
+            margin: 0;
+            font-size: 0.8rem;
         }
         .pmp-text h3 {
             margin: 0 0 12px 0; 
@@ -612,7 +618,11 @@
             <div class="card-box">
                 <div class="pmp-card-inner">
                     <div class="pmp-text">
-                        <span class="tag" style="background: #fff3cd; color: #856404;">Waterfall Professional Certification</span>
+                        <div class="pmp-tags">
+                            <span class="tag" style="background: #fff3cd; color: #856404;">Waterfall Professional Certification</span>
+                            <span class="tag" style="background: #fff3cd; color: #856404;">Project Management</span>
+                            <span class="tag" style="background: #fff3cd; color: #856404;">PMI</span>
+                        </div>
                         <h3>Project Management Professional (PMP)®</h3>
                         <p><strong>Issued by:</strong> Project Management Institute (PMI)</p>
                         <p><strong>Original Grant Date:</strong> 05 December 2020</p>

@@ -7,7 +7,7 @@
 <script src="https://cdn.jsdelivr.net/npm/lucide@0.294.0/dist/umd/lucide.min.js"></script>
 <style>
 :root{color-scheme:light dark;}
-body{margin:0;padding:clamp(14px,2vw,36px) clamp(10px,1.8vw,32px);background:#f4f4f2;background:light-dark(#f4f4f2,#101010);}
+body{margin:0;padding:clamp(14px,2vw,36px) clamp(10px,1.8vw,32px);background:#f4f0f6;background:light-dark(#f4f0f6,#120e18);}
 #mr-demo{max-width:1760px;margin:0 auto;}
 </style>
 </head>
@@ -16,16 +16,18 @@ body{margin:0;padding:clamp(14px,2vw,36px) clamp(10px,1.8vw,32px);background:#f4
 <style>
 #mr-demo{
   color-scheme: light dark;
-  --mr-bg:#f4f4f2;            --mr-bg:light-dark(#f4f4f2,#161616);
-  --mr-panel:#ffffff;         --mr-panel:light-dark(#ffffff,#1f1f1f);
-  --mr-panel2:#f7f6f4;        --mr-panel2:light-dark(#f7f6f4,#262626);
-  --mr-border:#e7e5e1;        --mr-border:light-dark(#e7e5e1,#303030);
+  --mr-bg:#f4f0f6;            --mr-bg:light-dark(#f4f0f6,#16121a);
+  --mr-panel:#ffffff;         --mr-panel:light-dark(#ffffff,#1f1f24);
+  --mr-panel2:#f8f5fa;        --mr-panel2:light-dark(#f8f5fa,#241f2b);
+  --mr-border:#e5dde9;        --mr-border:light-dark(#e5dde9,#32293a);
   --mr-text:#37352f;          --mr-text:light-dark(#37352f,#e9e7e2);
-  --mr-muted:#8a877f;         --mr-muted:light-dark(#8a877f,#9a978e);
-  --mr-accent:#2f6fed;        --mr-accent:light-dark(#2f6fed,#7aa7ff);
-  --mr-accent-fg:#ffffff;     --mr-accent-fg:light-dark(#ffffff,#0c1a35);
-  --mr-accent-tint:rgba(47,111,237,.10);  --mr-accent-tint:light-dark(rgba(47,111,237,.10),rgba(122,167,255,.14));
-  --mr-blue:#2f6fed;          --mr-blue:light-dark(#2f6fed,#7aa7ff);
+  --mr-muted:#837b8c;         --mr-muted:light-dark(#837b8c,#a49bb0);
+  --mr-accent:#49156D;        --mr-accent:light-dark(#49156D,#C49BE3);
+  --mr-accent-fg:#ffffff;     --mr-accent-fg:light-dark(#ffffff,#241035);
+  --mr-accent-tint:rgba(73,21,109,.10);   --mr-accent-tint:light-dark(rgba(73,21,109,.10),rgba(196,155,227,.16));
+  --mr-blue:#49156D;          --mr-blue:light-dark(#49156D,#C49BE3);
+  --mr-gold:#DDA300;
+  --mr-gold-deep:#8A6800;     --mr-gold-deep:light-dark(#8A6800,#E7BE4F);
   --mr-green:#1e8e4e;         --mr-green:light-dark(#1e8e4e,#5ec98c);
   --mr-red:#d14343;           --mr-red:light-dark(#d14343,#ff8f8f);
   --mr-orange:#c2790f;        --mr-orange:light-dark(#c2790f,#f0b35a);
@@ -39,7 +41,10 @@ body{margin:0;padding:clamp(14px,2vw,36px) clamp(10px,1.8vw,32px);background:#f4
 #mr-demo .mr-num{font-variant-numeric:tabular-nums;}
 #mr-demo .mr-header{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:14px;}
 #mr-demo .mr-brand{display:flex;gap:11px;align-items:center;}
-#mr-demo .mr-logo{width:38px;height:38px;border-radius:9px;background:var(--mr-accent);color:var(--mr-accent-fg);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:11px;letter-spacing:.04em;flex:none;}
+#mr-demo .mr-logo{height:44px;width:auto;flex:none;display:block;}
+#mr-demo .mr-logo-fb{width:38px;height:38px;border-radius:9px;background:var(--mr-accent);color:var(--mr-accent-fg);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:11px;letter-spacing:.04em;flex:none;}
+#mr-demo .mr-logo-fb[hidden]{display:none;}
+#mr-demo .mr-footer{margin-top:18px;text-align:center;font-size:11.5px;color:var(--mr-muted);}
 #mr-demo h1{font-size:16px;font-weight:600;margin:0;}
 #mr-demo .mr-sub{font-size:11.5px;color:var(--mr-muted);margin-top:2px;}
 #mr-demo .mr-headerright{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
@@ -91,11 +96,11 @@ body{margin:0;padding:clamp(14px,2vw,36px) clamp(10px,1.8vw,32px);background:#f4
 #mr-demo .mr-step[data-s="done"] .mr-dot{background:var(--mr-green);border-color:var(--mr-green);}
 #mr-demo .mr-step[data-s="fail"] .mr-dot{background:var(--mr-red);border-color:var(--mr-red);}
 #mr-demo .mr-step[data-s="wait"] .mr-dot{background:var(--mr-orange);border-color:var(--mr-orange);}
-@keyframes mr-pulse{0%,100%{box-shadow:0 0 0 0 rgba(47,111,237,.35);}50%{box-shadow:0 0 0 5px rgba(47,111,237,0);}}
+@keyframes mr-pulse{0%,100%{box-shadow:0 0 0 0 rgba(73,21,109,.35);}50%{box-shadow:0 0 0 5px rgba(73,21,109,0);}}
 @media (prefers-reduced-motion:reduce){#mr-demo .mr-step[data-s="active"] .mr-dot{animation:none;}#mr-demo tr.mr-flash{animation:none !important;}}
 #mr-demo .mr-chipai,#mr-demo .mr-chiph{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.04em;border-radius:4px;padding:1px 5px;margin-left:5px;vertical-align:1px;}
-#mr-demo .mr-chipai{background:var(--mr-accent-tint);color:var(--mr-blue);}
-#mr-demo .mr-chiph{background:rgba(194,121,15,.14);color:var(--mr-orange);}
+#mr-demo .mr-chipai{background:rgba(221,163,0,.16);color:var(--mr-gold-deep);}
+#mr-demo .mr-chiph{background:var(--mr-accent-tint);color:var(--mr-accent);}
 #mr-demo .mr-tablewrap{overflow-x:auto;}
 #mr-demo table{width:100%;border-collapse:collapse;min-width:540px;}
 #mr-demo th{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--mr-muted);font-weight:600;text-align:left;padding:6px 9px;border-bottom:1px solid var(--mr-border);}
@@ -111,7 +116,7 @@ body{margin:0;padding:clamp(14px,2vw,36px) clamp(10px,1.8vw,32px);background:#f4
 #mr-demo .mr-pill[data-s="New"]{background:var(--mr-accent-tint);color:var(--mr-blue);}
 #mr-demo .mr-pill[data-s="Needs triage"]{background:rgba(194,121,15,.14);color:var(--mr-orange);}
 #mr-demo .mr-pill[data-s="Expert confirmed"]{background:rgba(91,95,199,.14);color:var(--mr-purple);}
-#mr-demo .mr-pill[data-s="Approved"]{background:rgba(154,123,10,.15);color:var(--mr-yellow);}
+#mr-demo .mr-pill[data-s="Approved"]{background:rgba(221,163,0,.16);color:var(--mr-gold-deep);}
 #mr-demo .mr-pill[data-s="Replied"]{background:rgba(30,142,78,.13);color:var(--mr-green);}
 #mr-demo .mr-pill[data-s="Duplicate"]{background:var(--mr-panel2);color:var(--mr-muted);border:1px solid var(--mr-border);}
 #mr-demo .mr-dl.ok{color:var(--mr-text);}
@@ -173,7 +178,8 @@ body{margin:0;padding:clamp(14px,2vw,36px) clamp(10px,1.8vw,32px);background:#f4
 
 <header class="mr-header">
   <div class="mr-brand">
-    <div class="mr-logo">CPRO</div>
+    <img class="mr-logo" src="images/Emblem_of_CU.png" alt="The Chinese University of Hong Kong emblem" onerror="this.hidden=true;document.getElementById('mr-logofb').hidden=false;">
+    <div class="mr-logo-fb" id="mr-logofb" hidden>CPRO</div>
     <div>
       <h1>Media request workflow — demo</h1>
       <div class="mr-sub">Power Automate · university tenant&nbsp;&nbsp;·&nbsp;&nbsp;Azure OpenAI (procured endpoint)&nbsp;&nbsp;·&nbsp;&nbsp;Notion “Media requests”&nbsp;&nbsp;·&nbsp;&nbsp;Teams #media-requests-alerts</div>
@@ -230,6 +236,7 @@ body{margin:0;padding:clamp(14px,2vw,36px) clamp(10px,1.8vw,32px);background:#f4
     <div class="mr-feed" id="mr-feed" aria-live="polite"></div>
   </aside>
 </div>
+<footer class="mr-footer">© 2026 Zhuo Huang for CPRO media-workflow-demo.html. All Rights Reserved.</footer>
 </div>
 
 <script>

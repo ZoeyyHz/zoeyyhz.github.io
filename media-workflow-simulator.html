@@ -1,0 +1,777 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CPRO 媒体请求自动化 — PRD 流程模拟器</title>
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.294.0/dist/umd/lucide.min.js"></script>
+<style>
+:root{color-scheme:light dark;}
+body{margin:0;padding:clamp(14px,2vw,36px) clamp(10px,1.8vw,32px);background:#f4f0f6;background:light-dark(#f4f0f6,#120e18);}
+#mr-demo{max-width:1760px;margin:0 auto;}
+</style>
+</head>
+<body>
+<div id="mr-demo">
+<style>
+#mr-demo{
+  color-scheme: light dark;
+  --mr-bg:#f4f0f6;            --mr-bg:light-dark(#f4f0f6,#16121a);
+  --mr-panel:#ffffff;         --mr-panel:light-dark(#ffffff,#1f1f24);
+  --mr-panel2:#f8f5fa;        --mr-panel2:light-dark(#f8f5fa,#241f2b);
+  --mr-border:#e5dde9;        --mr-border:light-dark(#e5dde9,#32293a);
+  --mr-text:#37352f;          --mr-text:light-dark(#37352f,#e9e7e2);
+  --mr-muted:#837b8c;         --mr-muted:light-dark(#837b8c,#a49bb0);
+  --mr-accent:#49156D;        --mr-accent:light-dark(#49156D,#C49BE3);
+  --mr-accent-fg:#ffffff;     --mr-accent-fg:light-dark(#ffffff,#241035);
+  --mr-accent-tint:rgba(73,21,109,.10);   --mr-accent-tint:light-dark(rgba(73,21,109,.10),rgba(196,155,227,.16));
+  --mr-gold:#DDA300;
+  --mr-gold-deep:#8A6800;     --mr-gold-deep:light-dark(#8A6800,#E7BE4F);
+  --mr-blue:#49156D;          --mr-blue:light-dark(#49156D,#C49BE3);
+  --mr-green:#1e8e4e;         --mr-green:light-dark(#1e8e4e,#5ec98c);
+  --mr-red:#d14343;           --mr-red:light-dark(#d14343,#ff8f8f);
+  --mr-orange:#c2790f;        --mr-orange:light-dark(#c2790f,#f0b35a);
+  --mr-purple:#5b5fc7;        --mr-purple:light-dark(#5b5fc7,#9fa3f2);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  font-size:14px; line-height:1.5; color:var(--mr-text);
+  background:var(--mr-bg); border-radius:12px; padding:18px 20px;
+}
+#mr-demo *{box-sizing:border-box;}
+#mr-demo .mr-num{font-variant-numeric:tabular-nums;}
+#mr-demo .mr-header{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:14px;}
+#mr-demo .mr-brand{display:flex;gap:11px;align-items:center;}
+#mr-demo .mr-logo{height:44px;width:auto;flex:none;display:block;}
+#mr-demo .mr-logo-fb{width:38px;height:38px;border-radius:9px;background:var(--mr-accent);color:var(--mr-accent-fg);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:11px;letter-spacing:.04em;flex:none;}
+#mr-demo .mr-logo-fb[hidden]{display:none;}
+#mr-demo h1{font-size:16px;font-weight:600;margin:0;}
+#mr-demo .mr-sub{font-size:11.5px;color:var(--mr-muted);margin-top:2px;}
+#mr-demo .mr-headerright{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+#mr-demo .mr-daychip{font-size:12px;font-weight:500;border:1px solid var(--mr-border);background:var(--mr-panel);border-radius:999px;padding:4px 11px;}
+#mr-demo .mr-switch{display:flex;align-items:center;gap:7px;font-size:12px;cursor:pointer;user-select:none;}
+#mr-demo .mr-switch input{position:absolute;opacity:0;width:1px;height:1px;}
+#mr-demo .mr-track{width:32px;height:18px;border-radius:999px;background:var(--mr-border);position:relative;transition:background .15s;flex:none;}
+#mr-demo .mr-track::after{content:"";position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:var(--mr-panel);transition:left .15s;}
+#mr-demo .mr-switch input:checked + .mr-track{background:var(--mr-red);}
+#mr-demo .mr-switch input:checked + .mr-track::after{left:16px;}
+#mr-demo .mr-switch input:focus-visible + .mr-track{outline:2px solid var(--mr-accent);outline-offset:2px;}
+#mr-demo .mr-metrics{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px;}
+#mr-demo .mr-chip{background:var(--mr-panel);border:1px solid var(--mr-border);border-radius:9px;padding:6px 12px 7px;min-width:100px;}
+#mr-demo .mr-chip .l{font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--mr-muted);}
+#mr-demo .mr-chip .v{font-size:14.5px;font-weight:600;margin-top:1px;}
+#mr-demo .mr-chip.bad .v{color:var(--mr-red);}
+#mr-demo .mr-grid{display:grid;grid-template-columns:minmax(250px,300px) minmax(0,1.6fr) minmax(320px,380px);gap:16px;align-items:start;}
+#mr-demo .mr-grid > *{min-width:0;}
+#mr-demo .mr-panel{background:var(--mr-panel);border:1px solid var(--mr-border);border-radius:10px;padding:14px;}
+#mr-demo .mr-panel + .mr-panel{margin-top:16px;}
+#mr-demo .mr-panelh{display:flex;align-items:center;gap:7px;font-size:13px;font-weight:600;margin-bottom:11px;}
+#mr-demo .mr-panelh svg{color:var(--mr-muted);flex:none;}
+#mr-demo .mr-panelh .mr-teal{color:var(--mr-purple);}
+#mr-demo .mr-samples{display:flex;flex-direction:column;gap:8px;}
+#mr-demo .mr-sample{display:flex;align-items:center;gap:8px;width:100%;text-align:left;background:var(--mr-panel2);border:1px solid var(--mr-border);border-radius:8px;padding:8px 10px;font-size:13px;color:var(--mr-text);cursor:pointer;font-family:inherit;}
+#mr-demo .mr-sample:hover{background:var(--mr-accent-tint);border-color:var(--mr-accent);}
+#mr-demo .mr-sample:disabled{opacity:.45;cursor:default;}
+#mr-demo .mr-sample svg{color:var(--mr-muted);flex:none;}
+#mr-demo .mr-sample .mr-kb{margin-left:auto;font-size:10.5px;color:var(--mr-muted);border:1px solid var(--mr-border);border-radius:5px;padding:1px 5px;flex:none;}
+#mr-demo .mr-panelh2{font-size:11.5px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--mr-muted);margin:16px 0 9px;}
+#mr-demo .mr-simrow{display:flex;gap:8px;margin-bottom:8px;flex-wrap:wrap;}
+#mr-demo .mr-btn{display:inline-flex;align-items:center;gap:5px;background:var(--mr-panel2);color:var(--mr-text);border:1px solid var(--mr-border);border-radius:7px;padding:5px 11px;font-size:13px;font-family:inherit;cursor:pointer;}
+#mr-demo .mr-btn:hover{border-color:var(--mr-accent);color:var(--mr-accent);}
+#mr-demo .mr-btn:disabled{opacity:.45;cursor:default;}
+#mr-demo .mr-btn.mr-primary{background:var(--mr-accent);border-color:transparent;color:var(--mr-accent-fg);font-weight:500;}
+#mr-demo .mr-btn.mr-primary:hover{filter:brightness(1.07);color:var(--mr-accent-fg);}
+#mr-demo .mr-btn.mr-grow{flex:1;justify-content:center;}
+#mr-demo .mr-note{font-size:11.5px;color:var(--mr-muted);margin:10px 0 0;line-height:1.55;}
+#mr-demo .mr-flowtitle{font-weight:400;color:var(--mr-muted);margin-left:2px;}
+#mr-demo .mr-steps{list-style:none;margin:0;padding:0;position:relative;}
+#mr-demo .mr-steps::before{content:"";position:absolute;left:8px;top:8px;bottom:8px;width:1px;background:var(--mr-border);}
+#mr-demo .mr-step{display:grid;grid-template-columns:18px 1fr;gap:9px;position:relative;padding:5px 0;}
+#mr-demo .mr-dot{width:17px;height:17px;border-radius:50%;border:1.5px solid var(--mr-border);background:var(--mr-panel);color:var(--mr-panel);font-size:10px;display:flex;align-items:center;justify-content:center;font-weight:700;margin-top:1px;}
+#mr-demo .mr-step .t{font-size:13.5px;}
+#mr-demo .mr-step .sub{font-size:11.5px;color:var(--mr-muted);margin-top:1px;white-space:pre-wrap;}
+#mr-demo .mr-step[data-s="todo"]{opacity:.55;}
+#mr-demo .mr-step[data-s="skip"]{opacity:.4;}
+#mr-demo .mr-step[data-s="active"] .mr-dot{background:var(--mr-accent);border-color:var(--mr-accent);animation:mr-pulse 1.1s ease-in-out infinite;}
+#mr-demo .mr-step[data-s="done"] .mr-dot{background:var(--mr-green);border-color:var(--mr-green);}
+#mr-demo .mr-step[data-s="fail"] .mr-dot{background:var(--mr-red);border-color:var(--mr-red);}
+#mr-demo .mr-step[data-s="wait"] .mr-dot{background:var(--mr-orange);border-color:var(--mr-orange);}
+@keyframes mr-pulse{0%,100%{box-shadow:0 0 0 0 rgba(73,21,109,.35);}50%{box-shadow:0 0 0 5px rgba(73,21,109,0);}}
+@media (prefers-reduced-motion:reduce){#mr-demo .mr-step[data-s="active"] .mr-dot{animation:none;}#mr-demo tr.mr-flash{animation:none !important;}}
+#mr-demo .mr-chipai,#mr-demo .mr-chiph{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.04em;border-radius:4px;padding:1px 5px;margin-left:5px;vertical-align:1px;}
+#mr-demo .mr-chipai{background:rgba(221,163,0,.16);color:var(--mr-gold-deep);}
+#mr-demo .mr-chiph{background:var(--mr-accent-tint);color:var(--mr-accent);}
+#mr-demo .mr-tablewrap{overflow-x:auto;}
+#mr-demo table{width:100%;border-collapse:collapse;min-width:540px;}
+#mr-demo th{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--mr-muted);font-weight:600;text-align:left;padding:6px 9px;border-bottom:1px solid var(--mr-border);}
+#mr-demo td{font-size:13.5px;padding:9px 9px;border-bottom:1px solid var(--mr-border);vertical-align:top;}
+#mr-demo tr.mr-row{cursor:pointer;}
+#mr-demo tr.mr-row:hover{background:var(--mr-panel2);}
+#mr-demo tr.mr-row.is-open{background:var(--mr-accent-tint);}
+#mr-demo tr.mr-dup td{color:var(--mr-muted);}
+#mr-demo .mr-tt{font-weight:600;display:flex;align-items:center;gap:5px;}
+#mr-demo .mr-tt svg{color:var(--mr-orange);flex:none;}
+#mr-demo .mr-tsub{font-size:11.5px;color:var(--mr-muted);margin-top:1px;}
+#mr-demo .mr-pill{display:inline-block;font-size:11.5px;font-weight:500;border-radius:999px;padding:2px 9px;white-space:nowrap;}
+#mr-demo .mr-pill[data-s="New"]{background:var(--mr-accent-tint);color:var(--mr-blue);}
+#mr-demo .mr-pill[data-s="Needs triage"]{background:rgba(194,121,15,.14);color:var(--mr-orange);}
+#mr-demo .mr-pill[data-s="Expert confirmed"]{background:rgba(91,95,199,.14);color:var(--mr-purple);}
+#mr-demo .mr-pill[data-s="Approved"]{background:rgba(221,163,0,.16);color:var(--mr-gold-deep);}
+#mr-demo .mr-pill[data-s="Replied"]{background:rgba(30,142,78,.13);color:var(--mr-green);}
+#mr-demo .mr-pill[data-s="Declined"]{background:var(--mr-panel2);color:var(--mr-muted);border:1px solid var(--mr-border);}
+#mr-demo .mr-pill[data-s="Duplicate"]{background:var(--mr-panel2);color:var(--mr-muted);border:1px solid var(--mr-border);}
+#mr-demo .mr-dl.ok{color:var(--mr-text);}
+#mr-demo .mr-dl.soon{color:var(--mr-orange);font-weight:500;}
+#mr-demo .mr-dl.over{color:var(--mr-red);font-weight:600;}
+#mr-demo td svg{color:var(--mr-muted);}
+#mr-demo tr.mr-flash{animation:mr-flash 1.6s ease-out 1;}
+@keyframes mr-flash{0%{background:var(--mr-accent-tint);}100%{background:transparent;}}
+#mr-demo tr.mr-detail > td{background:var(--mr-panel2);padding:14px 13px;border-bottom:1px solid var(--mr-border);}
+#mr-demo .mr-detailgrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr) minmax(0,1.15fr);gap:16px;}
+#mr-demo .mr-dh{font-size:11.5px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--mr-muted);margin-bottom:6px;}
+#mr-demo .mr-orig,#mr-demo .mr-json{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:11.5px;line-height:1.5;background:var(--mr-panel);border:1px solid var(--mr-border);border-radius:7px;padding:9px 10px;white-space:pre-wrap;word-break:break-word;margin:0;max-height:200px;overflow:auto;}
+#mr-demo .mr-metamini{font-size:11.5px;color:var(--mr-muted);margin-top:6px;}
+#mr-demo .mr-exp{display:block;width:100%;text-align:left;background:var(--mr-panel);border:1px solid var(--mr-border);border-radius:8px;padding:7px 10px;font-size:13px;color:var(--mr-text);cursor:pointer;font-family:inherit;margin-bottom:6px;}
+#mr-demo .mr-exp:hover{border-color:var(--mr-accent);}
+#mr-demo .mr-exp.is-selected{border-color:var(--mr-accent);background:var(--mr-accent-tint);}
+#mr-demo .mr-exp .nm{font-weight:500;}
+#mr-demo .mr-exp .lg{font-size:11px;color:var(--mr-muted);}
+#mr-demo .mr-exp .sc{font-size:11px;color:var(--mr-green);font-weight:600;}
+#mr-demo .mr-exp .rs{font-size:11px;color:var(--mr-muted);margin-top:2px;}
+#mr-demo .mr-exp.mr-unavail{opacity:.5;cursor:default;}
+#mr-demo .mr-exphint{font-size:11.5px;color:var(--mr-muted);margin:2px 0 7px;}
+#mr-demo textarea{width:100%;min-height:130px;resize:vertical;background:var(--mr-panel);border:1px solid var(--mr-border);border-radius:7px;padding:9px 10px;font-family:inherit;font-size:13px;color:var(--mr-text);line-height:1.5;}
+#mr-demo textarea:focus-visible{outline:2px solid var(--mr-accent);outline-offset:1px;}
+#mr-demo .mr-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:11px;}
+#mr-demo .mr-err{font-size:12px;color:var(--mr-red);margin-top:7px;}
+#mr-demo .mr-gate{font-size:11.5px;color:var(--mr-red);margin-top:8px;}
+#mr-demo .mr-sentchip{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:var(--mr-green);font-weight:500;}
+#mr-demo .mr-sentchip svg{color:var(--mr-green);}
+#mr-demo .mr-triagebtns{margin-top:8px;}
+#mr-demo .mr-dupnote{font-size:13px;color:var(--mr-muted);background:var(--mr-panel);border:1px dashed var(--mr-border);border-radius:7px;padding:10px 12px;}
+#mr-demo .mr-auditblock{grid-column:1 / -1;}
+#mr-demo .mr-audit{list-style:none;margin:0;padding:0;max-height:190px;overflow-y:auto;background:var(--mr-panel);border:1px solid var(--mr-border);border-radius:7px;padding:8px 10px;}
+#mr-demo .mr-audit li{font-size:11.5px;padding:2px 0 2px 14px;position:relative;color:var(--mr-text);}
+#mr-demo .mr-audit li::before{content:"";position:absolute;left:2px;top:9px;width:5px;height:5px;border-radius:50%;background:var(--mr-accent);}
+#mr-demo .mr-audit li .at{color:var(--mr-muted);margin-right:6px;white-space:nowrap;}
+#mr-demo .mr-feed{display:flex;flex-direction:column;gap:10px;max-height:400px;overflow-y:auto;padding-right:3px;}
+#mr-demo .mr-msg{display:flex;gap:8px;}
+#mr-demo .mr-ava{width:24px;height:24px;border-radius:50%;color:#fff;font-size:9.5px;font-weight:700;display:flex;align-items:center;justify-content:center;flex:none;margin-top:1px;}
+#mr-demo .mr-msgbody{min-width:0;flex:1;}
+#mr-demo .mr-msgmeta{display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+#mr-demo .mr-msgmeta b{font-size:12px;font-weight:600;}
+#mr-demo .mr-kind{font-size:9.5px;font-weight:700;letter-spacing:.05em;border-radius:4px;padding:1px 5px;}
+#mr-demo .mr-kind.k-alert{background:rgba(209,67,67,.14);color:var(--mr-red);}
+#mr-demo .mr-kind.k-ping{background:rgba(91,95,199,.15);color:var(--mr-purple);}
+#mr-demo .mr-kind.k-digest{background:rgba(30,142,78,.13);color:var(--mr-green);}
+#mr-demo .mr-kind.k-info{background:var(--mr-panel2);color:var(--mr-muted);border:1px solid var(--mr-border);}
+#mr-demo .mr-time{font-size:11px;color:var(--mr-muted);}
+#mr-demo .mr-msgtext{font-size:13px;margin-top:2px;white-space:pre-wrap;word-break:break-word;}
+#mr-demo .mr-empty{font-size:11.5px;color:var(--mr-muted);}
+#mr-demo .mr-footer{margin-top:18px;text-align:center;font-size:11.5px;color:var(--mr-muted);}
+@media (min-width:1600px){
+  #mr-demo .mr-panel{padding:16px;}
+  #mr-demo .mr-feed{max-height:480px;}
+  #mr-demo .mr-grid{gap:18px;}
+}
+@media (max-width:1520px){
+  #mr-demo .mr-grid{grid-template-columns:minmax(230px,280px) minmax(0,1fr);}
+  #mr-demo .mr-teams{grid-column:1 / -1;}
+  #mr-demo .mr-feed{max-height:330px;}
+}
+@media (max-width:1100px){#mr-demo .mr-col-lang{display:none;}#mr-demo .mr-pill{white-space:normal;}}
+@media (max-width:760px){
+  #mr-demo .mr-grid{grid-template-columns:1fr;}
+  #mr-demo .mr-detailgrid{grid-template-columns:1fr;}
+}
+</style>
+
+<header class="mr-header">
+  <div class="mr-brand">
+    <img class="mr-logo" src="images/Emblem_of_CU.png" alt="The Chinese University of Hong Kong emblem" onerror="this.hidden=true;document.getElementById('mr-logofb').hidden=false;">
+    <div class="mr-logo-fb" id="mr-logofb" hidden>CPRO</div>
+    <div>
+      <h1>CPRO 媒体请求自动化 — PRD 流程模拟器</h1>
+      <div class="mr-sub">Power Automate · 大学 M365 租户&nbsp;&nbsp;·&nbsp;&nbsp;企业级 LLM 端点（经 IT/安全审批）&nbsp;&nbsp;·&nbsp;&nbsp;Notion Requests / Experts&nbsp;&nbsp;·&nbsp;&nbsp;Teams #media-requests-alerts</div>
+    </div>
+  </div>
+  <div class="mr-headerright">
+    <div class="mr-daychip mr-num" id="mr-day">Day 1</div>
+    <label class="mr-switch">
+      <input type="checkbox" id="mr-outage">
+      <span class="mr-track" aria-hidden="true"></span>
+      <span>Notion 不可用（F-21）</span>
+    </label>
+  </div>
+</header>
+
+<div class="mr-metrics" id="mr-metrics"></div>
+
+<div class="mr-grid">
+  <aside class="mr-panel">
+    <div class="mr-panelh"><i data-lucide="inbox" aria-hidden="true"></i>接收模拟（F-01 / F-02）</div>
+    <div class="mr-samples" id="mr-samples"></div>
+    <div class="mr-panelh2">运维与监控</div>
+    <div class="mr-simrow">
+      <button class="mr-btn mr-grow" id="mr-nextday" type="button"><i data-lucide="calendar-days" aria-hidden="true"></i>推进 1 天</button>
+      <button class="mr-btn mr-grow" id="mr-sweep" type="button"><i data-lucide="alarm-clock" aria-hidden="true"></i>每日清扫 + 对账</button>
+    </div>
+    <div class="mr-simrow">
+      <button class="mr-btn mr-grow" id="mr-digest" type="button"><i data-lucide="file-text" aria-hidden="true"></i>每周摘要（F-18）</button>
+      <button class="mr-btn mr-grow" id="mr-canary" type="button"><i data-lucide="crosshair" aria-hidden="true"></i>Canary（F-22）</button>
+    </div>
+    <div class="mr-simrow">
+      <button class="mr-btn mr-grow" id="mr-reconcile" type="button" hidden><i data-lucide="refresh-ccw" aria-hidden="true"></i>恢复并补同步</button>
+    </div>
+    <label class="mr-switch" style="margin-top:4px">
+      <input type="checkbox" id="mr-sendfail">
+      <span class="mr-track" aria-hidden="true"></span>
+      <span>下一次发送失败（模拟 §9）</span>
+    </label>
+    <p class="mr-note">发送仅在 Approved 后放行（F-14/15）；敏感请求跳过 AI 起草（F-13）；邮箱与表单始终是原始记录来源（NF-03）；每个请求保留完整处理记录（F-24）。</p>
+  </aside>
+
+  <main>
+    <section class="mr-panel">
+      <div class="mr-panelh"><i data-lucide="workflow" aria-hidden="true"></i>流程运行 <span class="mr-flowtitle" id="mr-flowtitle"></span></div>
+      <ol class="mr-steps" id="mr-steps" aria-live="polite">
+        <li class="mr-step" data-s="todo"><span class="mr-dot" aria-hidden="true"></span><div><div class="t">点击左侧样例，观察一次完整流程</div><div class="sub">含去重、AI 提取、建页分配、专家排序、人工审批门控与发送保护。</div></div></li>
+      </ol>
+    </section>
+    <section class="mr-panel">
+      <div class="mr-panelh"><i data-lucide="database" aria-hidden="true"></i>Notion — Requests 数据库 <span style="font-weight:400;color:var(--mr-muted)">· 点击行以所有者身份处理</span></div>
+      <div class="mr-tablewrap">
+        <table>
+          <thead><tr><th>请求</th><th>媒体</th><th class="mr-col-lang">语言</th><th>截止</th><th>状态</th><th>所有者</th><th>专家</th><th>来源</th></tr></thead>
+          <tbody id="mr-rows"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <aside class="mr-panel mr-teams">
+    <div class="mr-panelh mr-teal"><i data-lucide="message-square" aria-hidden="true"></i>Teams · #media-requests-alerts</div>
+    <div class="mr-feed" id="mr-feed" aria-live="polite"></div>
+  </aside>
+</div>
+<footer class="mr-footer">© 2026 Zhuo Huang for CPRO media-workflow-simulator.html. All Rights Reserved.</footer>
+</div>
+
+<script>
+(function(){
+'use strict';
+var HOUR=3600e3, DAY=24*HOUR, now0=Date.now();
+var OWNERS=['Maria','Ken','Wei','Sofia'];
+var EXPERTS=[
+  {name:'Prof. Lena Hartmann',dept:'计算机科学系',areas:['AI','funding','policy'],langs:['EN','DE'],avail:true},
+  {name:'Prof. 陈伟 (Wei Chen)',dept:'物理系',areas:['quantum','research'],langs:['ZH','EN'],avail:true},
+  {name:'Dr. Sofia Marques',dept:'地球科学系',areas:['sustainability','climate'],langs:['EN','ES'],avail:true},
+  {name:'Prof. David Okafor',dept:'管理学院',areas:['finance','funding'],langs:['EN'],avail:true},
+  {name:'Prof. 林嘉欣 (Jiaxin Lin)',dept:'医学院',areas:['clinical','health'],langs:['ZH','EN'],avail:true},
+  {name:'Dr. Amir Rahimi',dept:'信息科学办公室',areas:['AI','privacy'],langs:['EN','ZH'],avail:true},
+  {name:'Prof. Grace Yeung',dept:'物理系',areas:['quantum','AI'],langs:['EN'],avail:false}
+];
+
+function $(id){return document.getElementById(id);}
+function pad(n){return n<10?'0'+n:''+n;}
+function sleep(ms){return new Promise(function(r){setTimeout(r,ms);});}
+function fmtH(ms){var h=Math.round(ms/HOUR);if(h>=48){return Math.round(h/24)+'天';}if(h>=24){return '1天+';}return h+'小时';}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function refreshIcons(){if(window.lucide&&lucide.createIcons){lucide.createIcons({attrs:{width:14,height:14}});}}
+
+var state={simNow:now0,day:1,notionDown:false,openId:null,ownerIdx:1,nextId:4,dupsBlocked:0,alerts:0,busy:false,msgCount:0,pending:[],run:null,sendFail:false,requests:[],teams:[]};
+
+function clock(){state.msgCount++;var m=540+state.msgCount*3;var hh=Math.floor(m/60)%24,mm=m%60;return 'Day '+state.day+' '+pad(hh)+':'+pad(mm);}
+
+function post(kind,from,text){
+  state.teams.push({time:clock(),kind:kind,from:from,text:text});
+  var feed=$('mr-feed');
+  var A={'Workflow bot':['WB','var(--mr-blue)'],'每日清扫':['DS','var(--mr-purple)'],'每周摘要':['WD','var(--mr-green)'],'Canary':['CY','var(--mr-orange)']}[from]||['?','var(--mr-muted)'];
+  var d=document.createElement('div');d.className='mr-msg';
+  d.innerHTML='<div class="mr-ava" style="background:'+A[1]+'">'+A[0]+'</div><div class="mr-msgbody"><div class="mr-msgmeta"><b>'+esc(from)+'</b><span class="mr-kind k-'+kind+'">'+kind.toUpperCase()+'</span><span class="mr-time mr-num">'+esc(state.teams[state.teams.length-1].time)+'</span></div><div class="mr-msgtext"></div></div>';
+  d.querySelector('.mr-msgtext').textContent=text;
+  feed.appendChild(d);feed.scrollTop=feed.scrollHeight;
+}
+function audit(r,text){r.audit.push({t:clock(),txt:text});}
+
+function mkExtraction(o){return o;}
+function baseAudit(){return [];}
+
+function mkRequest(s,status){
+  return {id:'MR-'+pad(state.nextId++),title:s.title,journalist:s.journalist,email:s.email,outlet:s.outlet,
+    lang:s.lang,topics:(s.topics||[]).slice(),source:s.kind==='form'?'Form':'Email',
+    msgId:'<'+Math.random().toString(36).slice(2,8)+'@media-intake>',
+    received:state.simNow,deadline:s.deadline?state.simNow+s.deadline:null,status:status,
+    owner:OWNERS[state.ownerIdx++%OWNERS.length],expert:null,sensitive:!!s.sensitive,
+    confidence:s.confidence||null,sentAt:null,original:s.original,draft:s.sensitive?'':(s.draft||''),
+    dupOf:null,dupCount:0,suggestions:null,extraction:null,audit:baseAudit(),canary:false};
+}
+
+/* ---------- 预置数据 ---------- */
+var R1={id:'MR-01',title:'采访 — AI 研究资助',journalist:'Rachel Donnelly',email:'r.donnelly@bloomberg.net',
+  outlet:'Bloomberg',lang:'EN',topics:['AI','funding'],source:'Email',msgId:'<a91f40@bloomberg.net>',
+  received:now0-26*HOUR,deadline:now0+46*HOUR,status:'Replied',owner:'Maria',expert:'Prof. Lena Hartmann',
+  sensitive:false,confidence:0.95,sentAt:now0-21*HOUR,dupOf:null,dupCount:0,suggestions:null,canary:false,
+  original:'Hi,\n\nBloomberg is preparing a feature on national AI research funding and I would like to interview a university expert on the new programmes.\n\nCould we arrange 30 minutes this week?\n\nBest,\nRachel Donnelly',
+  draft:'Dear Ms Donnelly,\n\nThank you for reaching out. Prof. Lena Hartmann can speak to the AI funding programmes and is available Thursday 10:00–11:30. A Teams or in-person interview both work.\n\nKind regards,\nCPRO Media Office',
+  extraction:mkExtraction({journalist:'Rachel Donnelly',outlet:'Bloomberg',language:'EN',topics:['AI','funding'],deadline:'2026-11-09',format:'interview',sensitivity:'none',_confidence:0.95}),
+  audit:[
+    {t:'Day 1 09:02',txt:'收到 media@ 新邮件（F-01）— Message-ID <a91f40@bloomberg.net>'},
+    {t:'Day 1 09:02',txt:'去重查询无匹配（F-04）'},
+    {t:'Day 1 09:03',txt:'AI 提取成功，Schema 校验通过，置信度 0.95（F-06）'},
+    {t:'Day 1 09:03',txt:'Notion 页面创建，状态 New；轮询分配所有者 Maria（F-08/09）'},
+    {t:'Day 1 09:04',txt:'专家排序写入 Top-3，首位 Prof. Lena Hartmann（F-10）'},
+    {t:'Day 1 11:20',txt:'所有者确认专家 Hartmann 与周四时段 → Expert confirmed（F-11）'},
+    {t:'Day 1 11:22',txt:'AI 生成英文回复草稿（F-12）'},
+    {t:'Day 1 13:40',txt:'所有者编辑并批准 → Approved（F-14）'},
+    {t:'Day 1 13:41',txt:'经 media@ 发送成功 → Replied，记录发送时间（F-15）'}
+  ]};
+var R2={id:'MR-02',title:'采访 — 招生数据隐私',journalist:'Yuki Tanaka',email:'y.tanaka@nhk.jp',
+  outlet:'NHK',lang:'EN',topics:['privacy'],source:'Email',msgId:'<c07de2@nhk.jp>',
+  received:now0-3*HOUR,deadline:now0+20*HOUR,status:'New',owner:'Wei',expert:null,
+  sensitive:false,confidence:0.89,sentAt:null,dupOf:null,dupCount:0,suggestions:null,canary:false,
+  original:'Hello,\n\nNHK is reporting on how universities use student data in admissions. Could I speak with a specialist this week?\n\nRegards,\nYuki Tanaka',
+  draft:'Dear Ms Tanaka,\n\nThank you for your interest. Dr. Amir Rahimi studies data governance in higher education and could speak Friday afternoon.\n\nBest regards,\nCPRO Media Office',
+  extraction:mkExtraction({journalist:'Yuki Tanaka',outlet:'NHK',language:'EN',topics:['privacy'],deadline:'2026-11-08',format:'interview',sensitivity:'none',_confidence:0.89}),
+  audit:[
+    {t:'Day 1 06:10',txt:'收到 media@ 新邮件（F-01）— Message-ID <c07de2@nhk.jp>'},
+    {t:'Day 1 06:10',txt:'去重查询无匹配（F-04）'},
+    {t:'Day 1 06:11',txt:'AI 提取成功，置信度 0.89（F-06）'},
+    {t:'Day 1 06:11',txt:'页面创建，状态 New；分配所有者 Wei（F-08/09）'},
+    {t:'Day 1 06:12',txt:'专家排序 Top-3 写入：Rahimi（AI·privacy 命中）等（F-10）'}
+  ]};
+var R3={id:'MR-03',title:'专访 — 体育场馆建设',journalist:'王磊',email:'wanglei@nandu.example',
+  outlet:'南方都市报',lang:'ZH',topics:['sports'],source:'Form',msgId:'form-2f9d41',
+  received:now0-30*HOUR,deadline:now0-6*HOUR,status:'Declined',owner:'Ken',expert:null,
+  sensitive:false,confidence:0.71,sentAt:null,dupOf:null,dupCount:0,suggestions:[],canary:false,
+  original:'[网页表单提交]\n姓名：王磊\n媒体：南方都市报\n请求：想了解学校新体育场馆的建设进展与预算，希望专访相关负责人。',
+  draft:'',
+  extraction:mkExtraction({journalist:'王磊',outlet:'南方都市报',language:'ZH',topics:['sports'],deadline:'2026-11-06',format:'interview',sensitivity:'none',_confidence:0.71}),
+  audit:[
+    {t:'Day 1 04:40',txt:'收到网页表单提交（F-02）— 提交 ID form-2f9d41'},
+    {t:'Day 1 04:41',txt:'去重无匹配；AI 提取置信度 0.71，Schema 通过（F-06）'},
+    {t:'Day 1 04:41',txt:'页面创建 New；分配所有者 Ken（F-08/09）'},
+    {t:'Day 1 04:42',txt:'专家排序：Experts 库无可采访的匹配专家（F-10）'},
+    {t:'Day 1 09:30',txt:'所有者复核：主题超出专家库范围 → Declined（已礼貌婉拒并说明）'}
+  ]};
+state.requests=[R1,R2,R3];
+
+/* ---------- 样例输入 ---------- */
+var SAMPLES=[
+  {key:'dup',isDup:true,kind:'email',icon:'mail',label:'重复跟进（Rachel 同主题）',
+   title:'跟进 — AI 研究资助',journalist:'Rachel Donnelly',email:'r.donnelly@bloomberg.net',
+   outlet:'Bloomberg',lang:'EN',topics:['AI','funding'],deadline:46*HOUR,confidence:0.9,sensitive:false,lowConf:false,
+   original:'Just following up on my note below — would Thursday still work for Prof. Hartmann?\n\nBest,\nRachel',draft:''},
+  {key:'zh',kind:'email',icon:'mail',label:'中文请求 — 量子计算研究',
+   title:'量子计算研究进展专访',journalist:'王小明',email:'wangxm@stdaily.com',
+   outlet:'《科技日报》',lang:'ZH',topics:['quantum','research'],deadline:48*HOUR,confidence:0.93,sensitive:false,lowConf:false,
+   original:'您好：\n\n我们正在筹备一期关于量子计算研究进展的专题报道，希望采访贵校相关专家，介绍最新成果与应用前景。如方便，希望本周内安排 45 分钟线上采访。\n\n盼复。\n\n王小明 《科技日报》',
+   draft:'尊敬的王记者：\n\n感谢您的采访邀请。陈伟教授长期从事量子计算研究，可于本周四下午接受约 45 分钟的线上采访。\n\n如时间合适，我们再确认具体时段。\n\n大学传讯处'},
+  {key:'form',kind:'form',icon:'file-text',label:'网页表单 — 校园可持续发展',
+   title:'专题 — 校园可持续发展计划',journalist:'Ana Ruiz',email:'a.ruiz@guardian.example',
+   outlet:'The Guardian',lang:'EN',topics:['sustainability'],deadline:72*HOUR,confidence:0.91,sensitive:false,lowConf:false,
+   original:'[网页表单提交]\nName: Ana Ruiz\nOutlet: The Guardian\nRequest: Working on a feature about the new campus sustainability plan — could I tour the site and interview the lead?\nPreferred: any day this week',draft:''},
+  {key:'embargo',kind:'email',icon:'lock',label:'敏感请求 — 禁运临床试验（F-13）',
+   title:'禁运 — 临床试验结果',journalist:'Tomas Fischer',email:'t.fischer@ghwire.example',
+   outlet:'Global Health Wire',lang:'EN',topics:['clinical','health'],deadline:60*HOUR,confidence:0.97,sensitive:true,lowConf:false,
+   original:'Dear team,\n\nWe are preparing coverage of the multi-site clinical trial results. The findings are embargoed until 20 November; please treat all details as confidential.\n\nCould we schedule an interview under embargo terms?\n\nTomas Fischer',draft:''},
+  {key:'vague',kind:'email',icon:'mail',label:'模糊询件 — 低置信度（F-07）',
+   title:'一般咨询 — 主题不明',journalist:'J. Lester',email:'j.lester@cityherald.example',
+   outlet:'City Herald',lang:'EN',topics:[],deadline:null,confidence:0.42,sensitive:false,lowConf:true,
+   original:'Hi — we’d love to chat with someone at the university sometime soon. Thanks!',draft:''},
+  {key:'ai',kind:'email',icon:'mail',label:'英文请求 — AI 政策',
+   title:'Interview — AI policy and governance',journalist:'Emma Clarke',email:'e.clarke@reuters.example',
+   outlet:'Reuters',lang:'EN',topics:['AI','policy'],deadline:40*HOUR,confidence:0.94,sensitive:false,lowConf:false,
+   original:'Hello,\n\nReuters is planning a piece on university AI governance policies. Could we arrange a short interview with a relevant expert this week?\n\nBest,\nEmma Clarke',draft:''}
+];
+
+/* ---------- 专家排序（F-10） ---------- */
+function rankExperts(req){
+  return EXPERTS.filter(function(e){return e.avail;}).map(function(e){
+    var hits=req.topics.filter(function(t){return e.areas.indexOf(t)>=0;});
+    var langOk=e.langs.indexOf(req.lang)>=0;
+    return {name:e.name,dept:e.dept,langs:e.langs.join(' · '),score:hits.length,langOk:langOk,
+      reason:'主题命中 '+(hits.length?hits.join('、'):'无')+'（'+hits.length+'/'+req.topics.length+'）'+(req.topics.length?' · ':' · ')+(langOk?'语言 '+req.lang+' ✓':'语言需协调')};
+  }).filter(function(e){return e.score>0;}).sort(function(a,b){return (b.score+(b.langOk?0.5:0))-(a.score+(a.langOk?0.5:0));}).slice(0,3);
+}
+
+/* ---------- 流程运行（PRD 5.1/5.2） ---------- */
+function stepsFor(){return [
+  {t:'触发 — media@ 新邮件 / 表单新提交',s:'todo',ai:false,human:false,sub:''},
+  {t:'规范化与去重（Message-ID → 发件人+主题）',s:'todo',ai:false,human:false,sub:''},
+  {t:'AI 字段提取（Schema 校验 + 置信度）',s:'todo',ai:true,human:false,sub:''},
+  {t:'创建 Notion 页面（New）+ 轮询分配所有者',s:'todo',ai:false,human:false,sub:''},
+  {t:'AI 专家排序 — Top-3 建议写入页面',s:'todo',ai:true,human:false,sub:''},
+  {t:'人工确认专家与时间 → Expert confirmed',s:'todo',ai:false,human:true,sub:''},
+  {t:'AI 草稿（非敏感）/ 人工撰写（敏感）→ 批准',s:'todo',ai:true,human:true,sub:''},
+  {t:'发送保护 — 仅 Approved 经 media@ 发送',s:'todo',ai:false,human:false,sub:''}
+];}
+function renderFlow(){
+  var run=state.run;if(!run){return;}
+  $('mr-flowtitle').textContent=run.title?'— '+run.title:'';
+  $('mr-steps').innerHTML=run.steps.map(function(st){
+    var dot=st.s==='done'?'✓':(st.s==='fail'?'✕':(st.s==='skip'?'—':(st.s==='wait'?'…':'')));
+    return '<li class="mr-step" data-s="'+st.s+'"><span class="mr-dot" aria-hidden="true">'+dot+'</span><div><div class="t">'+esc(st.t)+(st.ai?'<span class="mr-chipai">AI</span>':'')+(st.human?'<span class="mr-chiph">HUMAN</span>':'')+'</div><div class="sub">'+esc(st.sub)+'</div></div></li>';
+  }).join('');
+}
+
+async function run(s){
+  if(state.busy){return;}
+  state.busy=true;refreshSamples();
+  var st=stepsFor();
+  state.run={title:s.title,steps:st};
+  renderFlow();
+  try{
+    st[0].s='active';st[0].sub=s.kind==='email'?('邮件来自 '+s.email):'网页表单提交';renderFlow();await sleep(600);
+    st[0].s='done';renderFlow();
+
+    st[1].s='active';st[1].sub='规范化字段并记录接收时间（F-03）';renderFlow();await sleep(450);
+    var hit=null;
+    for(var i=0;i<state.requests.length;i++){
+      var r=state.requests[i];
+      if(r.status==='Duplicate'){continue;}
+      if(r.email===s.email&&s.topics&&s.topics.some(function(t){return r.topics.indexOf(t)>=0;})){hit=r;break;}
+    }
+    if(hit){
+      st[1].s='done';st[1].sub='匹配 '+hit.id+'（发件人+主题）→ 追加原文、标记 Duplicate、停止新建（F-05）';
+      renderFlow();
+      var d=mkRequest(s,'Duplicate');d.dupOf=hit.id;d.owner=hit.owner;
+      audit(d,'判定为重复：按发件人+主题匹配 '+hit.id+'，原文已追加至既有页面（F-05）');
+      state.requests.push(d);
+      hit.dupCount++;audit(hit,'收到重复跟进，已并入本页面（不二次回复）');
+      state.dupsBlocked++;
+      post('info','Workflow bot','重复请求：来自 '+hit.journalist+' 的跟进已追加到 '+hit.id+'（所有者 '+hit.owner+'），不会创建第二个请求或二次回复。');
+      for(var j=2;j<st.length;j++){st[j].s='skip';st[j].sub='重复——流程终止';}
+      renderFlow();renderTable();renderMetrics();
+      return;
+    }
+    st[1].s='done';st[1].sub='无匹配——首见请求';renderFlow();await sleep(300);
+
+    st[2].s='active';st[2].sub='提取记者 / 媒体 / 主题 / 语言 / 截止 / 格式 / 敏感标志…';renderFlow();await sleep(850);
+    st[2].s='done';
+    if(s.lowConf){st[2].sub='置信度 0.42，Schema ✗（主题、截止缺失）→ Needs triage 人工补齐（F-07）';}
+    else{st[2].sub='置信度 '+(s.confidence||0.9).toFixed(2)+'，Schema ✓，语言 '+s.lang;}
+    renderFlow();await sleep(400);
+
+    st[3].s='active';renderFlow();
+    if(state.notionDown){
+      for(var k=1;k<=3;k++){st[3].sub='Notion API 503 — 重试 '+k+'/3（NF-02）';renderFlow();await sleep(700);}
+      st[3].s='fail';st[3].sub='三次重试失败——邮件保留并标记，等待对账补同步（F-19/20）';
+      renderFlow();
+      state.pending.push(s);state.alerts++;
+      post('alert','Workflow bot','⚠ Notion 不可用：“'+s.title+'”创建失败（重试 3 次）。邮件已标记并保留在 media@；依赖 Notion 的审批与发送暂停（F-21）。');
+      for(var m=4;m<st.length;m++){st[m].s='skip';st[m].sub='暂停——等待 Notion 恢复';}
+      renderMetrics();
+      return;
+    }
+    await sleep(500);
+    var req=mkRequest(s,s.lowConf?'Needs triage':'New');
+    req.extraction=mkExtraction({journalist:s.journalist,outlet:s.outlet,language:s.lang,
+      topics:s.topics.length?s.topics:null,deadline:s.deadline?new Date(state.simNow+s.deadline).toISOString().slice(0,10):null,
+      format:'interview',sensitivity:s.sensitive?'embargo-flagged':'none',_confidence:s.confidence});
+    state.requests.push(req);
+    audit(req,'触发：'+(s.kind==='email'?'邮件（F-01）':'表单（F-02）')+' '+s.email);
+    audit(req,'去重无匹配（F-04）；AI 提取'+(s.lowConf?'置信度低 → Needs triage（F-07）':'成功，Schema 通过（F-06）'));
+    audit(req,'页面创建 New；轮询分配所有者 '+req.owner+'（F-08/09）');
+    st[3].s='done';st[3].sub=req.id+' 已创建 · 所有者 '+req.owner+'（轮询）· 来源 '+req.source;
+    post('ping','Workflow bot','@'+req.owner+' — 新请求 '+req.id+'“'+req.title+'”。截止：'+(req.deadline?('还有 '+fmtH(req.deadline-state.simNow)):'未提供')+'。');
+    renderFlow();renderTable();flashRow(req.id);renderMetrics();await sleep(400);
+
+    st[4].s='active';renderFlow();await sleep(700);
+    var sug=rankExperts(req);req.suggestions=sug;
+    if(sug.length){st[4].s='done';st[4].sub=sug.map(function(x){return x.name.split(' ')[x.name.split(' ').length-1];}).join(' · ')+' → 写入页面';audit(req,'专家排序 Top-3 写入：'+sug[0].name+' 等（F-10）');}
+    else{st[4].s='done';st[4].sub='Experts 库无可采访的匹配专家——由所有者人工决定（F-10）';audit(req,'专家排序：无匹配，转人工（F-10）');}
+    renderTable();await sleep(300);
+
+    st[5].s='wait';st[5].sub='等待所有者 '+req.owner+' —— 点击表格行确认专家与时间';
+    st[6].s='todo';st[7].s='todo';
+    renderFlow();
+  } finally {
+    state.busy=false;refreshSamples();
+  }
+}
+
+/* ---------- 表格与详情 ---------- */
+function refreshSamples(){
+  $('mr-samples').innerHTML=SAMPLES.map(function(s){
+    return '<button type="button" class="mr-sample cursor-interaction" data-key="'+s.key+'"'+(state.busy?' disabled':'')+'><i data-lucide="'+s.icon+'" aria-hidden="true"></i><span>'+esc(s.label)+'</span><span class="mr-kb">'+(s.kind==='form'?'Form':'Email')+'</span></button>';
+  }).join('');
+  refreshIcons();
+}
+function relDeadline(r){
+  if(!r.deadline){return {txt:'—',cls:''};}
+  var left=r.deadline-state.simNow;
+  if(left<0){return {txt:'逾期 '+fmtH(-left),cls:'over'};}
+  if(left<=24*HOUR){return {txt:'还有 '+fmtH(left),cls:'soon'};}
+  return {txt:'还有 '+fmtH(left),cls:'ok'};
+}
+function lastToken(n){var p=n.split(' ');return p[p.length-1];}
+
+function detailHtml(r){
+  if(r.status==='Duplicate'){
+    return '<div class="mr-dupnote">重复请求——原文已追加到既有页面 <b>'+esc(r.dupOf)+'</b>（F-05）。不创建第二个常规请求、不进入回复发送流程（6.3）。</div>';
+  }
+  var left='';
+  if(r.status==='Needs triage'){
+    left='<div class="mr-exphint">AI 置信度不足，需人工补齐字段后进入正常队列（F-07）。</div>'+
+      '<button type="button" class="mr-btn mr-primary mr-triagebtns" data-act="confirm" data-rid="'+r.id+'"><i data-lucide="user-check" aria-hidden="true"></i>人工补齐（主题 general · 截止 +3 天）→ New</button>';
+  } else {
+    var list,manual=false;
+    if(r.suggestions&&r.suggestions.length){list=r.suggestions;}
+    else{list=EXPERTS.map(function(e){return {name:e.name,dept:e.dept,langs:e.langs.join(' · '),score:0,langOk:true,reason:'',avail:e.avail};});manual=true;}
+    left='<div class="mr-exphint">'+(manual?'无 AI 匹配——请从 Experts 数据库人工挑选：':'AI 排序建议（Top-3）——点击确认（F-10/11）：')+'</div>'+
+      list.map(function(e){
+        var sel=r.expert===e.name?' is-selected':'';
+        var unavail=(e.avail===false)?' mr-unavail':'';
+        var dis=(e.avail===false)?' disabled':'';
+        var sc=e.score>0?'<span class="sc">匹配 '+e.score+'</span>':'';
+        var rs=e.reason?'<div class="rs">'+esc(e.reason)+(e.avail===false?' · 当前不可采访（Experts 库标记）':'')+'</div>':'';
+        return '<button type="button" class="mr-exp cursor-interaction'+sel+unavail+'" data-act="expert" data-rid="'+r.id+'" data-name="'+esc(e.name)+'"'+dis+'><span class="nm">'+esc(e.name)+'</span> <span class="lg">'+esc(e.dept)+' · '+esc(e.langs)+'</span>'+sc+rs+'</button>';
+      }).join('');
+  }
+  var draftLabel=r.sensitive?'敏感请求——已跳过 AI 起草，请人工撰写（F-13）':'回复草稿（AI 生成，可编辑）——批准前不会发送（F-12/14）';
+  var actions='',gate='';
+  if(r.status==='Replied'){
+    actions='<span class="mr-sentchip"><i data-lucide="check-circle-2" aria-hidden="true"></i>已于 '+fmtH(state.simNow-r.sentAt)+' 前发送 · 一个工作日内：'+((r.sentAt-r.received)<=24*HOUR?'✓':'✗')+' · 记录见处理记录（F-15）</span>';
+  } else if(r.status==='Declined'){
+    actions='<span class="mr-pill" data-s="Declined">Declined</span><span class="mr-exphint" style="margin:0">已婉拒——不进入发送流程。</span>';
+  } else {
+    if(state.notionDown){gate='<div class="mr-gate"><i data-lucide="shield-alert" aria-hidden="true"></i> Notion 不可用——审批与发送已暂停（F-21），恢复后可继续。</div>';}
+    actions=
+      '<button type="button" class="mr-btn" data-act="approve" data-rid="'+r.id+'"'+(r.status==='Approved'||state.notionDown?' disabled':'')+'><i data-lucide="user-check" aria-hidden="true"></i>'+(r.status==='Approved'?'已批准':'批准（Approved）')+'</button>'+
+      '<button type="button" class="mr-btn mr-primary" data-act="send" data-rid="'+r.id+'"'+(r.status!=='Approved'||state.notionDown?' disabled':'')+'><i data-lucide="send" aria-hidden="true"></i>经 media@ 发送</button>'+
+      '<button type="button" class="mr-btn" data-act="decline" data-rid="'+r.id+'"'+(state.notionDown?' disabled':'')+'><i data-lucide="x-circle" aria-hidden="true"></i>婉拒（Declined）</button>'+
+      '<span class="mr-pill" data-s="'+r.status+'">'+r.status+'</span>'+gate;
+  }
+  var auditHtml=r.audit.map(function(a){return '<li><span class="at mr-num">'+esc(a.t)+'</span>'+esc(a.txt)+'</li>';}).join('');
+  return '<div class="mr-detailgrid">'+
+    '<div><div class="mr-dh">原始请求（来源记录）</div><pre class="mr-orig" data-pre="orig"></pre><div class="mr-metamini mr-num">接收 '+new Date(r.received).toISOString().slice(0,16).replace('T',' ')+' UTC · '+esc(r.msgId)+' · 来源 '+r.source+(r.sensitive?' · <b style="color:var(--mr-orange)">敏感</b>':'')+'</div></div>'+
+    '<div><div class="mr-dh">AI 提取（Schema 校验）</div><pre class="mr-json" data-pre="json"></pre><div style="height:8px"></div><div class="mr-dh">专家建议</div>'+left+'</div>'+
+    '<div><div class="mr-dh">'+draftLabel+'</div><textarea data-draft="'+r.id+'" aria-label="回复草稿"></textarea><div class="mr-actions">'+actions+'</div><div class="mr-err" role="alert" data-err hidden></div></div>'+
+    '<div class="mr-auditblock"><div class="mr-dh">处理记录（F-24 审计）</div><ul class="mr-audit">'+(auditHtml||'<li>暂无记录</li>')+'</ul></div>'+
+  '</div>';
+}
+
+function renderTable(){
+  var tb=$('mr-rows');
+  tb.innerHTML=state.requests.map(function(r){
+    var dl=relDeadline(r);
+    var open=state.openId===r.id;
+    var sens=r.sensitive?'<i data-lucide="lock" aria-hidden="true"></i>':'';
+    var sub=r.status==='Duplicate'?('↳ 并入 '+esc(r.dupOf)):esc(r.journalist)+(r.dupCount?(' · 已合并 '+r.dupCount+' 条重复'):'');
+    var row='<tr class="mr-row cursor-interaction'+(open?' is-open':'')+(r.status==='Duplicate'?' mr-dup':'')+'" data-id="'+r.id+'">'+
+      '<td><div class="mr-tt">'+esc(r.title)+' '+sens+'</div><div class="mr-tsub">'+sub+'</div></td>'+
+      '<td>'+esc(r.outlet)+'</td><td class="mr-col-lang">'+r.lang+'</td>'+
+      '<td><span class="mr-dl mr-num '+dl.cls+'">'+dl.txt+'</span></td>'+
+      '<td><span class="mr-pill" data-s="'+r.status+'">'+r.status+'</span></td>'+
+      '<td>'+esc(r.owner)+'</td><td>'+(r.expert?esc(lastToken(r.expert)):'—')+'</td>'+
+      '<td><i data-lucide="'+(r.source==='Form'?'file-text':'mail')+'" aria-hidden="true"></i></td></tr>';
+    if(open){row+='<tr class="mr-detail"><td colspan="8">'+detailHtml(r)+'</td></tr>';}
+    return row;
+  }).join('');
+  state.requests.forEach(function(r){
+    if(state.openId!==r.id){return;}
+    var tr=tb.querySelector('tr[data-id="'+r.id+'"]');
+    if(!tr){return;}
+    var next=tr.nextElementSibling;
+    if(next&&next.classList.contains('mr-detail')){
+      next.querySelector('[data-pre="orig"]').textContent=r.original;
+      next.querySelector('[data-pre="json"]').textContent=JSON.stringify(r.extraction,null,1);
+      var ta=next.querySelector('textarea[data-draft]');
+      ta.value=r.draft;
+      ta.addEventListener('input',function(){r.draft=ta.value;});
+    }
+  });
+  refreshIcons();
+}
+function flashRow(id){
+  var tr=$('mr-rows').querySelector('tr[data-id="'+id+'"]');
+  if(tr){tr.classList.add('mr-flash');tr.scrollIntoView({block:'nearest',behavior:'smooth'});}
+}
+function renderMetrics(){
+  var real=state.requests.filter(function(r){return r.status!=='Duplicate';});
+  var replied=real.filter(function(r){return r.status==='Replied';});
+  var within=replied.filter(function(r){return (r.sentAt-r.received)<=24*HOUR;});
+  var open=real.filter(function(r){return ['New','Needs triage','Expert confirmed','Approved'].indexOf(r.status)>=0;});
+  var unrecon=state.pending.length;
+  function chip(l,v){return '<div class="mr-chip"><div class="l">'+l+'</div><div class="v mr-num">'+v+'</div></div>';}
+  function chipBad(bad,l,v){return '<div class="mr-chip'+(bad?' bad':'')+'"><div class="l">'+l+'</div><div class="v mr-num">'+v+'</div></div>';}
+  $('mr-metrics').innerHTML=
+    chip('请求（开立 '+open.length+'）',real.length)+
+    chip('1 个工作日内回复（目标 ≥90%）',replied.length?(Math.round(within.length/replied.length*100)+'%（'+within.length+'/'+replied.length+'）'):'—')+
+    chip('重复拦截',state.dupsBlocked)+
+    chipBad(unrecon>0,'未同步 / 丢失',unrecon)+
+    chip('告警',state.alerts);
+  $('mr-reconcile').hidden=!(unrecon>0);
+}
+function err(rid,msg){
+  var tr=$('mr-rows').querySelector('tr[data-id="'+rid+'"]');
+  if(!tr){return;}
+  var d=tr.nextElementSibling.querySelector('[data-err]');
+  d.textContent=msg;d.hidden=false;
+  setTimeout(function(){d.hidden=true;},3500);
+}
+function findReq(id){return state.requests.find(function(x){return x.id===id;});}
+
+/* ---------- 行内操作 ---------- */
+$('mr-rows').addEventListener('click',function(e){
+  var btn=e.target.closest('button[data-act]');
+  if(btn){
+    var r=findReq(btn.dataset.rid);
+    if(!r){return;}
+    var act=btn.dataset.act;
+    if(act==='expert'){
+      r.expert=btn.dataset.name;
+      if(r.status==='New'){r.status='Expert confirmed';}
+      audit(r,'所有者确认专家 '+r.expert+'（F-11）→ Expert confirmed');
+      renderTable();
+    } else if(act==='confirm'){
+      r.status='New';r.deadline=state.simNow+3*DAY;
+      r.topics=r.topics.length?r.topics:['general'];
+      r.extraction.topics=r.extraction.topics||['general'];
+      r.extraction.deadline=new Date(r.deadline).toISOString().slice(0,10);
+      r.extraction._confidence=String(r.extraction._confidence)+' → 人工补齐';
+      r.suggestions=r.suggestions&&r.suggestions.length?r.suggestions:rankExperts(r);
+      audit(r,'人工补齐字段：主题 general、截止 +3 天 → New（F-07）');
+      post('ping','Workflow bot','@'+r.owner+' — '+r.id+' 已完成人工分拣，截止设为 3 天内。');
+      renderTable();
+    } else if(act==='approve'){
+      if(!r.expert){err(r.id,'请先选择一位专家。');return;}
+      if(!r.draft||!r.draft.trim()){err(r.id,r.sensitive?'敏感请求需人工撰写回复后才能批准（F-13）。':'请保留或撰写草稿后再批准。');return;}
+      r.status='Approved';
+      audit(r,'所有者编辑并批准回复 → Approved（F-14）');
+      post('info','Workflow bot',r.id+' 已由 '+r.owner+' 批准——发送解锁（仅 Approved 可发送）。');
+      renderTable();
+    } else if(act==='send'){
+      if(r.status!=='Approved'){return;}
+      if(state.sendFail){
+        state.sendFail=false;$('mr-sendfail').checked=false;
+        state.alerts++;
+        audit(r,'发送失败（SMTP 模拟）：状态保持 Approved，未记录发送时间，已通知跟进（§9）');
+        post('alert','Workflow bot','⚠ '+r.id+' 发送失败（SMTP）——状态保持 Approved、不填写发送时间。@'+r.owner+' 请跟进重发。');
+        renderMetrics();return;
+      }
+      r.status='Replied';r.sentAt=state.simNow;
+      audit(r,'经 media@ 发送成功 → Replied，记录回复已发送时间（F-15）');
+      post('info','Workflow bot','✅ 已回复 '+r.journalist+'（'+r.outlet+'）'+r.id+' —— 接收后 '+fmtH(r.sentAt-r.received)+'。');
+      renderTable();renderMetrics();
+    } else if(act==='decline'){
+      r.status='Declined';
+      audit(r,'所有者婉拒 → Declined（不进入发送流程）');
+      post('info','Workflow bot',r.id+' 已标记 Declined（'+r.owner+'）——礼貌婉拒模板由所有者发送。');
+      renderTable();renderMetrics();
+    }
+    return;
+  }
+  var tr=e.target.closest('tr.mr-row');
+  if(tr){
+    var id=tr.dataset.id;
+    state.openId=(state.openId===id)?null:id;
+    renderTable();
+  }
+});
+
+$('mr-samples').addEventListener('click',function(e){
+  var b=e.target.closest('button[data-key]');
+  if(!b){return;}
+  var s=SAMPLES.find(function(x){return x.key===b.dataset.key;});
+  if(s){run(s);}
+});
+
+$('mr-outage').addEventListener('change',function(e){
+  state.notionDown=e.target.checked;
+  if(state.notionDown){
+    state.alerts++;
+    post('alert','Workflow bot','⚠ Notion 不可用（模拟）——新请求创建将重试 3 次后告警；审批与发送暂停；原始请求保留在邮箱/表单（F-19/21，NF-06）。');
+  } else {
+    post('info','Workflow bot','Notion 已恢复——可执行补同步（F-20）。');
+  }
+  renderTable();renderMetrics();
+});
+$('mr-sendfail').addEventListener('change',function(e){state.sendFail=e.target.checked;});
+
+$('mr-reconcile').addEventListener('click',function(){
+  var n=state.pending.length;
+  state.pending.forEach(function(s){
+    var req=mkRequest(s,'New');
+    req.received=state.simNow-2*HOUR;
+    req.extraction=mkExtraction({journalist:s.journalist,outlet:s.outlet,language:s.lang,
+      topics:s.topics.length?s.topics:null,deadline:s.deadline?new Date(req.received+s.deadline).toISOString().slice(0,10):null,
+      format:'interview',sensitivity:s.sensitive?'embargo-flagged':'none',_confidence:s.confidence});
+    audit(req,'Notion 恢复——由对账流程补同步创建（F-20/21）');
+    req.suggestions=rankExperts(req);
+    state.requests.push(req);
+    post('ping','Workflow bot','@'+req.owner+' — '+req.id+' 由对账补录创建（原始接收 '+fmtH(state.simNow-req.received)+' 前）。截止：'+(req.deadline?('还有 '+fmtH(req.deadline-state.simNow)):'未提供')+'。');
+  });
+  state.pending=[];
+  post('info','Workflow bot','对账完成：'+n+' 条缺失记录已从邮箱/表单补同步至 Notion（F-20）。');
+  renderTable();renderMetrics();
+});
+
+$('mr-nextday').addEventListener('click',function(){
+  state.simNow+=DAY;state.day++;
+  $('mr-day').textContent='Day '+state.day;
+  post('info','Workflow bot','— Day '+state.day+' 开始 —');
+  renderTable();
+});
+
+$('mr-sweep').addEventListener('click',function(){
+  var acted=false;
+  state.requests.forEach(function(r){
+    if(['Replied','Declined','Duplicate'].indexOf(r.status)>=0){return;}
+    if(r.status==='Needs triage'&&!r.deadline){
+      post('ping','每日清扫','@'+r.owner+' — '+r.id+' 未设置截止日期（待分拣），请补齐（F-16）。');
+      acted=true;return;
+    }
+    if(!r.deadline){return;}
+    var left=r.deadline-state.simNow;
+    if(left<0){
+      state.alerts++;
+      post('alert','每日清扫','⚠ 逾期升级（F-17）：'+r.id+'“'+r.title+'”逾期 '+fmtH(-left)+' 未回复——已通知经理 Priya 与所有者 '+r.owner+'。');
+      acted=true;
+    } else if(left<=24*HOUR){
+      post('ping','每日清扫','@'+r.owner+' — '+r.id+'“'+r.title+'”截止 '+fmtH(left)+' 内，尚未回复（F-16）。');
+      acted=true;
+    }
+  });
+  var miss=state.pending.length;
+  post('info','每日清扫','每日对账（F-20）：邮箱/表单 vs Notion — '+(miss?('缺失 '+miss+' 条，等待补同步'):'一致，无缺失')+'。');
+  if(!acted&&miss===0){post('info','每日清扫','清扫完成——24 小时内无临期未回复请求。');}
+  renderMetrics();
+});
+
+$('mr-digest').addEventListener('click',function(){
+  var real=state.requests.filter(function(r){return r.status!=='Duplicate';});
+  var by={};
+  real.forEach(function(r){by[r.status]=(by[r.status]||0)+1;});
+  var byTxt=Object.keys(by).map(function(k){return k+' '+by[k];}).join(' · ')||'无';
+  var replied=real.filter(function(r){return r.status==='Replied';});
+  var times=replied.map(function(r){return r.sentAt-r.received;}).sort(function(a,b){return a-b;});
+  var med=times.length?fmtH(times[Math.floor(times.length/2)]):'—';
+  var within=replied.filter(function(r){return (r.sentAt-r.received)<=24*HOUR;}).length;
+  var oldest=real.filter(function(r){return ['New','Needs triage','Expert confirmed','Approved'].indexOf(r.status)>=0;})
+    .sort(function(a,b){return a.received-b.received;})[0];
+  post('digest','每周摘要',
+    '📊 本周期 '+real.length+' 个请求：'+byTxt+'\n'+
+    '响应中位数 '+med+' · 1 个工作日内回复 '+within+'/'+replied.length+'（目标 ≥90%）\n'+
+    (oldest?('最久积压：'+oldest.id+'（'+fmtH(state.simNow-oldest.received)+'）\n'):'')+
+    '重复拦截 '+state.dupsBlocked+' · 未同步 '+state.pending.length+' · 告警 '+state.alerts+'\n'+
+    '试点判据（1.2）：丢失=0 ✓（对账） · 重复回复=0 ✓');
+});
+
+$('mr-canary').addEventListener('click',function(){
+  if(state.notionDown){
+    state.alerts++;
+    post('alert','Canary','⚠ Canary 测试失败：Notion 不可用，测试请求未达到 Replied——已通知管理员（F-22）。');
+    renderMetrics();return;
+  }
+  post('info','Canary','Canary 测试请求 [CANARY-'+state.day+'] 已注入：完整走至 Replied ✓（不向真实媒体发送，F-22）。');
+});
+
+refreshSamples();
+renderMetrics();
+renderTable();
+post('info','Workflow bot','流程已上线——监控 media@ 与网页表单。MR-02 等待 Wei 处理；MR-01 已完整走完全流程（可点开查看处理记录）。');
+refreshIcons();
+})();
+</script>
+</body>
+</html>

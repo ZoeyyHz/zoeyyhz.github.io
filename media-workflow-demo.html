@@ -186,7 +186,7 @@ body{margin:0;padding:clamp(14px,2vw,36px) clamp(10px,1.8vw,32px);background:#f4
     <div class="mr-logo-fb" id="mr-logofb" hidden>CPRO</div>
     <div>
       <h1>CPRO Media Request Automation — PRD Workflow Simulator</h1>
-      <div class="mr-sub">Power Automate · University M365 tenant&nbsp;&nbsp;·&nbsp;&nbsp;Enterprise LLM endpoint (IT/security approved)&nbsp;&nbsp;·&nbsp;&nbsp;Notion Requests / Experts&nbsp;&nbsp;·&nbsp;&nbsp;Teams #media-requests-alerts</div>
+      <div class="mr-sub">Power Automate · university M365 tenant&nbsp;&nbsp;·&nbsp;&nbsp;enterprise LLM endpoint (IT/security approved)&nbsp;&nbsp;·&nbsp;&nbsp;Notion Requests / Experts&nbsp;&nbsp;·&nbsp;&nbsp;Teams #media-requests-alerts</div>
     </div>
   </div>
   <div class="mr-headerright">
@@ -215,12 +215,12 @@ body{margin:0;padding:clamp(14px,2vw,36px) clamp(10px,1.8vw,32px);background:#f4
       <button class="mr-btn mr-grow" id="mr-canary" type="button"><i data-lucide="crosshair" aria-hidden="true"></i>Canary</button>
     </div>
     <div class="mr-simrow">
-      <button class="mr-btn mr-grow" id="mr-reconcile" type="button" hidden><i data-lucide="refresh-ccw" aria-hidden="true"></i>Restore &amp; Re-sync</button>
+      <button class="mr-btn mr-grow" id="mr-reconcile" type="button" hidden><i data-lucide="refresh-ccw" aria-hidden="true"></i>Restore &amp; re-sync</button>
     </div>
     <label class="mr-switch" style="margin-top:4px">
       <input type="checkbox" id="mr-sendfail">
       <span class="mr-track" aria-hidden="true"></span>
-      <span>Fail next send</span>
+      <span>Fail next send (simulated)</span>
     </label>
     <p class="mr-note">Sending is gated on Approved; sensitive requests skip AI drafting; the mailbox and form remain the source of record; every request keeps a full audit trail.</p>
   </aside>
@@ -244,11 +244,11 @@ body{margin:0;padding:clamp(14px,2vw,36px) clamp(10px,1.8vw,32px);background:#f4
   </main>
 
   <aside class="mr-panel mr-teams">
-    <div class="mr-panelh mr-teal"><i data-lucide="message-square" aria-hidden="true"></i>Teams · #media-requests-alerts-log</div>
+    <div class="mr-panelh mr-teal"><i data-lucide="message-square" aria-hidden="true"></i>Teams · #media-requests-alerts</div>
     <div class="mr-feed" id="mr-feed" aria-live="polite"></div>
   </aside>
 </div>
-<footer class="mr-footer">© 2026 Zhuo Huang for CPRO media-workflow-demo-only. All Rights Reserved.</footer>
+<footer class="mr-footer">© 2026 Zhuo Huang for CPRO media-workflow-demo.html. All Rights Reserved.</footer>
 </div>
 
 <script>
@@ -258,10 +258,10 @@ var HOUR=3600e3, DAY=24*HOUR, now0=Date.now();
 var OWNERS=['Maria','Ken','Wei','Sofia'];
 var EXPERTS=[
   {name:'Prof. Lena Hartmann',dept:'Dept. of Computer Science',areas:['AI','funding','policy'],langs:['EN','DE'],avail:true},
-  {name:'Prof. Wei Chen 陈伟',dept:'Dept. of Physics',areas:['quantum','research'],langs:['ZH','EN'],avail:true},
+  {name:'Prof. Wei Chen (陈伟)',dept:'Dept. of Physics',areas:['quantum','research'],langs:['ZH','EN'],avail:true},
   {name:'Dr. Sofia Marques',dept:'Dept. of Earth Sciences',areas:['sustainability','climate'],langs:['EN','ES'],avail:true},
   {name:'Prof. David Okafor',dept:'Business School',areas:['finance','funding'],langs:['EN'],avail:true},
-  {name:'Prof. Jiaxin Lin 林嘉欣',dept:'Faculty of Medicine',areas:['clinical','health'],langs:['ZH','EN'],avail:true},
+  {name:'Prof. Jiaxin Lin (林嘉欣)',dept:'Faculty of Medicine',areas:['clinical','health'],langs:['ZH','EN'],avail:true},
   {name:'Dr. Amir Rahimi',dept:'Office of Information Science',areas:['AI','privacy'],langs:['EN','ZH'],avail:true},
   {name:'Prof. Grace Yeung',dept:'Dept. of Physics',areas:['quantum','AI'],langs:['EN'],avail:false}
 ];
@@ -307,15 +307,15 @@ var R1={id:'MR-01',title:'Interview — AI research funding',journalist:'Rachel 
   draft:'Dear Ms Donnelly,\n\nThank you for reaching out. Prof. Lena Hartmann can speak to the AI funding programmes and is available Thursday 10:00–11:30. A Teams or in-person interview both work.\n\nKind regards,\nCPRO Media Office',
   extraction:{journalist:'Rachel Donnelly',outlet:'Bloomberg',language:'EN',topics:['AI','funding'],deadline:'2026-11-09',format:'interview',sensitivity:'none',_confidence:0.95},
   audit:[
-    {t:'Day 1 09:02',txt:'New mail received at media@ (F-01) — Message-ID <a91f40@bloomberg.net>'},
-    {t:'Day 1 09:02',txt:'Dedup query: no match (F-04)'},
-    {t:'Day 1 09:03',txt:'AI extraction passed schema validation, confidence 0.95 (F-06)'},
-    {t:'Day 1 09:03',txt:'Notion page created as New; owner Maria assigned by rota (F-08/09)'},
-    {t:'Day 1 09:04',txt:'Expert ranking written, top match Prof. Lena Hartmann (F-10)'},
-    {t:'Day 1 11:20',txt:'Owner confirmed expert Hartmann and a Thursday slot → Expert confirmed (F-11)'},
-    {t:'Day 1 11:22',txt:'AI drafted the reply in English (F-12)'},
-    {t:'Day 1 13:40',txt:'Owner edited and approved the draft → Approved (F-14)'},
-    {t:'Day 1 13:41',txt:'Sent via media@ successfully → Replied, send time recorded (F-15)'}
+    {t:'Day 1 09:02',txt:'New mail received at media@ — Message-ID <a91f40@bloomberg.net>'},
+    {t:'Day 1 09:02',txt:'Dedup query: no match'},
+    {t:'Day 1 09:03',txt:'AI extraction passed schema validation, confidence 0.95'},
+    {t:'Day 1 09:03',txt:'Notion page created as New; owner Maria assigned by rota'},
+    {t:'Day 1 09:04',txt:'Expert ranking written, top match Prof. Lena Hartmann'},
+    {t:'Day 1 11:20',txt:'Owner confirmed expert Hartmann and a Thursday slot → Expert confirmed'},
+    {t:'Day 1 11:22',txt:'AI drafted the reply in English'},
+    {t:'Day 1 13:40',txt:'Owner edited and approved the draft → Approved'},
+    {t:'Day 1 13:41',txt:'Sent via media@ successfully → Replied, send time recorded'}
   ]};
 var R2={id:'MR-02',title:'Interview — admissions data privacy',journalist:'Yuki Tanaka',email:'y.tanaka@nhk.jp',
   outlet:'NHK',lang:'EN',topics:['privacy'],source:'Email',msgId:'<c07de2@nhk.jp>',
@@ -325,11 +325,11 @@ var R2={id:'MR-02',title:'Interview — admissions data privacy',journalist:'Yuk
   draft:'Dear Ms Tanaka,\n\nThank you for your interest. Dr. Amir Rahimi studies data governance in higher education and could speak Friday afternoon.\n\nBest regards,\nCPRO Media Office',
   extraction:{journalist:'Yuki Tanaka',outlet:'NHK',language:'EN',topics:['privacy'],deadline:'2026-11-08',format:'interview',sensitivity:'none',_confidence:0.89},
   audit:[
-    {t:'Day 1 06:10',txt:'New mail received at media@ (F-01) — Message-ID <c07de2@nhk.jp>'},
-    {t:'Day 1 06:10',txt:'Dedup query: no match (F-04)'},
-    {t:'Day 1 06:11',txt:'AI extraction passed, confidence 0.89 (F-06)'},
-    {t:'Day 1 06:11',txt:'Page created as New; owner Wei assigned by rota (F-08/09)'},
-    {t:'Day 1 06:12',txt:'Expert ranking written: Rahimi (AI · privacy match) and others (F-10)'}
+    {t:'Day 1 06:10',txt:'New mail received at media@ — Message-ID <c07de2@nhk.jp>'},
+    {t:'Day 1 06:10',txt:'Dedup query: no match'},
+    {t:'Day 1 06:11',txt:'AI extraction passed, confidence 0.89'},
+    {t:'Day 1 06:11',txt:'Page created as New; owner Wei assigned by rota'},
+    {t:'Day 1 06:12',txt:'Expert ranking written: Rahimi (AI · privacy match) and others'}
   ]};
 var R3={id:'MR-03',title:'Interview — sports facility construction',journalist:'Wang Lei',email:'wanglei@nandu.example',
   outlet:'Southern Metropolis Daily',lang:'ZH',topics:['sports'],source:'Form',msgId:'form-2f9d41',
@@ -339,10 +339,10 @@ var R3={id:'MR-03',title:'Interview — sports facility construction',journalist
   draft:'',
   extraction:{journalist:'Wang Lei',outlet:'Southern Metropolis Daily',language:'ZH',topics:['sports'],deadline:'2026-11-06',format:'interview',sensitivity:'none',_confidence:0.71},
   audit:[
-    {t:'Day 1 04:40',txt:'New web form submission (F-02) — submission ID form-2f9d41'},
-    {t:'Day 1 04:41',txt:'Dedup: no match; AI extraction confidence 0.71, schema passed (F-06)'},
-    {t:'Day 1 04:41',txt:'Page created as New; owner Ken assigned by rota (F-08/09)'},
-    {t:'Day 1 04:42',txt:'Expert ranking: no available matching expert in the Experts DB (F-10)'},
+    {t:'Day 1 04:40',txt:'New web form submission — submission ID form-2f9d41'},
+    {t:'Day 1 04:41',txt:'Dedup: no match; AI extraction confidence 0.71, schema passed'},
+    {t:'Day 1 04:41',txt:'Page created as New; owner Ken assigned by rota'},
+    {t:'Day 1 04:42',txt:'Expert ranking: no available matching expert in the Experts DB'},
     {t:'Day 1 09:30',txt:'Owner review: topic outside the Experts DB scope → Declined (polite decline sent by the owner)'}
   ]};
 state.requests=[R1,R2,R3];
@@ -362,11 +362,11 @@ var SAMPLES=[
    title:'Feature — campus sustainability plan',journalist:'Ana Ruiz',email:'a.ruiz@guardian.example',
    outlet:'The Guardian',lang:'EN',topics:['sustainability'],deadline:72*HOUR,confidence:0.91,sensitive:false,lowConf:false,
    original:'[Web form submission]\nName: Ana Ruiz\nOutlet: The Guardian\nRequest: Working on a feature about the new campus sustainability plan — could I tour the site and interview the lead?\nPreferred: any day this week',draft:''},
-  {key:'embargo',kind:'email',icon:'lock',label:'Sensitive — embargoed clinical trial (F-13)',
+  {key:'embargo',kind:'email',icon:'lock',label:'Sensitive — embargoed clinical trial',
    title:'Embargoed — clinical trial results',journalist:'Tomas Fischer',email:'t.fischer@ghwire.example',
    outlet:'Global Health Wire',lang:'EN',topics:['clinical','health'],deadline:60*HOUR,confidence:0.97,sensitive:true,lowConf:false,
    original:'Dear team,\n\nWe are preparing coverage of the multi-site clinical trial results. The findings are embargoed until 20 November; please treat all details as confidential.\n\nCould we schedule an interview under embargo terms?\n\nTomas Fischer',draft:''},
-  {key:'vague',kind:'email',icon:'mail',label:'Vague enquiry — low confidence (F-07)',
+  {key:'vague',kind:'email',icon:'mail',label:'Vague enquiry — low confidence',
    title:'General enquiry — no clear topic',journalist:'J. Lester',email:'j.lester@cityherald.example',
    outlet:'City Herald',lang:'EN',topics:[],deadline:null,confidence:0.42,sensitive:false,lowConf:true,
    original:'Hi — we would love to chat with someone at the university sometime soon. Thanks!',draft:''},
@@ -376,7 +376,7 @@ var SAMPLES=[
    original:'Hello,\n\nReuters is planning a piece on university AI governance policies. Could we arrange a short interview with a relevant expert this week?\n\nBest,\nEmma Clarke',draft:''}
 ];
 
-/* ---------- Expert ranking (F-10) ---------- */
+/* ---------- Expert ranking ---------- */
 function rankExperts(req){
   return EXPERTS.filter(function(e){return e.avail;}).map(function(e){
     var hits=req.topics.filter(function(t){return e.areas.indexOf(t)>=0;});
@@ -416,7 +416,7 @@ async function run(s){
     st[0].s='active';st[0].sub=(s.kind==='email'?('email from '+s.email):'web form submission');renderFlow();await sleep(600);
     st[0].s='done';renderFlow();
 
-    st[1].s='active';st[1].sub='Normalizing fields and recording the received time (F-03)';renderFlow();await sleep(450);
+    st[1].s='active';st[1].sub='Normalizing fields and recording the received time';renderFlow();await sleep(450);
     var hit=null;
     for(var i=0;i<state.requests.length;i++){
       var r=state.requests[i];
@@ -424,10 +424,10 @@ async function run(s){
       if(r.email===s.email&&s.topics&&s.topics.some(function(t){return r.topics.indexOf(t)>=0;})){hit=r;break;}
     }
     if(hit){
-      st[1].s='done';st[1].sub='Matched '+hit.id+' (sender + topic) → original appended, marked Duplicate, no new page (F-05)';
+      st[1].s='done';st[1].sub='Matched '+hit.id+' (sender + topic) → original appended, marked Duplicate, no new page';
       renderFlow();
       var d=mkRequest(s,'Duplicate');d.dupOf=hit.id;d.owner=hit.owner;
-      audit(d,'Judged duplicate: matched '+hit.id+' by sender + topic; original appended to the existing page (F-05)');
+      audit(d,'Judged duplicate: matched '+hit.id+' by sender + topic; original appended to the existing page');
       state.requests.push(d);
       hit.dupCount++;audit(hit,'Duplicate follow-up received and merged into this page (no second reply)');
       state.dupsBlocked++;
@@ -440,17 +440,17 @@ async function run(s){
 
     st[2].s='active';st[2].sub='Extracting journalist / outlet / topic / language / deadline / format / sensitivity…';renderFlow();await sleep(850);
     st[2].s='done';
-    if(s.lowConf){st[2].sub='Confidence 0.42, schema ✗ (topic, deadline missing) → Needs triage for a human (F-07)';}
+    if(s.lowConf){st[2].sub='Confidence 0.42, schema ✗ (topic, deadline missing) → Needs triage for a human';}
     else{st[2].sub='Confidence '+(s.confidence||0.9).toFixed(2)+', schema ✓, language '+s.lang;}
     renderFlow();await sleep(400);
 
     st[3].s='active';renderFlow();
     if(state.notionDown){
-      for(var k=1;k<=3;k++){st[3].sub='Notion API 503 — retry '+k+'/3 (NF-02)';renderFlow();await sleep(700);}
-      st[3].s='fail';st[3].sub='Failed after 3 retries — email kept and flagged, awaiting reconciliation (F-19/20)';
+      for(var k=1;k<=3;k++){st[3].sub='Notion API 503 — retry '+k+'/3';renderFlow();await sleep(700);}
+      st[3].s='fail';st[3].sub='Failed after 3 retries — email kept and flagged, awaiting reconciliation';
       renderFlow();
       state.pending.push(s);state.alerts++;
-      post('alert','Workflow bot','⚠ Notion unavailable: “'+s.title+'” could not be created (3 retries). The email is flagged and kept at media@; approvals and sends are paused (F-21).');
+      post('alert','Workflow bot','⚠ Notion unavailable: “'+s.title+'” could not be created (3 retries). The email is flagged and kept at media@; approvals and sends are paused.');
       for(var m=4;m<st.length;m++){st[m].s='skip';st[m].sub='paused — waiting for Notion';}
       renderMetrics();
       return;
@@ -461,17 +461,17 @@ async function run(s){
       topics:s.topics.length?s.topics:null,deadline:s.deadline?new Date(state.simNow+s.deadline).toISOString().slice(0,10):null,
       format:'interview',sensitivity:s.sensitive?'embargo-flagged':'none',_confidence:s.confidence};
     state.requests.push(req);
-    audit(req,'Trigger: '+(s.kind==='email'?'email (F-01)':'form (F-02)')+' from '+s.email);
-    audit(req,'Dedup: no match (F-04); AI extraction '+(s.lowConf?'low confidence → Needs triage (F-07)':'passed schema (F-06)'));
-    audit(req,'Page created as New; owner '+req.owner+' assigned by rota (F-08/09)');
+    audit(req,'Trigger: '+(s.kind==='email'?'email':'form')+' from '+s.email);
+    audit(req,'Dedup: no match; AI extraction '+(s.lowConf?'low confidence → Needs triage':'passed schema'));
+    audit(req,'Page created as New; owner '+req.owner+' assigned by rota');
     st[3].s='done';st[3].sub=req.id+' created · owner '+req.owner+' (rota) · source '+req.source;
     post('ping','Workflow bot','@'+req.owner+' — new request '+req.id+' “'+req.title+'”. Deadline: '+(req.deadline?(fmtH(req.deadline-state.simNow)+' left'):'not provided')+'.');
     renderFlow();renderTable();flashRow(req.id);renderMetrics();await sleep(400);
 
     st[4].s='active';renderFlow();await sleep(700);
     var sug=rankExperts(req);req.suggestions=sug;
-    if(sug.length){st[4].s='done';st[4].sub=sug.map(function(x){return x.name.split(' ')[x.name.split(' ').length-1];}).join(' · ')+' → written to the page';audit(req,'Expert ranking written: '+sug[0].name+' and others (F-10)');}
-    else{st[4].s='done';st[4].sub='No available match in the Experts DB — the owner decides manually (F-10)';audit(req,'Expert ranking: no match, manual pick (F-10)');}
+    if(sug.length){st[4].s='done';st[4].sub=sug.map(function(x){return x.name.split(' ')[x.name.split(' ').length-1];}).join(' · ')+' → written to the page';audit(req,'Expert ranking written: '+sug[0].name+' and others');}
+    else{st[4].s='done';st[4].sub='No available match in the Experts DB — the owner decides manually';audit(req,'Expert ranking: no match, manual pick');}
     renderTable();await sleep(300);
 
     st[5].s='wait';st[5].sub='Waiting for owner '+req.owner+' — open the row to confirm expert and time';
@@ -500,17 +500,17 @@ function lastToken(n){var p=n.split(' ');return p[p.length-1];}
 
 function detailHtml(r){
   if(r.status==='Duplicate'){
-    return '<div class="mr-dupnote">Duplicate — the original was appended to existing page <b>'+esc(r.dupOf)+'</b> (F-05). No second regular request is created and it never enters the send flow (6.3).</div>';
+    return '<div class="mr-dupnote">Duplicate — the original was appended to existing page <b>'+esc(r.dupOf)+'</b>. No second regular request is created and it never enters the send flow.</div>';
   }
   var left='';
   if(r.status==='Needs triage'){
-    left='<div class="mr-exphint">AI confidence is too low — a human must complete the fields before the request enters the queue (F-07).</div>'+
+    left='<div class="mr-exphint">AI confidence is too low — a human must complete the fields before the request enters the queue.</div>'+
       '<button type="button" class="mr-btn mr-primary mr-triagebtns" data-act="confirm" data-rid="'+r.id+'"><i data-lucide="user-check" aria-hidden="true"></i>Complete fields manually (topic general · deadline +3d) → New</button>';
   } else {
     var list,manual=false;
     if(r.suggestions&&r.suggestions.length){list=r.suggestions;}
     else{list=EXPERTS.map(function(e){return {name:e.name,dept:e.dept,langs:e.langs.join(' · '),score:0,langOk:true,reason:'',avail:e.avail};});manual=true;}
-    left='<div class="mr-exphint">'+(manual?'No AI match — pick manually from the Experts database:':'AI-ranked suggestions (top 3) — click to confirm (F-10/11):')+'</div>'+
+    left='<div class="mr-exphint">'+(manual?'No AI match — pick manually from the Experts database:':'AI-ranked suggestions (top 3) — click to confirm:')+'</div>'+
       list.map(function(e){
         var sel=r.expert===e.name?' is-selected':'';
         var unavail=(e.avail===false)?' mr-unavail':'';
@@ -520,14 +520,14 @@ function detailHtml(r){
         return '<button type="button" class="mr-exp cursor-interaction'+sel+unavail+'" data-act="expert" data-rid="'+r.id+'" data-name="'+esc(e.name)+'"'+dis+'><span class="nm">'+esc(e.name)+'</span> <span class="lg">'+esc(e.dept)+' · '+esc(e.langs)+'</span>'+sc+rs+'</button>';
       }).join('');
   }
-  var draftLabel=r.sensitive?'Sensitive request — AI drafting skipped; write the reply manually (F-13)':'Reply draft (AI-generated, editable) — nothing sends before approval (F-12/14)';
+  var draftLabel=r.sensitive?'Sensitive request — AI drafting skipped; write the reply manually':'Reply draft (AI-generated, editable) — nothing sends before approval';
   var actions='',gate='';
   if(r.status==='Replied'){
-    actions='<span class="mr-sentchip"><i data-lucide="check-circle-2" aria-hidden="true"></i>Sent '+fmtH(state.simNow-r.sentAt)+' after intake · within 1 working day: '+((r.sentAt-r.received)<=24*HOUR?'✓':'✗')+' · logged in the audit trail (F-15)</span>';
+    actions='<span class="mr-sentchip"><i data-lucide="check-circle-2" aria-hidden="true"></i>Sent '+fmtH(state.simNow-r.sentAt)+' after intake · within 1 working day: '+((r.sentAt-r.received)<=24*HOUR?'✓':'✗')+' · logged in the audit trail</span>';
   } else if(r.status==='Declined'){
     actions='<span class="mr-pill" data-s="Declined">Declined</span><span class="mr-exphint" style="margin:0">Declined — never enters the send flow.</span>';
   } else {
-    if(state.notionDown){gate='<div class="mr-gate"><i data-lucide="shield-alert" aria-hidden="true"></i> Notion unavailable — approvals and sends are paused (F-21); resume after recovery.</div>';}
+    if(state.notionDown){gate='<div class="mr-gate"><i data-lucide="shield-alert" aria-hidden="true"></i> Notion unavailable — approvals and sends are paused; resume after recovery.</div>';}
     actions=
       '<button type="button" class="mr-btn" data-act="approve" data-rid="'+r.id+'"'+(r.status==='Approved'||state.notionDown?' disabled':'')+'><i data-lucide="user-check" aria-hidden="true"></i>'+(r.status==='Approved'?'Approved':'Approve')+'</button>'+
       '<button type="button" class="mr-btn mr-primary" data-act="send" data-rid="'+r.id+'"'+(r.status!=='Approved'||state.notionDown?' disabled':'')+'><i data-lucide="send" aria-hidden="true"></i>Send via media@</button>'+
@@ -539,7 +539,7 @@ function detailHtml(r){
     '<div><div class="mr-dh">Original request (source record)</div><pre class="mr-orig" data-pre="orig"></pre><div class="mr-metamini mr-num">Received '+new Date(r.received).toISOString().slice(0,16).replace('T',' ')+' UTC · '+esc(r.msgId)+' · source '+r.source+(r.sensitive?' · <b style="color:var(--mr-orange)">sensitive</b>':'')+'</div></div>'+
     '<div><div class="mr-dh">Extraction (AI, schema-checked)</div><pre class="mr-json" data-pre="json"></pre><div style="height:8px"></div><div class="mr-dh">Expert suggestions</div>'+left+'</div>'+
     '<div><div class="mr-dh">'+draftLabel+'</div><textarea data-draft="'+r.id+'" aria-label="Reply draft"></textarea><div class="mr-actions">'+actions+'</div><div class="mr-err" role="alert" data-err hidden></div></div>'+
-    '<div class="mr-auditblock"><div class="mr-dh">Audit trail (F-24)</div><ul class="mr-audit">'+(auditHtml||'<li>No entries yet</li>')+'</ul></div>'+
+    '<div class="mr-auditblock"><div class="mr-dh">Audit trail</div><ul class="mr-audit">'+(auditHtml||'<li>No entries yet</li>')+'</ul></div>'+
   '</div>';
 }
 
@@ -614,7 +614,7 @@ $('mr-rows').addEventListener('click',function(e){
     if(act==='expert'){
       r.expert=btn.dataset.name;
       if(r.status==='New'){r.status='Expert confirmed';}
-      audit(r,'Owner confirmed expert '+r.expert+' (F-11) → Expert confirmed');
+      audit(r,'Owner confirmed expert '+r.expert+' → Expert confirmed');
       renderTable();
     } else if(act==='confirm'){
       r.status='New';r.deadline=state.simNow+3*DAY;
@@ -623,14 +623,14 @@ $('mr-rows').addEventListener('click',function(e){
       r.extraction.deadline=new Date(r.deadline).toISOString().slice(0,10);
       r.extraction._confidence=String(r.extraction._confidence)+' → human-confirmed';
       r.suggestions=r.suggestions&&r.suggestions.length?r.suggestions:rankExperts(r);
-      audit(r,'Fields completed manually: topic general, deadline +3 days → New (F-07)');
+      audit(r,'Fields completed manually: topic general, deadline +3 days → New');
       post('ping','Workflow bot','@'+r.owner+' — '+r.id+' triage complete; deadline set within 3 days.');
       renderTable();
     } else if(act==='approve'){
       if(!r.expert){err(r.id,'Pick an expert first.');return;}
-      if(!r.draft||!r.draft.trim()){err(r.id,r.sensitive?'Sensitive requests need a manually written reply before approval (F-13).':'Keep or write a draft before approving.');return;}
+      if(!r.draft||!r.draft.trim()){err(r.id,r.sensitive?'Sensitive requests need a manually written reply before approval.':'Keep or write a draft before approving.');return;}
       r.status='Approved';
-      audit(r,'Owner edited and approved the reply → Approved (F-14)');
+      audit(r,'Owner edited and approved the reply → Approved');
       post('info','Workflow bot',r.id+' approved by '+r.owner+' — send is now unlocked (only Approved can send).');
       renderTable();
     } else if(act==='send'){
@@ -638,12 +638,12 @@ $('mr-rows').addEventListener('click',function(e){
       if(state.sendFail){
         state.sendFail=false;$('mr-sendfail').checked=false;
         state.alerts++;
-        audit(r,'Send failed (simulated SMTP): status stays Approved, no send time recorded, follow-up requested (§9)');
+        audit(r,'Send failed (simulated SMTP): status stays Approved, no send time recorded, follow-up requested');
         post('alert','Workflow bot','⚠ '+r.id+' send failed (SMTP) — status stays Approved and no send time is recorded. @'+r.owner+' please follow up and resend.');
         renderMetrics();return;
       }
       r.status='Replied';r.sentAt=state.simNow;
-      audit(r,'Sent via media@ successfully → Replied, send time recorded (F-15)');
+      audit(r,'Sent via media@ successfully → Replied, send time recorded');
       post('info','Workflow bot','✅ Reply sent to '+r.journalist+' ('+r.outlet+') for '+r.id+' — '+fmtH(r.sentAt-r.received)+' after intake.');
       renderTable();renderMetrics();
     } else if(act==='decline'){
@@ -673,9 +673,9 @@ $('mr-outage').addEventListener('change',function(e){
   state.notionDown=e.target.checked;
   if(state.notionDown){
     state.alerts++;
-    post('alert','Workflow bot','⚠ Notion unavailable (simulated) — new requests will retry 3 times then alert; approvals and sends are paused; originals stay in the mailbox/form (F-19/21, NF-06).');
+    post('alert','Workflow bot','⚠ Notion unavailable (simulated) — new requests will retry 3 times then alert; approvals and sends are paused; originals stay in the mailbox/form.');
   } else {
-    post('info','Workflow bot','Notion restored — re-sync is now available (F-20).');
+    post('info','Workflow bot','Notion restored — re-sync is now available.');
   }
   renderTable();renderMetrics();
 });
@@ -689,13 +689,13 @@ $('mr-reconcile').addEventListener('click',function(){
     req.extraction={journalist:s.journalist,outlet:s.outlet,language:s.lang,
       topics:s.topics.length?s.topics:null,deadline:s.deadline?new Date(req.received+s.deadline).toISOString().slice(0,10):null,
       format:'interview',sensitivity:s.sensitive?'embargo-flagged':'none',_confidence:s.confidence};
-    audit(req,'Notion restored — page created by the reconciliation flow (F-20/21)');
+    audit(req,'Notion restored — page created by the reconciliation flow');
     req.suggestions=rankExperts(req);
     state.requests.push(req);
     post('ping','Workflow bot','@'+req.owner+' — '+req.id+' created by reconciliation (originally received '+fmtH(state.simNow-req.received)+' ago). Deadline: '+(req.deadline?(fmtH(req.deadline-state.simNow)+' left'):'not provided')+'.');
   });
   state.pending=[];
-  post('info','Workflow bot','Reconciliation complete: '+n+' missing record(s) re-synced from the mailbox/form to Notion (F-20).');
+  post('info','Workflow bot','Reconciliation complete: '+n+' missing record(s) re-synced from the mailbox/form to Notion.');
   renderTable();renderMetrics();
 });
 
@@ -711,22 +711,22 @@ $('mr-sweep').addEventListener('click',function(){
   state.requests.forEach(function(r){
     if(['Replied','Declined','Duplicate'].indexOf(r.status)>=0){return;}
     if(r.status==='Needs triage'&&!r.deadline){
-      post('ping','Daily sweep','@'+r.owner+' — '+r.id+' has no deadline set (awaiting triage); please complete it (F-16).');
+      post('ping','Daily sweep','@'+r.owner+' — '+r.id+' has no deadline set (awaiting triage); please complete it.');
       acted=true;return;
     }
     if(!r.deadline){return;}
     var left=r.deadline-state.simNow;
     if(left<0){
       state.alerts++;
-      post('alert','Daily sweep','⚠ Overdue escalation (F-17): '+r.id+' “'+r.title+'” is overdue by '+fmtH(-left)+' and not replied — manager Priya and owner '+r.owner+' notified.');
+      post('alert','Daily sweep','⚠ Overdue escalation: '+r.id+' “'+r.title+'” is overdue by '+fmtH(-left)+' and not replied — manager Priya and owner '+r.owner+' notified.');
       acted=true;
     } else if(left<=24*HOUR){
-      post('ping','Daily sweep','@'+r.owner+' — '+r.id+' “'+r.title+'”: deadline within '+fmtH(left)+', not yet replied (F-16).');
+      post('ping','Daily sweep','@'+r.owner+' — '+r.id+' “'+r.title+'”: deadline within '+fmtH(left)+', not yet replied.');
       acted=true;
     }
   });
   var miss=state.pending.length;
-  post('info','Daily sweep','Daily reconciliation (F-20): mailbox/form vs Notion — '+(miss?(miss+' record(s) missing, awaiting re-sync'):'consistent, nothing missing')+'.');
+  post('info','Daily sweep','Daily reconciliation: mailbox/form vs Notion — '+(miss?(miss+' record(s) missing, awaiting re-sync'):'consistent, nothing missing')+'.');
   if(!acted&&miss===0){post('info','Daily sweep','Sweep clean — nothing due within 24h.');}
   renderMetrics();
 });
@@ -747,16 +747,16 @@ $('mr-digest').addEventListener('click',function(){
     'Median response '+med+' · replied within 1 working day '+within+'/'+replied.length+' (target ≥90%)\n'+
     (oldest?('Oldest backlog: '+oldest.id+' ('+fmtH(state.simNow-oldest.received)+')\n'):'')+
     'Duplicates blocked '+state.dupsBlocked+' · unsynced '+state.pending.length+' · alerts '+state.alerts+'\n'+
-    'Pilot checks (1.2): lost = 0 ✓ (reconciled) · duplicate replies = 0 ✓');
+    'Pilot checks: lost = 0 ✓ (reconciled) · duplicate replies = 0 ✓');
 });
 
 $('mr-canary').addEventListener('click',function(){
   if(state.notionDown){
     state.alerts++;
-    post('alert','Canary','⚠ Canary failed: Notion unavailable, the test request did not reach Replied — admins notified (F-22).');
+    post('alert','Canary','⚠ Canary failed: Notion unavailable, the test request did not reach Replied — admins notified.');
     renderMetrics();return;
   }
-  post('info','Canary','Canary test request [CANARY-'+state.day+'] injected: walked through to Replied ✓ (nothing sent to real media, F-22).');
+  post('info','Canary','Canary test request [CANARY-'+state.day+'] injected: walked through to Replied ✓ (nothing sent to real media).');
 });
 
 refreshSamples();

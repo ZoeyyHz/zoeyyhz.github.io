@@ -1,0 +1,671 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CPRO — Media request workflow demo</title>
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.294.0/dist/umd/lucide.min.js"></script>
+<style>
+:root{color-scheme:light dark;}
+body{margin:0;padding:22px 16px;background:#f4f4f2;background:light-dark(#f4f4f2,#101010);}
+#mr-demo{max-width:1240px;margin:0 auto;}
+</style>
+</head>
+<body>
+<div id="mr-demo">
+<style>
+#mr-demo{
+  color-scheme: light dark;
+  --mr-bg:#f4f4f2;            --mr-bg:light-dark(#f4f4f2,#161616);
+  --mr-panel:#ffffff;         --mr-panel:light-dark(#ffffff,#1f1f1f);
+  --mr-panel2:#faf9f7;        --mr-panel2:light-dark(#262626,#262626);
+  --mr-panel2:#f7f6f4;        --mr-panel2:light-dark(#f7f6f4,#262626);
+  --mr-border:#e7e5e1;        --mr-border:light-dark(#e7e5e1,#303030);
+  --mr-text:#37352f;          --mr-text:light-dark(#37352f,#e9e7e2);
+  --mr-muted:#8a877f;         --mr-muted:light-dark(#8a877f,#9a978e);
+  --mr-accent:#2f6fed;        --mr-accent:light-dark(#2f6fed,#7aa7ff);
+  --mr-accent-fg:#ffffff;     --mr-accent-fg:light-dark(#ffffff,#0c1a35);
+  --mr-accent-tint:rgba(47,111,237,.10);  --mr-accent-tint:light-dark(rgba(47,111,237,.10),rgba(122,167,255,.14));
+  --mr-blue:#2f6fed;          --mr-blue:light-dark(#2f6fed,#7aa7ff);
+  --mr-green:#1e8e4e;         --mr-green:light-dark(#1e8e4e,#5ec98c);
+  --mr-red:#d14343;           --mr-red:light-dark(#d14343,#ff8f8f);
+  --mr-orange:#c2790f;        --mr-orange:light-dark(#c2790f,#f0b35a);
+  --mr-yellow:#9a7b0a;        --mr-yellow:light-dark(#9a7b0a,#e3c458);
+  --mr-purple:#5b5fc7;        --mr-purple:light-dark(#5b5fc7,#9fa3f2);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  font-size:13px; line-height:1.45; color:var(--mr-text);
+  background:var(--mr-bg); border-radius:12px; padding:16px;
+}
+#mr-demo *{box-sizing:border-box;}
+#mr-demo .mr-num{font-variant-numeric:tabular-nums;}
+#mr-demo .mr-header{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:12px;}
+#mr-demo .mr-brand{display:flex;gap:10px;align-items:center;}
+#mr-demo .mr-logo{width:36px;height:36px;border-radius:9px;background:var(--mr-accent);color:var(--mr-accent-fg);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:10.5px;letter-spacing:.04em;flex:none;}
+#mr-demo h1{font-size:15px;font-weight:600;margin:0;}
+#mr-demo .mr-sub{font-size:11px;color:var(--mr-muted);margin-top:2px;}
+#mr-demo .mr-headerright{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+#mr-demo .mr-daychip{font-size:11.5px;font-weight:500;border:1px solid var(--mr-border);background:var(--mr-panel);border-radius:999px;padding:3px 10px;}
+#mr-demo .mr-switch{display:flex;align-items:center;gap:7px;font-size:11.5px;cursor:pointer;user-select:none;}
+#mr-demo .mr-switch input{position:absolute;opacity:0;width:1px;height:1px;}
+#mr-demo .mr-track{width:30px;height:17px;border-radius:999px;background:var(--mr-border);position:relative;transition:background .15s;flex:none;}
+#mr-demo .mr-track::after{content:"";position:absolute;top:2px;left:2px;width:13px;height:13px;border-radius:50%;background:var(--mr-panel);transition:left .15s;}
+#mr-demo .mr-switch input:checked + .mr-track{background:var(--mr-red);}
+#mr-demo .mr-switch input:checked + .mr-track::after{left:15px;}
+#mr-demo .mr-switch input:focus-visible + .mr-track{outline:2px solid var(--mr-accent);outline-offset:2px;}
+#mr-demo .mr-metrics{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;}
+#mr-demo .mr-chip{background:var(--mr-panel);border:1px solid var(--mr-border);border-radius:9px;padding:5px 11px 6px;min-width:86px;}
+#mr-demo .mr-chip .l{font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:var(--mr-muted);}
+#mr-demo .mr-chip .v{font-size:13.5px;font-weight:600;margin-top:1px;}
+#mr-demo .mr-chip.bad .v{color:var(--mr-red);}
+#mr-demo .mr-grid{display:grid;grid-template-columns:262px minmax(0,1fr) 324px;gap:13px;align-items:start;}
+#mr-demo .mr-panel{background:var(--mr-panel);border:1px solid var(--mr-border);border-radius:10px;padding:12px;}
+#mr-demo .mr-panel + .mr-panel{margin-top:13px;}
+#mr-demo .mr-panelh{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:600;margin-bottom:10px;}
+#mr-demo .mr-panelh svg{color:var(--mr-muted);flex:none;}
+#mr-demo .mr-panelh .mr-teal{color:var(--mr-purple);}
+#mr-demo .mr-samples{display:flex;flex-direction:column;gap:7px;}
+#mr-demo .mr-sample{display:flex;align-items:center;gap:8px;width:100%;text-align:left;background:var(--mr-panel2);border:1px solid var(--mr-border);border-radius:8px;padding:7px 9px;font-size:12px;color:var(--mr-text);cursor:pointer;font-family:inherit;}
+#mr-demo .mr-sample:hover{background:var(--mr-accent-tint);border-color:var(--mr-accent);}
+#mr-demo .mr-sample:disabled{opacity:.45;cursor:default;}
+#mr-demo .mr-sample svg{color:var(--mr-muted);flex:none;}
+#mr-demo .mr-sample .mr-kb{margin-left:auto;font-size:10px;color:var(--mr-muted);border:1px solid var(--mr-border);border-radius:5px;padding:1px 5px;flex:none;}
+#mr-demo .mr-panelh2{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--mr-muted);margin:14px 0 8px;}
+#mr-demo .mr-simrow{display:flex;gap:7px;margin-bottom:7px;flex-wrap:wrap;}
+#mr-demo .mr-btn{display:inline-flex;align-items:center;gap:5px;background:var(--mr-panel2);color:var(--mr-text);border:1px solid var(--mr-border);border-radius:7px;padding:4px 10px;font-size:12px;font-family:inherit;cursor:pointer;}
+#mr-demo .mr-btn:hover{border-color:var(--mr-accent);color:var(--mr-accent);}
+#mr-demo .mr-btn:disabled{opacity:.45;cursor:default;}
+#mr-demo .mr-btn.mr-primary{background:var(--mr-accent);border-color:transparent;color:var(--mr-accent-fg);font-weight:500;}
+#mr-demo .mr-btn.mr-primary:hover{filter:brightness(1.07);color:var(--mr-accent-fg);}
+#mr-demo .mr-btn.mr-grow{flex:1;justify-content:center;}
+#mr-demo .mr-note{font-size:11px;color:var(--mr-muted);margin:10px 0 0;line-height:1.55;}
+#mr-demo .mr-flowtitle{font-weight:400;color:var(--mr-muted);margin-left:2px;}
+#mr-demo .mr-steps{list-style:none;margin:0;padding:0;position:relative;}
+#mr-demo .mr-steps::before{content:"";position:absolute;left:8px;top:8px;bottom:8px;width:1px;background:var(--mr-border);}
+#mr-demo .mr-step{display:grid;grid-template-columns:18px 1fr;gap:9px;position:relative;padding:4px 0;}
+#mr-demo .mr-dot{width:17px;height:17px;border-radius:50%;border:1.5px solid var(--mr-border);background:var(--mr-panel);color:var(--mr-panel);font-size:10px;display:flex;align-items:center;justify-content:center;font-weight:700;margin-top:1px;}
+#mr-demo .mr-step .t{font-size:12.5px;}
+#mr-demo .mr-step .sub{font-size:11px;color:var(--mr-muted);margin-top:1px;white-space:pre-wrap;}
+#mr-demo .mr-step[data-s="todo"]{opacity:.55;}
+#mr-demo .mr-step[data-s="skip"]{opacity:.4;}
+#mr-demo .mr-step[data-s="active"] .mr-dot{background:var(--mr-accent);border-color:var(--mr-accent);animation:mr-pulse 1.1s ease-in-out infinite;}
+#mr-demo .mr-step[data-s="done"] .mr-dot{background:var(--mr-green);border-color:var(--mr-green);}
+#mr-demo .mr-step[data-s="fail"] .mr-dot{background:var(--mr-red);border-color:var(--mr-red);}
+#mr-demo .mr-step[data-s="wait"] .mr-dot{background:var(--mr-orange);border-color:var(--mr-orange);}
+@keyframes mr-pulse{0%,100%{box-shadow:0 0 0 0 rgba(47,111,237,.35);}50%{box-shadow:0 0 0 5px rgba(47,111,237,0);}}
+@media (prefers-reduced-motion:reduce){#mr-demo .mr-step[data-s="active"] .mr-dot{animation:none;}#mr-demo tr.mr-flash{animation:none !important;}}
+#mr-demo .mr-chipai,#mr-demo .mr-chiph{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.04em;border-radius:4px;padding:1px 5px;margin-left:5px;vertical-align:1px;}
+#mr-demo .mr-chipai{background:var(--mr-accent-tint);color:var(--mr-blue);}
+#mr-demo .mr-chiph{background:rgba(194,121,15,.14);color:var(--mr-orange);}
+#mr-demo .mr-tablewrap{overflow-x:auto;}
+#mr-demo table{width:100%;border-collapse:collapse;min-width:730px;}
+#mr-demo th{font-size:10.5px;text-transform:uppercase;letter-spacing:.04em;color:var(--mr-muted);font-weight:600;text-align:left;padding:5px 8px;border-bottom:1px solid var(--mr-border);}
+#mr-demo td{font-size:12.5px;padding:7px 8px;border-bottom:1px solid var(--mr-border);vertical-align:top;}
+#mr-demo tr.mr-row{cursor:pointer;}
+#mr-demo tr.mr-row:hover{background:var(--mr-panel2);}
+#mr-demo tr.mr-row.is-open{background:var(--mr-accent-tint);}
+#mr-demo tr.mr-dup td{color:var(--mr-muted);}
+#mr-demo .mr-tt{font-weight:600;display:flex;align-items:center;gap:5px;}
+#mr-demo .mr-tt svg{color:var(--mr-orange);flex:none;}
+#mr-demo .mr-tsub{font-size:11px;color:var(--mr-muted);margin-top:1px;}
+#mr-demo .mr-pill{display:inline-block;font-size:11px;font-weight:500;border-radius:999px;padding:1.5px 9px;white-space:nowrap;}
+#mr-demo .mr-pill[data-s="New"]{background:var(--mr-accent-tint);color:var(--mr-blue);}
+#mr-demo .mr-pill[data-s="Needs triage"]{background:rgba(194,121,15,.14);color:var(--mr-orange);}
+#mr-demo .mr-pill[data-s="Expert confirmed"]{background:rgba(91,95,199,.14);color:var(--mr-purple);}
+#mr-demo .mr-pill[data-s="Approved"]{background:rgba(154,123,10,.15);color:var(--mr-yellow);}
+#mr-demo .mr-pill[data-s="Replied"]{background:rgba(30,142,78,.13);color:var(--mr-green);}
+#mr-demo .mr-pill[data-s="Duplicate"]{background:var(--mr-panel2);color:var(--mr-muted);border:1px solid var(--mr-border);}
+#mr-demo .mr-dl.ok{color:var(--mr-text);}
+#mr-demo .mr-dl.soon{color:var(--mr-orange);font-weight:500;}
+#mr-demo .mr-dl.over{color:var(--mr-red);font-weight:600;}
+#mr-demo td svg{color:var(--mr-muted);}
+#mr-demo tr.mr-flash{animation:mr-flash 1.6s ease-out 1;}
+@keyframes mr-flash{0%{background:var(--mr-accent-tint);}100%{background:transparent;}}
+#mr-demo tr.mr-detail > td{background:var(--mr-panel2);padding:13px 12px;border-bottom:1px solid var(--mr-border);}
+#mr-demo .mr-detailgrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr) minmax(0,1.15fr);gap:14px;}
+#mr-demo .mr-dh{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--mr-muted);margin-bottom:6px;}
+#mr-demo .mr-orig,#mr-demo .mr-json{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:11px;line-height:1.5;background:var(--mr-panel);border:1px solid var(--mr-border);border-radius:7px;padding:8px 9px;white-space:pre-wrap;word-break:break-word;margin:0;max-height:180px;overflow:auto;}
+#mr-demo .mr-metamini{font-size:11px;color:var(--mr-muted);margin-top:6px;}
+#mr-demo .mr-exp{display:flex;align-items:center;gap:6px;width:100%;text-align:left;background:var(--mr-panel);border:1px solid var(--mr-border);border-radius:8px;padding:6px 9px;font-size:12px;color:var(--mr-text);cursor:pointer;font-family:inherit;margin-bottom:6px;}
+#mr-demo .mr-exp:hover{border-color:var(--mr-accent);}
+#mr-demo .mr-exp.is-selected{border-color:var(--mr-accent);background:var(--mr-accent-tint);}
+#mr-demo .mr-exp .nm{font-weight:500;}
+#mr-demo .mr-exp .lg{font-size:10.5px;color:var(--mr-muted);}
+#mr-demo .mr-exp .sc{margin-left:auto;font-size:10.5px;color:var(--mr-green);font-weight:600;flex:none;}
+#mr-demo .mr-exphint{font-size:11px;color:var(--mr-muted);margin:2px 0 7px;}
+#mr-demo textarea{width:100%;min-height:118px;resize:vertical;background:var(--mr-panel);border:1px solid var(--mr-border);border-radius:7px;padding:8px 9px;font-family:inherit;font-size:12px;color:var(--mr-text);line-height:1.5;}
+#mr-demo textarea:focus-visible{outline:2px solid var(--mr-accent);outline-offset:1px;}
+#mr-demo .mr-actions{display:flex;gap:7px;align-items:center;flex-wrap:wrap;margin-top:9px;}
+#mr-demo .mr-err{font-size:11.5px;color:var(--mr-red);margin-top:7px;}
+#mr-demo .mr-sentchip{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;color:var(--mr-green);font-weight:500;}
+#mr-demo .mr-sentchip svg{color:var(--mr-green);}
+#mr-demo .mr-triagebtns{margin-top:8px;}
+#mr-demo .mr-dupnote{font-size:12px;color:var(--mr-muted);background:var(--mr-panel);border:1px dashed var(--mr-border);border-radius:7px;padding:9px 11px;}
+#mr-demo .mr-feed{display:flex;flex-direction:column;gap:10px;max-height:330px;overflow-y:auto;padding-right:3px;}
+#mr-demo .mr-msg{display:flex;gap:8px;}
+#mr-demo .mr-ava{width:24px;height:24px;border-radius:50%;color:#fff;font-size:9.5px;font-weight:700;display:flex;align-items:center;justify-content:center;flex:none;margin-top:1px;}
+#mr-demo .mr-msgbody{min-width:0;flex:1;}
+#mr-demo .mr-msgmeta{display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+#mr-demo .mr-msgmeta b{font-size:11.5px;font-weight:600;}
+#mr-demo .mr-kind{font-size:9px;font-weight:700;letter-spacing:.05em;border-radius:4px;padding:1px 5px;}
+#mr-demo .mr-kind.k-alert{background:rgba(209,67,67,.14);color:var(--mr-red);}
+#mr-demo .mr-kind.k-ping{background:rgba(91,95,199,.15);color:var(--mr-purple);}
+#mr-demo .mr-kind.k-digest{background:rgba(30,142,78,.13);color:var(--mr-green);}
+#mr-demo .mr-kind.k-info{background:var(--mr-panel2);color:var(--mr-muted);border:1px solid var(--mr-border);}
+#mr-demo .mr-time{font-size:10.5px;color:var(--mr-muted);}
+#mr-demo .mr-msgtext{font-size:12px;margin-top:2px;white-space:pre-wrap;word-break:break-word;}
+#mr-demo .mr-empty{font-size:11.5px;color:var(--mr-muted);}
+@media (max-width:1120px){
+  #mr-demo .mr-grid{grid-template-columns:240px minmax(0,1fr);}
+  #mr-demo .mr-teams{grid-column:1 / -1;}
+}
+@media (max-width:760px){
+  #mr-demo .mr-grid{grid-template-columns:1fr;}
+  #mr-demo .mr-detailgrid{grid-template-columns:1fr;}
+}
+</style>
+
+<header class="mr-header">
+  <div class="mr-brand">
+    <div class="mr-logo">CPRO</div>
+    <div>
+      <h1>Media request workflow — demo</h1>
+      <div class="mr-sub">Power Automate · university tenant&nbsp;&nbsp;·&nbsp;&nbsp;Azure OpenAI (procured endpoint)&nbsp;&nbsp;·&nbsp;&nbsp;Notion “Media requests”&nbsp;&nbsp;·&nbsp;&nbsp;Teams #media-requests-alerts</div>
+    </div>
+  </div>
+  <div class="mr-headerright">
+    <div class="mr-daychip mr-num" id="mr-day">Day 1</div>
+    <label class="mr-switch">
+      <input type="checkbox" id="mr-outage">
+      <span class="mr-track" aria-hidden="true"></span>
+      <span>Notion unavailable</span>
+    </label>
+  </div>
+</header>
+
+<div class="mr-metrics" id="mr-metrics"></div>
+
+<div class="mr-grid">
+  <aside class="mr-panel">
+    <div class="mr-panelh"><i data-lucide="inbox" aria-hidden="true"></i>Intake — try a request</div>
+    <div class="mr-samples" id="mr-samples"></div>
+    <div class="mr-panelh2">Simulation</div>
+    <div class="mr-simrow">
+      <button class="mr-btn mr-grow" id="mr-nextday" type="button"><i data-lucide="calendar-days" aria-hidden="true"></i>Advance 1 day</button>
+      <button class="mr-btn mr-grow" id="mr-sweep" type="button"><i data-lucide="alarm-clock" aria-hidden="true"></i>Daily sweep</button>
+    </div>
+    <div class="mr-simrow">
+      <button class="mr-btn mr-grow" id="mr-digest" type="button"><i data-lucide="file-text" aria-hidden="true"></i>Weekly digest</button>
+      <button class="mr-btn mr-grow" id="mr-reconcile" type="button" hidden><i data-lucide="refresh-ccw" aria-hidden="true"></i>Restore &amp; reconcile</button>
+    </div>
+    <p class="mr-note">Sending is gated on human approval — AI only suggests. Embargoed items skip the AI drafter entirely. The mailbox stays the record of truth: if Notion is down, requests wait and reconcile later.</p>
+  </aside>
+
+  <main>
+    <section class="mr-panel">
+      <div class="mr-panelh"><i data-lucide="workflow" aria-hidden="true"></i>Flow run <span class="mr-flowtitle" id="mr-flowtitle"></span></div>
+      <ol class="mr-steps" id="mr-steps" aria-live="polite">
+        <li class="mr-step" data-s="todo"><span class="mr-dot" aria-hidden="true"></span><div><div class="t">Submit a request to see the flow run</div><div class="sub">Left panel: five sample inputs, including a duplicate, an embargoed item and a vague enquiry.</div></div></li>
+      </ol>
+    </section>
+    <section class="mr-panel">
+      <div class="mr-panelh"><i data-lucide="database" aria-hidden="true"></i>Notion — Media requests <span style="font-weight:400;color:var(--mr-muted)">· click a row to review as the owner</span></div>
+      <div class="mr-tablewrap">
+        <table>
+          <thead><tr><th>Request</th><th>Outlet</th><th>Lang</th><th>Deadline</th><th>Status</th><th>Owner</th><th>Expert</th><th>Source</th></tr></thead>
+          <tbody id="mr-rows"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <aside class="mr-panel mr-teams">
+    <div class="mr-panelh mr-teal"><i data-lucide="message-square" aria-hidden="true"></i>Teams · #media-requests-alerts</div>
+    <div class="mr-feed" id="mr-feed" aria-live="polite"></div>
+  </aside>
+</div>
+</div>
+
+<script>
+(function(){
+'use strict';
+var HOUR=3600e3, DAY=24*HOUR;
+var root=document.getElementById('mr-demo');
+var now0=Date.now();
+var OWNERS=['Maria','Ken','Wei','Sofia'];
+var EXPERTS=[
+  {name:'Prof. Lena Hartmann',areas:['AI','funding','policy'],langs:'EN · DE'},
+  {name:'Prof. 陈伟 (Wei Chen)',areas:['quantum','research'],langs:'ZH · EN'},
+  {name:'Dr. Sofia Marques',areas:['sustainability','climate'],langs:'EN · ES'},
+  {name:'Prof. David Okafor',areas:['finance','funding'],langs:'EN'},
+  {name:'Prof. 林嘉欣 (Jiaxin Lin)',areas:['clinical','health'],langs:'ZH · EN'},
+  {name:'Dr. Amir Rahimi',areas:['AI','privacy'],langs:'EN · ZH'}
+];
+
+function mkExtraction(journalist,outlet,lang,topics,dh,sensitive,conf){
+  return {journalist:journalist,outlet:outlet,language:lang,topics:topics&&topics.length?topics:null,
+    deadline:dh?new Date(now0+dh).toISOString().slice(0,10):null,format:'interview',
+    sensitivity:sensitive?'embargo-flagged':'none',_confidence:conf};
+}
+
+var state={
+  simNow:now0, day:1, notionDown:false, openId:null, ownerIdx:2, nextId:3,
+  dupsBlocked:0, alerts:0, busy:false, msgCount:0, pending:[], run:null,
+  requests:[
+    {id:'MR-01',title:'Interview — AI research funding',journalist:'Rachel Donnelly',email:'r.donnelly@bloomberg.net',
+     outlet:'Bloomberg',lang:'EN',topics:['AI','funding'],source:'Email',msgId:'<a91f40@bloomberg.net>',
+     received:now0-26*HOUR,deadline:now0+46*HOUR,status:'Replied',owner:'Maria',expert:'Prof. Lena Hartmann',
+     sensitive:false,confidence:0.95,sentAt:now0-21*HOUR,dupCount:0,dupOf:null,suggestions:null,
+     original:'Hi,\n\nBloomberg is preparing a feature on national AI research funding and I would like to interview a university expert on the new programmes.\n\nCould we arrange 30 minutes this week?\n\nBest,\nRachel Donnelly',
+     draft:'Dear Ms Donnelly,\n\nThank you for reaching out. Prof. Lena Hartmann can speak to the AI funding programmes and is available Thursday 10:00–11:30. A Teams or in-person interview both work.\n\nKind regards,\nCPRO Media Office',
+     extraction:mkExtraction('Rachel Donnelly','Bloomberg','EN',['AI','funding'],46*HOUR,false,0.95)},
+    {id:'MR-02',title:'Interview — data privacy in admissions',journalist:'Yuki Tanaka',email:'y.tanaka@nhk.jp',
+     outlet:'NHK',lang:'EN',topics:['privacy'],source:'Email',msgId:'<c07de2@nhk.jp>',
+     received:now0-3*HOUR,deadline:now0+20*HOUR,status:'New',owner:'Wei',expert:null,
+     sensitive:false,confidence:0.89,sentAt:null,dupCount:0,dupOf:null,
+     original:'Hello,\n\nNHK is reporting on how universities use student data in admissions. Could I speak with a specialist this week?\n\nRegards,\nYuki Tanaka',
+     draft:'Dear Ms Tanaka,\n\nThank you for your interest. Dr. Amir Rahimi studies data governance in higher education and could speak Friday afternoon.\n\nBest regards,\nCPRO Media Office',
+     extraction:mkExtraction('Yuki Tanaka','NHK','EN',['privacy'],20*HOUR,false,0.89)}
+  ],
+  teams:[]
+};
+
+var SAMPLES=[
+  {key:'dup',isDup:true,kind:'email',icon:'mail',label:'Follow-up from Rachel (duplicate)',
+   title:'Follow-up — AI funding interview',journalist:'Rachel Donnelly',email:'r.donnelly@bloomberg.net',
+   outlet:'Bloomberg',lang:'EN',topics:['AI','funding'],deadline:46*HOUR,confidence:0.9,sensitive:false,lowConf:false,
+   original:'Just following up on my note below — would Thursday still work for Prof. Hartmann?\n\nBest,\nRachel',draft:''},
+  {key:'zh',kind:'email',icon:'mail',label:'Chinese request — quantum research',
+   title:'量子计算研究进展专访',journalist:'王小明',email:'wangxm@stdaily.com',
+   outlet:'《科技日报》',lang:'ZH',topics:['quantum','research'],deadline:48*HOUR,confidence:0.93,sensitive:false,lowConf:false,
+   original:'您好：\n\n我们正在筹备一期关于量子计算研究进展的专题报道，希望采访贵校相关专家，介绍最新成果与应用前景。如方便，希望本周内安排 45 分钟线上采访。\n\n盼复。\n\n王小明 《科技日报》',
+   draft:'尊敬的王记者：\n\n感谢您的采访邀请。陈伟教授长期从事量子计算研究，可于本周四下午接受约 45 分钟的线上采访。\n\n如时间合适，我们再确认具体时段。\n\n大学传讯处'},
+  {key:'form',kind:'form',icon:'file-text',label:'Web form — campus sustainability',
+   title:'Feature — campus sustainability plan',journalist:'Ana Ruiz',email:'a.ruiz@guardian.example',
+   outlet:'The Guardian',lang:'EN',topics:['sustainability'],deadline:72*HOUR,confidence:0.91,sensitive:false,lowConf:false,
+   original:'[Web form submission]\nName: Ana Ruiz\nOutlet: The Guardian\nRequest: Working on a feature about the new campus sustainability plan — could I tour the site and interview the lead?\nPreferred: any day this week',draft:''},
+  {key:'embargo',kind:'email',icon:'lock',label:'Embargoed clinical trial (sensitive)',
+   title:'Embargoed — clinical trial results',journalist:'Tomas Fischer',email:'t.fischer@ghwire.example',
+   outlet:'Global Health Wire',lang:'EN',topics:['clinical','health'],deadline:60*HOUR,confidence:0.97,sensitive:true,lowConf:false,
+   original:'Dear team,\n\nWe are preparing coverage of the multi-site clinical trial results. The findings are embargoed until 20 November; please treat all details as confidential.\n\nCould we schedule an interview under embargo terms?\n\nTomas Fischer',draft:''},
+  {key:'vague',kind:'email',icon:'mail',label:'Vague enquiry (low confidence)',
+   title:'General enquiry — no clear topic',journalist:'J. Lester',email:'j.lester@cityherald.example',
+   outlet:'City Herald',lang:'EN',topics:[],deadline:null,confidence:0.42,sensitive:false,lowConf:true,
+   original:'Hi — we’d love to chat with someone at the university sometime soon. Thanks!',draft:''}
+];
+
+function $(id){return document.getElementById(id);}
+function pad(n){return n<10?'0'+n:''+n;}
+function refreshIcons(){if(window.lucide&&lucide.createIcons){lucide.createIcons({attrs:{width:14,height:14}});}}
+function sleep(ms){return new Promise(function(r){setTimeout(r,ms);});}
+function fmtH(ms){var h=Math.round(ms/HOUR);if(h>=48){return Math.round(h/24)+'d';}if(h>=24){return (h/24).toFixed(1).replace('.0','')+'d';}return h+'h';}
+function clock(){state.msgCount++;var m=540+state.msgCount*3;var hh=Math.floor(m/60)%24,mm=m%60;return 'Day '+state.day+' · '+pad(hh)+':'+pad(mm);}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+var AVA={ 'Workflow bot':['WB','var(--mr-blue)'], 'Daily sweep':['DS','var(--mr-purple)'], 'Weekly digest':['WD','var(--mr-green)'] };
+function post(kind,from,text){
+  state.teams.push({time:clock(),kind:kind,from:from,text:text});
+  var feed=$('mr-feed');
+  var a=AVA[from]||['?','var(--mr-muted)'];
+  var d=document.createElement('div');
+  d.className='mr-msg';
+  d.innerHTML='<div class="mr-ava" style="background:'+a[1]+'">'+a[0]+'</div><div class="mr-msgbody"><div class="mr-msgmeta"><b>'+esc(from)+'</b><span class="mr-kind k-'+kind+'">'+kind.toUpperCase()+'</span><span class="mr-time mr-num">'+esc(state.teams[state.teams.length-1].time)+'</span></div><div class="mr-msgtext"></div></div>';
+  d.querySelector('.mr-msgtext').textContent=text;
+  feed.appendChild(d);
+  feed.scrollTop=feed.scrollHeight;
+}
+
+function rankExperts(req){
+  return EXPERTS.map(function(e){return {name:e.name,langs:e.langs,score:req.topics.filter(function(t){return e.areas.indexOf(t)>=0;}).length};})
+    .filter(function(e){return e.score>0;}).sort(function(a,b){return b.score-a.score;}).slice(0,3);
+}
+function mkRequest(s,status){
+  return {id:'MR-'+pad(state.nextId++),title:s.title,journalist:s.journalist,email:s.email,outlet:s.outlet,
+    lang:s.lang,topics:s.topics.slice(),source:s.kind==='form'?'Form':'Email',
+    msgId:'<'+Math.random().toString(36).slice(2,8)+'@media-intake>',
+    received:state.simNow,deadline:s.deadline?state.simNow+s.deadline:null,status:status,
+    owner:OWNERS[state.ownerIdx++%OWNERS.length],expert:null,sensitive:!!s.sensitive,
+    confidence:s.confidence||null,sentAt:null,original:s.original,
+    draft:s.sensitive?'':(s.draft||''),dupOf:null,dupCount:0,suggestions:null,
+    extraction:null};
+}
+
+function stepsFor(){return [
+  {t:'Trigger — new message in media@',s:'todo',ai:false,human:false,sub:''},
+  {t:'Deduplicate (Message-ID / sender + topic)',s:'todo',ai:false,human:false,sub:''},
+  {t:'AI — extract fields to JSON (schema-checked)',s:'todo',ai:true,human:false,sub:''},
+  {t:'Create Notion page · assign Owner',s:'todo',ai:false,human:false,sub:''},
+  {t:'AI — rank experts (top 3 to page)',s:'todo',ai:true,human:false,sub:''},
+  {t:'Human — owner approves expert, time & draft',s:'todo',ai:false,human:true,sub:''},
+  {t:'Send from media@ (gated on approval)',s:'todo',ai:false,human:false,sub:''}
+];}
+
+function renderFlow(){
+  var run=state.run;
+  if(!run){return;}
+  $('mr-flowtitle').textContent=run.title?'— '+run.title:'';
+  $('mr-steps').innerHTML=run.steps.map(function(st){
+    var dot=st.s==='done'?'✓':(st.s==='fail'?'✕':(st.s==='skip'?'—':(st.s==='wait'?'…':'')));
+    return '<li class="mr-step" data-s="'+st.s+'"><span class="mr-dot" aria-hidden="true">'+dot+'</span><div><div class="t">'+esc(st.t)+
+      (st.ai?'<span class="mr-chipai">AI</span>':'')+(st.human?'<span class="mr-chiph">HUMAN</span>':'')+'</div><div class="sub">'+esc(st.sub)+'</div></div></li>';
+  }).join('');
+}
+
+function shortTitle(s){return s.title;}
+
+async function run(s){
+  if(state.busy){return;}
+  state.busy=true; refreshSamples();
+  var st=stepsFor();
+  state.run={title:shortTitle(s),steps:st};
+  renderFlow();
+  try{
+    st[0].s='active'; st[0].sub=(s.kind==='email'?'email from '+s.email:'web form submission'); renderFlow(); await sleep(650);
+    st[0].s='done'; renderFlow();
+
+    st[1].s='active'; renderFlow(); await sleep(500);
+    var hit=null;
+    for(var i=0;i<state.requests.length;i++){
+      var r=state.requests[i];
+      if(r.status==='Duplicate'){continue;}
+      if(r.email===s.email&&s.topics.some(function(t){return r.topics.indexOf(t)>=0;})){hit=r;break;}
+    }
+    if(hit){
+      st[1].s='done'; st[1].sub='match: '+hit.id+' · same sender + topic → follow-up appended, no second page';
+      renderFlow();
+      var d=mkRequest(s,'Duplicate'); d.dupOf=hit.id; d.owner=hit.owner;
+      state.requests.push(d); hit.dupCount++;
+      state.dupsBlocked++;
+      post('info','Workflow bot','Duplicate follow-up appended to '+hit.id+' ('+hit.journalist+') — no second reply will be sent.');
+      for(var j=2;j<st.length;j++){st[j].s='skip';st[j].sub='not reached — duplicate';}
+      renderFlow(); renderTable(); renderMetrics();
+      return;
+    }
+    st[1].s='done'; st[1].sub='no match — first request for this sender + topic'; renderFlow(); await sleep(350);
+
+    st[2].s='active'; st[2].sub='extracting journalist · outlet · topic · deadline · sensitivity…'; renderFlow(); await sleep(850);
+    st[2].s='done';
+    if(s.lowConf){st[2].sub='confidence 0.42 · schema ✗ (topic, deadline missing) → routed to Needs triage';}
+    else{st[2].sub='confidence '+(s.confidence||0.9).toFixed(2)+' · schema ✓ · language '+s.lang;}
+    renderFlow(); await sleep(400);
+
+    st[3].s='active'; renderFlow();
+    if(state.notionDown){
+      for(var k=1;k<=3;k++){st[3].sub='Notion API 503 — retry '+k+'/3';renderFlow();await sleep(750);}
+      st[3].s='fail'; st[3].sub='gave up after 3 retries — email kept & flagged in the mailbox (record of truth)';
+      renderFlow();
+      state.pending.push(s); state.alerts++;
+      post('alert','Workflow bot','⚠ Notion unavailable — “'+s.title+'” could not be created. Email flagged in media@; reconcile when service returns.');
+      for(var m=4;m<st.length;m++){st[m].s='skip';st[m].sub='paused — waiting for Notion';}
+      renderMetrics();
+      return;
+    }
+    await sleep(550);
+    var req=mkRequest(s,s.lowConf?'Needs triage':'New');
+    req.extraction={journalist:s.journalist,outlet:s.outlet,language:s.lang,
+      topics:s.topics.length?s.topics:null,
+      deadline:s.deadline?new Date(state.simNow+s.deadline).toISOString().slice(0,10):null,
+      format:'interview',sensitivity:s.sensitive?'embargo-flagged':'none',_confidence:s.confidence};
+    state.requests.push(req);
+    st[3].s='done'; st[3].sub=req.id+' created · Owner '+req.owner+' (rota) · Source '+req.source;
+    post('ping','Workflow bot','@'+req.owner+' — new request '+req.id+' “'+req.title+'”. Deadline '+(req.deadline?'in '+fmtH(req.deadline-state.simNow):'not stated')+'.');
+    renderFlow(); renderTable(); flashRow(req.id); renderMetrics(); await sleep(450);
+
+    st[4].s='active'; renderFlow(); await sleep(750);
+    var sug=rankExperts(req); req.suggestions=sug;
+    if(sug.length){st[4].s='done';st[4].sub=sug.map(function(x){return x.name+' ('+x.score+'/'+req.topics.length+')';}).join(' · ')+' → written to page';}
+    else{st[4].s='done';st[4].sub='no confident match — owner picks manually from the Experts database';}
+    renderTable(); await sleep(350);
+
+    st[5].s='wait'; st[5].sub='waiting for '+req.owner+' — open the row above to review';
+    renderFlow();
+  } finally {
+    state.busy=false; refreshSamples();
+  }
+}
+
+function refreshSamples(){
+  var box=$('mr-samples');
+  box.innerHTML=SAMPLES.map(function(s){
+    return '<button type="button" class="mr-sample cursor-interaction" data-key="'+s.key+'"'+(state.busy?' disabled':'')+'><i data-lucide="'+s.icon+'" aria-hidden="true"></i><span>'+esc(s.label)+'</span><span class="mr-kb">'+(s.kind==='form'?'Form':'Email')+'</span></button>';
+  }).join('');
+  refreshIcons();
+}
+
+function relDeadline(r){
+  if(!r.deadline){return {txt:'—',cls:''};}
+  var left=r.deadline-state.simNow;
+  if(left<0){return {txt:'overdue '+fmtH(-left),cls:'over'};}
+  if(left<=24*HOUR){return {txt:'in '+fmtH(left),cls:'soon'};}
+  return {txt:'in '+fmtH(left),cls:'ok'};
+}
+function lastToken(name){var p=name.split(' ');return p[p.length-1];}
+
+function detailHtml(r){
+  if(r.status==='Duplicate'){
+    return '<div class="mr-dupnote">Duplicate follow-up — appended to the original page <b>'+esc(r.dupOf)+'</b>. No reply is sent from this path, so two colleagues cannot answer the same journalist.</div>';
+  }
+  var expHtml='';
+  if(r.status==='Needs triage'){
+    expHtml='<div class="mr-exphint">AI confidence too low — fields need a human check before the request enters the queue.</div>'+
+      '<button type="button" class="mr-btn mr-primary mr-triagebtns" data-act="confirm" data-rid="'+r.id+'"><i data-lucide="user-check" aria-hidden="true"></i>Confirm fields (set deadline +3d)</button>';
+  } else {
+    var list=(r.suggestions&&r.suggestions.length)?r.suggestions:EXPERTS.map(function(e){return {name:e.name,langs:e.langs,score:0};});
+    var hint=(r.suggestions&&r.suggestions.length)?'AI-ranked from the Experts database — pick one:':'No confident AI match — pick manually:';
+    expHtml='<div class="mr-exphint">'+hint+'</div>'+list.map(function(e){
+      var sel=r.expert===e.name?' is-selected':'';
+      var sc=e.score>0?'<span class="sc">match '+e.score+'</span>':'';
+      return '<button type="button" class="mr-exp cursor-interaction'+sel+'" data-act="expert" data-rid="'+r.id+'" data-name="'+esc(e.name)+'"><span class="nm">'+esc(e.name)+'</span><span class="lg">'+esc(e.langs)+'</span>'+sc+'</button>';
+    }).join('');
+  }
+  var draftLabel=r.sensitive?'Manual draft — AI drafting skipped (embargoed)':'AI draft (editable) — nothing sends without approval';
+  var actions='';
+  if(r.status==='Replied'){
+    actions='<span class="mr-sentchip"><i data-lucide="check-circle-2" aria-hidden="true"></i>Sent '+fmtH(state.simNow-r.sentAt)+' after intake · within 1 working day: '+((r.sentAt-r.received)<=24*HOUR?'✓':'✗')+'</span>';
+  } else {
+    actions='<button type="button" class="mr-btn" data-act="approve" data-rid="'+r.id+'"'+(r.status==='Approved'?' disabled':'')+'><i data-lucide="user-check" aria-hidden="true"></i>'+(r.status==='Approved'?'Approved':'Approve')+'</button>'+
+      '<button type="button" class="mr-btn mr-primary" data-act="send" data-rid="'+r.id+'"'+(r.status==='Approved'?'':' disabled')+'><i data-lucide="send" aria-hidden="true"></i>Send from media@</button>'+
+      '<span class="mr-pill" data-s="'+r.status+'">'+r.status+'</span>';
+  }
+  return '<div class="mr-detailgrid">'+
+    '<div><div class="mr-dh">Original message</div><pre class="mr-orig" data-pre="orig"></pre><div class="mr-metamini mr-num">Received '+new Date(r.received).toISOString().slice(0,16).replace('T',' ')+' UTC · '+esc(r.msgId)+' · via '+r.source+'</div></div>'+
+    '<div><div class="mr-dh">Extraction (AI, schema-checked)</div><pre class="mr-json" data-pre="json"></pre><div style="height:8px"></div><div class="mr-dh">Expert</div>'+expHtml+'</div>'+
+    '<div><div class="mr-dh">'+draftLabel+'</div><textarea data-draft="'+r.id+'" aria-label="Reply draft"></textarea><div class="mr-actions">'+actions+'</div><div class="mr-err" role="alert" data-err hidden></div></div>'+
+  '</div>';
+}
+
+function renderTable(){
+  var tb=$('mr-rows');
+  tb.innerHTML=state.requests.map(function(r){
+    var dl=relDeadline(r);
+    var open=state.openId===r.id;
+    var sens=r.sensitive?'<i data-lucide="lock" aria-hidden="true"></i>':'';
+    var sub=r.status==='Duplicate'?'↳ attached to '+esc(r.dupOf):esc(r.journalist)+(r.dupCount?' · '+r.dupCount+' duplicate merged':'');
+    var row='<tr class="mr-row cursor-interaction'+(open?' is-open':'')+(r.status==='Duplicate'?' mr-dup':'')+'" data-id="'+r.id+'">'+
+      '<td><div class="mr-tt">'+esc(r.title)+' '+sens+'</div><div class="mr-tsub">'+sub+'</div></td>'+
+      '<td>'+esc(r.outlet)+'</td><td>'+r.lang+'</td>'+
+      '<td><span class="mr-dl mr-num '+dl.cls+'">'+dl.txt+'</span></td>'+
+      '<td><span class="mr-pill" data-s="'+r.status+'">'+r.status+'</span></td>'+
+      '<td>'+esc(r.owner)+'</td><td>'+(r.expert?esc(lastToken(r.expert)):'—')+'</td>'+
+      '<td><i data-lucide="'+(r.source==='Form'?'file-text':'mail')+'" aria-hidden="true"></i></td></tr>';
+    if(open){row+='<tr class="mr-detail"><td colspan="8">'+detailHtml(r)+'</td></tr>';}
+    return row;
+  }).join('');
+  state.requests.forEach(function(r){
+    if(state.openId!==r.id){return;}
+    var tr=tb.querySelector('tr[data-id="'+r.id+'"]');
+    if(!tr){return;}
+    var next=tr.nextElementSibling;
+    if(next&&next.classList.contains('mr-detail')){
+      next.querySelector('[data-pre="orig"]').textContent=r.original;
+      next.querySelector('[data-pre="json"]').textContent=JSON.stringify(r.extraction,null,1);
+      var ta=next.querySelector('textarea[data-draft]');
+      ta.value=r.draft;
+      ta.addEventListener('input',function(){r.draft=ta.value;});
+    }
+  });
+  refreshIcons();
+}
+
+function flashRow(id){
+  var tr=$('mr-rows').querySelector('tr[data-id="'+id+'"]');
+  if(tr){tr.classList.add('mr-flash');tr.scrollIntoView({block:'nearest',behavior:'smooth'});}
+}
+
+function renderMetrics(){
+  var real=state.requests.filter(function(r){return r.status!=='Duplicate';});
+  var replied=real.filter(function(r){return r.status==='Replied';});
+  var within=replied.filter(function(r){return (r.sentAt-r.received)<=24*HOUR;});
+  var open=real.filter(function(r){return ['New','Needs triage','Expert confirmed','Approved'].indexOf(r.status)>=0;});
+  var unrecon=state.pending.length;
+  $('mr-metrics').innerHTML=
+    chip('Requests',real.length+' <span style="font-weight:400;color:var(--mr-muted)">('+open.length+' open)</span>')+
+    chip('Replied ≤ 1 day',replied.length?within.length+'/'+replied.length:'—')+
+    chip('Duplicates blocked',state.dupsBlocked)+
+    chipClass(unrecon>0,'Unreconciled',unrecon)+
+    chip('Alerts',state.alerts);
+  function chip(l,v){return '<div class="mr-chip"><div class="l">'+l+'</div><div class="v mr-num">'+v+'</div></div>';}
+  function chipClass(bad,l,v){return '<div class="mr-chip'+(bad?' bad':'')+'"><div class="l">'+l+'</div><div class="v mr-num">'+v+'</div></div>';}
+  $('mr-reconcile').hidden=!(unrecon>0);
+}
+
+function err(rid,msg){
+  var tb=$('mr-rows');var tr=tb.querySelector('tr[data-id="'+rid+'"]');
+  if(!tr){return;}
+  var d=tr.nextElementSibling.querySelector('[data-err]');
+  d.textContent=msg;d.hidden=false;
+  setTimeout(function(){d.hidden=true;},3500);
+}
+
+$('mr-rows').addEventListener('click',function(e){
+  var btn=e.target.closest('button[data-act]');
+  if(btn){
+    var rid=btn.dataset.rid;
+    var r=state.requests.find(function(x){return x.id===rid;});
+    if(!r){return;}
+    var act=btn.dataset.act;
+    if(act==='expert'){
+      r.expert=btn.dataset.name;
+      if(r.status==='New'){r.status='Expert confirmed';}
+      renderTable();
+    } else if(act==='confirm'){
+      r.status='New'; r.deadline=state.simNow+3*DAY;
+      r.extraction.topics=r.extraction.topics||['general'];
+      r.extraction.deadline=new Date(r.deadline).toISOString().slice(0,10);
+      r.extraction._confidence='0.42 → human-confirmed';
+      post('ping','Workflow bot','@'+r.owner+' — '+r.id+' triaged: deadline set to +3 days. Please pick an expert.');
+      renderTable();
+    } else if(act==='approve'){
+      if(!r.expert){err(rid,'Pick an expert first.');return;}
+      if(!r.draft||!r.draft.trim()){err(rid,'Write or keep a draft before approving.');return;}
+      r.status='Approved';
+      post('info','Workflow bot',r.id+' approved by '+r.owner+' — send is now unlocked.');
+      renderTable();
+    } else if(act==='send'){
+      if(r.status!=='Approved'){return;}
+      r.status='Replied'; r.sentAt=state.simNow;
+      var hrs=fmtH(r.sentAt-r.received);
+      post('info','Workflow bot','✅ Reply sent to '+r.journalist+' ('+r.outlet+') for '+r.id+' — '+hrs+' after intake.');
+      renderTable(); renderMetrics();
+    }
+    return;
+  }
+  var tr=e.target.closest('tr.mr-row');
+  if(tr){
+    var id=tr.dataset.id;
+    state.openId=(state.openId===id)?null:id;
+    renderTable();
+  }
+});
+
+$('mr-samples').addEventListener('click',function(e){
+  var b=e.target.closest('button[data-key]');
+  if(!b){return;}
+  var s=SAMPLES.find(function(x){return x.key===b.dataset.key;});
+  if(s){run(s);}
+});
+
+$('mr-outage').addEventListener('change',function(e){
+  state.notionDown=e.target.checked;
+  if(state.notionDown){
+    post('alert','Workflow bot','⚠ Notion outage simulated — new runs will fail at “Create page” after 3 retries. Mailbox remains the record of truth.');
+  } else {
+    post('info','Workflow bot','Notion restored. Reconciliation available for flagged items.');
+    renderMetrics();
+  }
+});
+
+$('mr-reconcile').addEventListener('click',function(){
+  var n=state.pending.length;
+  state.pending.forEach(function(s){
+    var req=mkRequest(s,'New');
+    req.extraction={journalist:s.journalist,outlet:s.outlet,language:s.lang,topics:s.topics.length?s.topics:null,
+      deadline:s.deadline?new Date(req.received+s.deadline).toISOString().slice(0,10):null,format:'interview',
+      sensitivity:s.sensitive?'embargo-flagged':'none',_confidence:s.confidence};
+    req.received=state.simNow-2*HOUR;
+    state.requests.push(req);
+  });
+  state.pending=[];
+  post('info','Workflow bot','Reconciliation complete — '+n+' flagged request(s) synced from the mailbox to Notion; owners notified.');
+  state.requests.filter(function(r){return r.status==='New'&&r.suggestions===null&&r.received===state.simNow-2*HOUR;}).forEach(function(r){
+    r.suggestions=rankExperts(r);
+    post('ping','Workflow bot','@'+r.owner+' — '+r.id+' created by reconciliation. Deadline '+(r.deadline?'in '+fmtH(r.deadline-state.simNow):'not set')+'.');
+  });
+  renderTable(); renderMetrics();
+});
+
+$('mr-nextday').addEventListener('click',function(){
+  state.simNow+=DAY; state.day++;
+  $('mr-day').textContent='Day '+state.day;
+  post('info','Workflow bot','— Day '+state.day+' begins —');
+  renderTable();
+});
+
+$('mr-sweep').addEventListener('click',function(){
+  var acted=false;
+  state.requests.forEach(function(r){
+    if(['Replied','Declined','Duplicate'].indexOf(r.status)>=0){return;}
+    if(r.status==='Needs triage'&&!r.deadline){
+      post('ping','Daily sweep','@'+r.owner+' — '+r.id+' has no deadline set. Please triage.');
+      acted=true; return;
+    }
+    if(!r.deadline){return;}
+    var left=r.deadline-state.simNow;
+    if(left<0){
+      state.alerts++;
+      post('alert','Daily sweep','⚠ Escalated to @Priya (manager): '+r.id+' OVERDUE by '+fmtH(-left)+' — owner '+r.owner+', not yet replied.');
+      acted=true;
+    } else if(left<=24*HOUR){
+      post('ping','Daily sweep','@'+r.owner+' — '+r.id+' “'+r.title+'”: deadline in '+fmtH(left)+', not yet replied.');
+      acted=true;
+    }
+  });
+  if(!acted){post('info','Daily sweep','Sweep clean — nothing due within 24h.');}
+  renderMetrics();
+});
+
+$('mr-digest').addEventListener('click',function(){
+  var real=state.requests.filter(function(r){return r.status!=='Duplicate';});
+  var by={};
+  real.forEach(function(r){by[r.status]=(by[r.status]||0)+1;});
+  var byTxt=Object.keys(by).map(function(k){return k+' '+by[k];}).join(' · ')||'none';
+  var replied=real.filter(function(r){return r.status==='Replied';});
+  var times=replied.map(function(r){return r.sentAt-r.received;}).sort(function(a,b){return a-b;});
+  var med=times.length?fmtH(times[Math.floor(times.length/2)]):'—';
+  var within=replied.filter(function(r){return (r.sentAt-r.received)<=24*HOUR;}).length;
+  post('digest','Weekly digest',
+    '📊 '+real.length+' requests this cycle: '+byTxt+'\n'+
+    'Median response '+med+' · replied within 1 working day: '+within+'/'+replied.length+'\n'+
+    'Duplicates blocked: '+state.dupsBlocked+' · Unreconciled: '+state.pending.length+'\n'+
+    'Canary: OK — monthly test request reached Replied.');
+});
+
+refreshSamples();
+renderMetrics();
+renderTable();
+post('info','Workflow bot','Workflow live — monitoring media@ and the web form. MR-02 is waiting for Wei to review.');
+refreshIcons();
+})();
+</script>
+
+</body>
+</html>

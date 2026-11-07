@@ -194,7 +194,7 @@ body{margin:0;padding:clamp(14px,2vw,36px) clamp(10px,1.8vw,32px);background:#f4
     <label class="mr-switch">
       <input type="checkbox" id="mr-outage">
       <span class="mr-track" aria-hidden="true"></span>
-      <span>Notion unavailable (F-21)</span>
+      <span>Notion unavailable</span>
     </label>
   </div>
 </header>
@@ -203,7 +203,7 @@ body{margin:0;padding:clamp(14px,2vw,36px) clamp(10px,1.8vw,32px);background:#f4
 
 <div class="mr-grid">
   <aside class="mr-panel">
-    <div class="mr-panelh"><i data-lucide="inbox" aria-hidden="true"></i>Intake simulation (F-01 / F-02)</div>
+    <div class="mr-panelh"><i data-lucide="inbox" aria-hidden="true"></i>Intake simulation</div>
     <div class="mr-samples" id="mr-samples"></div>
     <div class="mr-panelh2">Operations &amp; monitoring</div>
     <div class="mr-simrow">
@@ -211,8 +211,8 @@ body{margin:0;padding:clamp(14px,2vw,36px) clamp(10px,1.8vw,32px);background:#f4
       <button class="mr-btn mr-grow" id="mr-sweep" type="button"><i data-lucide="alarm-clock" aria-hidden="true"></i>Daily sweep + reconcile</button>
     </div>
     <div class="mr-simrow">
-      <button class="mr-btn mr-grow" id="mr-digest" type="button"><i data-lucide="file-text" aria-hidden="true"></i>Weekly digest (F-18)</button>
-      <button class="mr-btn mr-grow" id="mr-canary" type="button"><i data-lucide="crosshair" aria-hidden="true"></i>Canary (F-22)</button>
+      <button class="mr-btn mr-grow" id="mr-digest" type="button"><i data-lucide="file-text" aria-hidden="true"></i>Weekly digest</button>
+      <button class="mr-btn mr-grow" id="mr-canary" type="button"><i data-lucide="crosshair" aria-hidden="true"></i>Canary</button>
     </div>
     <div class="mr-simrow">
       <button class="mr-btn mr-grow" id="mr-reconcile" type="button" hidden><i data-lucide="refresh-ccw" aria-hidden="true"></i>Restore &amp; re-sync</button>
@@ -222,7 +222,7 @@ body{margin:0;padding:clamp(14px,2vw,36px) clamp(10px,1.8vw,32px);background:#f4
       <span class="mr-track" aria-hidden="true"></span>
       <span>Fail next send (simulate §9)</span>
     </label>
-    <p class="mr-note">Sending is gated on Approved (F-14/15); sensitive requests skip AI drafting (F-13); the mailbox and form remain the source of record (NF-03); every request keeps a full audit trail (F-24).</p>
+    <p class="mr-note">Sending is gated on Approved; sensitive requests skip AI drafting; the mailbox and form remain the source of record; every request keeps a full audit trail.</p>
   </aside>
 
   <main>
@@ -248,7 +248,7 @@ body{margin:0;padding:clamp(14px,2vw,36px) clamp(10px,1.8vw,32px);background:#f4
     <div class="mr-feed" id="mr-feed" aria-live="polite"></div>
   </aside>
 </div>
-<footer class="mr-footer">© 2026 Zhuo Huang for CPRO media-workflow-demo.html. All Rights Reserved.</footer>
+<footer class="mr-footer">© 2026 Zhuo Huang for CPRO media-workflow-demo-only. All Rights Reserved.</footer>
 </div>
 
 <script>
@@ -258,10 +258,10 @@ var HOUR=3600e3, DAY=24*HOUR, now0=Date.now();
 var OWNERS=['Maria','Ken','Wei','Sofia'];
 var EXPERTS=[
   {name:'Prof. Lena Hartmann',dept:'Dept. of Computer Science',areas:['AI','funding','policy'],langs:['EN','DE'],avail:true},
-  {name:'Prof. Wei Chen (陈伟)',dept:'Dept. of Physics',areas:['quantum','research'],langs:['ZH','EN'],avail:true},
+  {name:'Prof. Wei Chen 陈伟',dept:'Dept. of Physics',areas:['quantum','research'],langs:['ZH','EN'],avail:true},
   {name:'Dr. Sofia Marques',dept:'Dept. of Earth Sciences',areas:['sustainability','climate'],langs:['EN','ES'],avail:true},
   {name:'Prof. David Okafor',dept:'Business School',areas:['finance','funding'],langs:['EN'],avail:true},
-  {name:'Prof. Jiaxin Lin (林嘉欣)',dept:'Faculty of Medicine',areas:['clinical','health'],langs:['ZH','EN'],avail:true},
+  {name:'Prof. Jiaxin Lin 林嘉欣',dept:'Faculty of Medicine',areas:['clinical','health'],langs:['ZH','EN'],avail:true},
   {name:'Dr. Amir Rahimi',dept:'Office of Information Science',areas:['AI','privacy'],langs:['EN','ZH'],avail:true},
   {name:'Prof. Grace Yeung',dept:'Dept. of Physics',areas:['quantum','AI'],langs:['EN'],avail:false}
 ];

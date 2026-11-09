@@ -143,17 +143,16 @@
             border-bottom: 1px solid #eee;
         }
         .top-nav a {
-            padding: 8px 12px;
+            padding: 10px 14px;
             border-radius: 8px;
             color: var(--primary);
+            font-size: 1rem;
+            font-weight: 700;
             text-decoration: none;
-            font-weight: 600;
             transition: background-color 0.2s, color 0.2s;
         }
         .top-nav a:hover,
-        body:has(#project-experiences:target) .top-nav a[href="#project-experiences"],
-        body:has(#work-experiences:target) .top-nav a[href="#work-experiences"],
-        body:has(#professional-development:target) .top-nav a[href="#professional-development"] {
+        .top-nav a.is-active {
             background: #e6f2ff;
             color: var(--accent);
         }
@@ -874,5 +873,36 @@
         </main>
     </div>
 
+    <script>
+        const sectionLinks = [...document.querySelectorAll('.top-nav a')];
+        const sections = sectionLinks
+            .map(link => document.querySelector(link.getAttribute('href')))
+            .filter(Boolean);
+
+        function updateActiveSection() {
+            let activeSection = sections[0];
+            const activationLine = 100;
+
+            sections.forEach(section => {
+                if (section.getBoundingClientRect().top <= activationLine) {
+                    activeSection = section;
+                }
+            });
+
+            sectionLinks.forEach(link => {
+                const isActive = link.hash === `#${activeSection.id}`;
+                link.classList.toggle('is-active', isActive);
+                if (isActive) {
+                    link.setAttribute('aria-current', 'location');
+                } else {
+                    link.removeAttribute('aria-current');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', updateActiveSection, { passive: true });
+        window.addEventListener('resize', updateActiveSection);
+        updateActiveSection();
+    </script>
 </body>
 </html>

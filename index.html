@@ -127,6 +127,43 @@
             box-sizing: border-box;
         }
 
+        .top-nav {
+            position: fixed;
+            top: 0;
+            left: var(--sidebar-width);
+            right: 0;
+            z-index: 120;
+            display: flex;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 10px 50px;
+            box-sizing: border-box;
+            background: rgba(255, 255, 255, 0.96);
+            border-bottom: 1px solid #eee;
+        }
+        .top-nav a {
+            padding: 8px 12px;
+            border-radius: 8px;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.2s, color 0.2s;
+        }
+        .top-nav a:hover,
+        body:has(#project-experiences:target) .top-nav a[href="#project-experiences"],
+        body:has(#work-experiences:target) .top-nav a[href="#work-experiences"],
+        body:has(#professional-development:target) .top-nav a[href="#professional-development"] {
+            background: #e6f2ff;
+            color: var(--accent);
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        .section-title[id] {
+            scroll-margin-top: 80px;
+        }
+
         /* --- 通用样式 --- */
         .section-title {
             font-size: 2rem;
@@ -389,6 +426,13 @@
 
         /* --- 响应式适配 (Mobile) --- */
         @media (max-width: 1100px) {
+            .top-nav {
+                position: sticky;
+                left: auto;
+                right: auto;
+                margin: -40px -20px 24px;
+                padding: 10px 20px;
+            }
             .layout-wrapper { flex-direction: column; }
             
             .sidebar {
@@ -446,8 +490,14 @@
     <!-- === 右侧 Main Content (70%) === -->
     <main class="main-content">
 
+        <nav class="top-nav" aria-label="Section navigation">
+            <a href="#project-experiences">Project Experiences</a>
+            <a href="#work-experiences">Work Experiences</a>
+            <a href="#professional-development">Professional Development</a>
+        </nav>
+
         <!-- 1. Project Experiences -->
-        <h2 class="section-title">Project Experiences</h2>
+        <h2 class="section-title" id="project-experiences">Project Experiences</h2>
         
         <!-- Project 1 Card -->
         <div class="card-box">
@@ -628,7 +678,7 @@
         </div>
 
         <!-- 2. Work Experiences -->
-        <h2 class="section-title">Work Experiences</h2>
+        <h2 class="section-title" id="work-experiences">Work Experiences</h2>
         
         <div class="card-box">
             <div class="timeline-row">
@@ -683,7 +733,7 @@
         </div>
 
         <!-- 3. Professional Development (Vertical Stack) -->
-        <h2 class="section-title">Professional Development</h2>
+        <h2 class="section-title" id="professional-development">Professional Development</h2>
         
         <div class="vertical-stack">
             
